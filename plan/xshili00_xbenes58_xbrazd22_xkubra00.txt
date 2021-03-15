@@ -1,0 +1,73 @@
+IVS 2. projekt - Týmová spolupráce
+
+____________________________________________________________________________________________________
+TÝM - Blue Hair is the Way
+- xshili00 Evgenii Shiliaev (vedoucí týmu)
+- xbenes58 Beneš Pavel
+- xbrazd22 Brázda Šimon
+- xkubra00 Kubrachenko Marko
+
+____________________________________________________________________________________________________
+STANOVENÉ TERMÍNY:
+18.03.21 - Plán projektu
+21.03.21 - Testy k matematické knihovně
+28.03.21 - Matematická knihovna
+11.04.21 - Profiling
+14.04.21 - Makefile, Instalátor, GUI
+19.04.21 - Manual a dokumentace
+25.04.21 - Mockup
+29.04.21 - Odevzdání projektu 
+
+____________________________________________________________________________________________________
+PŘIDĚLENÍ  ÚKOLŮ:
+
+xshili00
+- matematická knihovna
+- uživatelský manual
+
+xbenes58
+- testy k matematické knihovně
+- dokumentace
+
+xbrazd22
+- profilling
+- instalátor
+
+xkubra00
+- matematická knihovna
+- makefile
+
+____________________________________________________________________________________________________
+PRAVIDLA PRO KOMUNIKACI:
+
+Obecně na všech komunikačních kanálech platí tato pravidla :
+1. Pokud se něco překáží v pokračování vaší práci, musíte o tom uvědomit ostatních členů týmu.
+2. Pokud máte názor, který by se hodil k probíhající diskuze, vždy musíte ho vyjádřit.
+3. Členové týmu musí respektovat názor ostatních členů týmu.
+4. Členové týmu musí držet emoce.
+5. Členové týmu nesmí začínat hádku. 
+
+Zvolené komunikační kanály, na které se vztahují obecná pravidla pro komunikaci:
+Telefon:
+- se používá pouze v případu nouze;
+- pouhé prozvonění je považováno za výzvu k příchodu na týmovou poradu;
+- členové nemají obtěžovat jiného člena týmu přes tento komunikační kanál.
+
+Discord:
+- hlavní komunikační kanál;
+- používá se pro týmové video porady každý pátek v 15 hodin;
+- používá se pro instantní zprávy mezi dvěma členy týmu mimo týmový server;
+- diskuze ohledně částí projektu se probíhá převážně tady v tematické kategorii;
+- člen týmu musí vytvořit kanál se svým tématem, pokud takový na serveru není;
+- minimální frekvence prohlíženi serveru je 1x každý pracovní den;
+- po přečtení zprávy s @everyone členové týmu musí zareagovat pomocí emoji ✅ (:white_check_mark);
+- vedoucí projektu je moderátorem serveru.
+
+Nesplnění těchto pravidel bude vést k bodové pokutě až do výše 5% ke konečnému hodnocení provedené práce!
+
+____________________________________________________________________________________________________
+SYSTÉM PRO SPRÁVU VERZI A HOSTING:
+- GitHub (přístup je sdílen pomocí e-mailu: ivs.kontrola@gmail.com)
+
+
+Datum: 15.03.21
