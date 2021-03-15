@@ -70,4 +70,4 @@ SYSTÉM PRO SPRÁVU VERZI A HOSTING:
 - GitHub (přístup je sdílen pomocí e-mailu: ivs.kontrola@gmail.com)
 
 
-Datum: 15.03.21
+Datum vytvoření: 15.03.21
