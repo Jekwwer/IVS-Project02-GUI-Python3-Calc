@@ -1,5 +1,5 @@
 import unittest
-import mathlib
+import mathlib  #our math library
 
 
 class MathLibTests(unittest.TestCase):
@@ -76,7 +76,7 @@ class MathLibTests(unittest.TestCase):
     #Test of function div
     def test_div(self):
 
-        #Cannot divide by zero
+        #Cannot divide by zero.
         with self.assertRaises(ValueError):
             mathlib.div(24, 0)
         with self.assertRaises(ValueError):
@@ -116,12 +116,129 @@ class MathLibTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             mathlib.fac(-4.2)
 
-        #Integer >= 0
+        #Natural numbers + zero
         self.assertEqual(mathlib.fac(0), 1)
         self.assertEqual(mathlib.fac(1), 1)
         self.assertEqual(mathlib.fac(4), 24)
         self.assertEqual(mathlib.fac(10), 3628800)
         self.assertEqual(mathlib.fac(15), 1307674368000)
+
+
+    #Test of function power
+    def test_power(self):
+        
+        #Due to project specification, exponent must be natural number.
+        with self.assertRaises(ValueError):
+            mathlib.power(3, 0)
+        with self.assertRaises(ValueError):
+            mathlib.power(-576, 1.5)
+        with self.assertRaises(ValueError):
+            mathlib.power(24.42, -1)
+        with self.assertRaises(ValueError):
+            mathlib.power(16.4, -100)
+        with self.assertRaises(ValueError):
+            mathlib.power(0.25, -9.9)
+
+        #Base - integer
+        self.assertEqual(mathlib.power(1, 2), 1)
+        self.assertEqual(mathlib.power(16, 3), 4096)
+        self.assertEqual(mathlib.power(-200, 4), 1600000000)
+        self.assertEqual(mathlib.power(-10, 5), -100000)
+        self.assertEqual(mathlib.power(0, 9), 0)
+
+        #Base - decimal
+        self.assertEqual(mathlib.power(16.25, 3), 4291.015625)
+        self.assertAlmostEqual(mathlib.power(-24.24, 4), 345247.43602, 5)
+        self.assertAlmostEqual(mathlib.power(-10.1, 5), -105101.00501, 5)
+
+
+    #Test of function root.
+    def test_root(self):
+
+        #In this project, root index is positive real number.
+        #Root of negative number is also forbidden.
+        with self.assertRaises(ValueError):
+            mathlib.root(23, 0)
+        with self.assertRaises(ValueError):
+            mathlib.root(-4, 2)
+        with self.assertRaises(ValueError):
+            mathlib.root(-1000, 3)
+        with self.assertRaises(ValueError):
+            mathlib.root(8495, -24)
+        with self.assertRaises(ValueError):
+            mathlib.root(-25.5, 1.8)
+        with self.assertRaises(ValueError):
+            mathlib.root(567, -9.4)
+
+        #Radicand - natural number + zero
+        #Index - natural number
+        self.assertEqual(mathlib.root(0, 2), 0)
+        self.assertEqual(mathlib.root(1, 3), 1)
+        self.assertEqual(mathlib.root(1000000, 6), 10)
+        self.assertAlmostEqual(mathlib.root(456445, 12), 2.962209050, 9)
+
+        #Radicand - positive decimal number + zero
+        #Index - positive decimal number
+        self.assertEqual(mathlib.root(0, 3.33), 0)
+        self.assertAlmostEqual(mathlib.root(2.25, 2.5), 1.383161867, 9)
+        self.assertAlmostEqual(mathlib.root(4242.4242, 7.4), 3.091847895, 9)
+
+
+    #Test of function log
+    def test_log(self):
+
+        #Logarithm argument must be greater than zero.
+        with self.assertRaises(ValueError):
+            mathlib.log(0, 10)
+        with self.assertRaises(ValueError):
+            mathlib.log(-1, 25.77)
+        with self.assertRaises(ValueError):
+            mathlib.log(-10.10, 752)
+
+        #Logarithm base must be greater than zero and not equal to 1.
+        with self.assertRaises(ValueError):
+            mathlib.log(10, 0)
+        with self.assertRaises(ValueError):
+            mathlib.log(16.12, 1)
+        with self.assertRaises(ValueError):
+            mathlib.log(10, -1)
+        with self.assertRaises(ValueError):
+            mathlib.log(576, -42.42)
+
+        #Argument - natural number
+        #Base - natural number \ {1}
+        self.assertEqual(mathlib.log(1, 10), 0)
+        self.assertEqual(mathlib.log(3, 3), 1)
+        self.assertAlmostEqual(mathlib.log(1000, 10), 3, 1)
+        self.assertAlmostEqual(mathlib.log(455, 6), 3.41580, 5)
+
+        #Argument - positive real number
+        #Base - positive real number \ {1}
+        self.assertEqual(mathlib.log(4.242, 4.242), 1)
+        self.assertAlmostEqual(mathlib.log(100, 2.4), 5.26023, 5)
+        self.assertAlmostEqual(mathlib.log(781.156, 7), 3.42296, 5)
+        self.assertAlmostEqual(mathlib.log(156478.42, 12.12), 4.79413, 5)
+
+
+    #Test of function ln.
+    def test_ln(self):
+
+        # Logarithm argument must be greater than zero.
+        with self.assertRaises(ValueError):
+            mathlib.ln(0)
+        with self.assertRaises(ValueError):
+            mathlib.ln(-1)
+        with self.assertRaises(ValueError):
+            mathlib.ln(-10.10)
+
+        # Argument - natural number
+        self.assertEqual(mathlib.ln(1), 0)
+        self.assertAlmostEqual(mathlib.ln(100), 4.60517, 5)
+        self.assertAlmostEqual(mathlib.ln(4266), 8.35843, 5)
+
+        # Argument - positive real number
+        self.assertAlmostEqual(mathlib.ln(2.7182818284), 1, 1)
+        self.assertAlmostEqual(mathlib.ln(4242.4242), 8.352890, 5)
 
 if __name__ == '__main__':
     unittest.main()
