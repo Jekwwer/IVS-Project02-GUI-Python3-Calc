@@ -1,5 +1,10 @@
+#Tests of mathematical library
+#Author: Pavel Beneš (xbenes58)
+#Date: 2021-03-20
+
+
 import unittest
-import mathlib  #our math library
+import mathlib  #our mathematical library
 
 
 class MathLibTests(unittest.TestCase):
