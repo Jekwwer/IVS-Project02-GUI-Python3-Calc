@@ -1,6 +1,8 @@
-#Tests of mathematical library
-#Author: Pavel Beneš (xbenes58)
-#Date: 2021-03-20
+##
+# @file tests.py
+# @brief Tests of mathematical library
+# @author Pavel Beneš xbenes58
+# @date 2021-03-20
 
 
 import unittest
