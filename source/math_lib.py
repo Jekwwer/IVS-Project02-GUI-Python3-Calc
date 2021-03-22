@@ -36,4 +36,4 @@ def mul(a, b):
 def root(x, n):
     if x < 0 or n <= 0:
         raise ValueError
-    return round(x ** (1 / n), 10)
+    return x ** (1 / n)

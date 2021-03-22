@@ -175,7 +175,7 @@ class MathLibTests(unittest.TestCase):
         # Index - natural number
         self.assertEqual(mathlib.root(0, 2), 0)
         self.assertEqual(mathlib.root(1, 3), 1)
-        self.assertEqual(mathlib.root(1000000, 6), 10)
+        self.assertAlmostEqual(mathlib.root(1000000, 6), 10, 1)
         self.assertAlmostEqual(mathlib.root(456445, 12), 2.962209050, 9)
 
         # Radicand - positive decimal number + zero
