@@ -1,8 +1,8 @@
 # Functions for mathematical library
 
 ##
-# @file math_lib.py
-# @brief Functions for mathematical library
+# @file    math_lib.py
+# @brief   Functions for mathematical library
 # @authors Evgenii Shiliaev  (xshili00)
 #          Marko Kubrachenko (xkubra00)
 
@@ -11,7 +11,7 @@
 #
 # @param a First addend
 # @param b Second addend
-# @return Return sum of two values
+# @return  Returns sum of two values
 def add(a, b):
     return a + b
 
@@ -21,7 +21,7 @@ def add(a, b):
 #
 # @param a Subtrahend
 # @param b Minuend
-# @return Return difference between subtrahend and minuend
+# @return  Returns difference between subtrahend and minuend
 def sub(a, b):
     return a - b
 
@@ -31,9 +31,9 @@ def sub(a, b):
 #
 # @param a First factor
 # @param b Second factor
-# @return Return product of two values
+# @return  Returns product of two values
 def mul(a, b):
-    return a * b
+    return round((a * b), 10)
 
 
 ##
@@ -41,31 +41,51 @@ def mul(a, b):
 #
 # @param a Dividend
 # @param b Divisor
-# @return Return quotient of dividend and divisor
+# @return  Returns quotient of dividend and divisor
 def div(a, b):
+    # Division by zero
     if b == 0:
-        raise ValueError('Division by ZERO')
-    return a / b
+        raise ValueError
+    return round((a / b), 10)
 
 
 ##
 # Power function
 #
-# @param a Base
-# @param b Exponent
-# @return Return base to the power of exponent
+# @param b   Base
+# @param exp Exponent
+# @return    Returns base to the power of exponent
 def power(b, exp):
-    if round(exp) != exp or exp <= 0:                       # According to project specification
-        raise ValueError('Power must be a natural number')  # power is a natural number
-    return b ** exp
+    # According to project specification power is a natural number
+    if round(exp) != exp or exp <= 0:
+        raise ValueError
+    return round((b ** exp), 10)
+
+
+# Factorial function
+#
+# @param a Number
+# @return  Returns factorial of entered number
+def fac(a):
+    # Factorial does not exist for negative or decimal numbers
+    if round(a) != a or a < 0:
+        raise ValueError
+    factorial = 1
+    # Factorial of 1 is 0
+    if a == 0:
+        return factorial
+    else:
+        for i in range(1, a + 1):
+            factorial = factorial * i
+    return factorial
 
 
 ##
 # Function of general root
 #
 # @param x Radicand
-# @param n index of the radical
-# @return Return n-th root of radicand
+# @param n Index of the radical
+# @return  Returns n-th root of radicand
 def root(x, n):
     if n == 0:
         raise ValueError
@@ -87,7 +107,7 @@ def root(x, n):
 #
 # @param a Argument
 # @param b Base
-# @return Return exponent
+# @return  Returns exponent
 def log(a, b):
     if b <= 0 or b == 1 or a <= 0:
         raise ValueError
@@ -123,7 +143,7 @@ def log(a, b):
 # Natural logarithm function
 #
 # @param a Argument
-# @return Return exponent
+# @return Returns exponent
 def ln(a):
     e = 2.718281828459045
     return log(a, e)
