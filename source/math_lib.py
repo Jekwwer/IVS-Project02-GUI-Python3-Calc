@@ -28,15 +28,23 @@ def mul(a, b):
 ##
 # Function of general root two values
 #
-# @todo the function should be changed for x < 0 and n < 0 values
-#
 # @param x Radicand
 # @param n index of the radical
 # @return Return n-th root of radicand
 def root(x, n):
-    if x < 0 or n <= 0:
+    if n == 0:
         raise ValueError
-    return x ** (1 / n)
+    # if radicand is less than zero and index is even
+    elif x < 0 and n % 2 == 0:
+        raise ValueError
+    # if radicand is less than zero and index is decimal
+    elif x < 0 and n - int(n) != 0 and int(n * 10) % 10 != 0:
+        raise ValueError
+
+    if x < 0:
+        return -((-x) ** (1 / n))
+    else:
+        return x ** (1 / n)
 
 
 ##
