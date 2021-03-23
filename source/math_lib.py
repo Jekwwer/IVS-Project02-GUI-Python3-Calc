@@ -3,7 +3,8 @@
 ##
 # @file math_lib.py
 # @brief Functions for mathematical library
-# @author Evgenii Shiliaev (xshili00)
+# @authors Evgenii Shiliaev  (xshili00)
+#          Marko Kubrachenko (xkubra00)
 
 ##
 # Function of adding two values
@@ -14,6 +15,14 @@
 def add(a, b):
     return a + b
 
+##
+# Function to subtract one number from another
+#
+# @param a First number
+# @param b Second number
+# @return Return difference between two numbers
+def sub(a, b):
+    return a - b
 
 ##
 # Function of multiplying two values
@@ -23,6 +32,7 @@ def add(a, b):
 # @return Return product of two values
 def mul(a, b):
     return a * b
+
 
 
 ##
