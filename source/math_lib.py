@@ -3,7 +3,8 @@
 ##
 # @file math_lib.py
 # @brief Functions for mathematical library
-# @author Evgenii Shiliaev (xshili00)
+# @authors Evgenii Shiliaev  (xshili00)
+#          Marko Kubrachenko (xkubra00)
 
 ##
 # Function of adding two values
@@ -14,6 +15,14 @@
 def add(a, b):
     return a + b
 
+##
+# Function to subtract one number from another
+#
+# @param a First number
+# @param b Second number
+# @return Return difference between two numbers
+def sub(a, b):
+    return a - b
 
 ##
 # Function of multiplying two values
@@ -24,6 +33,27 @@ def add(a, b):
 def mul(a, b):
     return a * b
 
+##
+# Function to divide two numbers
+#
+# @param a First number
+# @param b Second number
+# @return Return result of division
+def div(a, b):
+    if b == 0:
+        raise ValueError('Division by ZERO')
+    return a / b
+
+##
+# Power function
+#
+# @param a Number
+# @param b Power
+# @return Return result of power
+def power(a, b):
+    if round(b) != b or b <= 0:                             #According to project specification
+        raise ValueError('Power must be a natural number')  #power is a natural number
+    return a ** b
 
 ##
 # Function of general root two values
