@@ -15,6 +15,7 @@
 def add(a, b):
     return a + b
 
+
 ##
 # Function to subtract one number from another
 #
@@ -24,6 +25,7 @@ def add(a, b):
 def sub(a, b):
     return a - b
 
+
 ##
 # Function of multiplying two values
 #
@@ -32,6 +34,7 @@ def sub(a, b):
 # @return Return product of two values
 def mul(a, b):
     return a * b
+
 
 ##
 # Function to divide two numbers
@@ -44,6 +47,7 @@ def div(a, b):
         raise ValueError('Division by ZERO')
     return a / b
 
+
 ##
 # Power function
 #
@@ -51,9 +55,10 @@ def div(a, b):
 # @param b Power
 # @return Return result of power
 def power(a, b):
-    if round(b) != b or b <= 0:                             #According to project specification
-        raise ValueError('Power must be a natural number')  #power is a natural number
+    if round(b) != b or b <= 0:                             # According to project specification
+        raise ValueError('Power must be a natural number')  # power is a natural number
     return a ** b
+
 
 ##
 # Function of general root two values
