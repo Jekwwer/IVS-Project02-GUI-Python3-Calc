@@ -45,6 +45,17 @@ def div(a, b):
     return a / b
 
 ##
+# Power function
+#
+# @param a Number
+# @param b Power
+# @return Return result of power
+def power(a, b):
+    if round(b) != b or b <= 0:                             #According to project specification
+        raise ValueError('Power must be a natural number')  #power is a natural number
+    return a ** b
+
+##
 # Function of general root two values
 #
 # @todo the function should be changed for x < 0 and n < 0 values
