@@ -156,20 +156,17 @@ class MathLibTests(unittest.TestCase):
     # Test of function root.
     def test_root(self):
 
-        # In this project, root index is positive real number.
-        # Root of negative number is also forbidden.
-        with self.assertRaises(ValueError):
-            mathlib.root(23, 0)
+        # If index is even or decimal and radicand is negative, root cannot be calculated.
         with self.assertRaises(ValueError):
             mathlib.root(-4, 2)
         with self.assertRaises(ValueError):
-            mathlib.root(-1000, 3)
-        with self.assertRaises(ValueError):
-            mathlib.root(8495, -24)
-        with self.assertRaises(ValueError):
             mathlib.root(-25.5, 1.8)
         with self.assertRaises(ValueError):
-            mathlib.root(567, -9.4)
+            mathlib.root(-75, -4.5)
+
+        # Zero index is forbidden.
+        with self.assertRaises(ValueError):
+            mathlib.root(5, 0)
 
         # Radicand - natural number + zero
         # Index - natural number
@@ -183,6 +180,15 @@ class MathLibTests(unittest.TestCase):
         self.assertEqual(mathlib.root(0, 3.33), 0)
         self.assertAlmostEqual(mathlib.root(2.25, 2.5), 1.383161867, 9)
         self.assertAlmostEqual(mathlib.root(4242.4242, 7.4), 3.091847895, 9)
+
+        # Radicand - real number
+        # Index - real number \ {0, even numbers}
+        self.assertAlmostEqual(mathlib.root(-1000, 3), -10, 1)
+        self.assertAlmostEqual(mathlib.root(32, -5), 0.5, 1)
+        self.assertAlmostEqual(mathlib.root(-24.42, -7), -0.633505836, 9)
+        self.assertAlmostEqual(mathlib.root(567, -9.4), 0.509407849, 9)
+        self.assertAlmostEqual(mathlib.root(666.666, -6.6), 0.373366291, 9)
+
 
     # Test of function log
     def test_log(self):
