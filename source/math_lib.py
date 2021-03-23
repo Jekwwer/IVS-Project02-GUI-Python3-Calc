@@ -33,7 +33,16 @@ def sub(a, b):
 def mul(a, b):
     return a * b
 
-
+##
+# Function to divide two numbers
+#
+# @param a First number
+# @param b Second number
+# @return Return result of division
+def div(a, b):
+    if b == 0:
+        raise ValueError('Division by ZERO')
+    return a / b
 
 ##
 # Function of general root two values
