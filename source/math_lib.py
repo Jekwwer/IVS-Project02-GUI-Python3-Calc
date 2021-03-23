@@ -83,9 +83,7 @@ def root(x, n):
 
 
 ##
-# Function of logarithm
-#
-# @todo the function should be changed for non-natural numbers
+# Logarithm function of argument with any base
 #
 # @param a Argument
 # @param b Base
@@ -94,9 +92,38 @@ def log(a, b):
     if b <= 0 or b == 1 or a <= 0:
         raise ValueError
 
-    e = 0
-    while a > 1:
-        e += 1
-        a //= b
+    # string variable for every digit of result
+    result = ''
 
-    return e
+    # calculating with 10^-11 precision
+    for i in range(12):
+        # calculating nearest n power of base to argument
+        n = 0
+        while (b ** n) < a:
+            n += 1
+
+        if n == 0:
+            nearest_power_of_b = 0
+        else:
+            nearest_power_of_b = n - 1
+
+        # adding nearest powers one by one to result string
+        result += str(nearest_power_of_b)
+        if i == 0:
+            result += '.'
+
+        # calculating next argument
+        a /= b ** nearest_power_of_b    # a = a / b^n
+        a **= 10                        # a = a ^ 10
+
+    return round(float(result), 10)
+
+
+##
+# Natural logarithm function
+#
+# @param a Argument
+# @return Return exponent
+def ln(a):
+    e = 2.718281828459045
+    return log(a, e)
