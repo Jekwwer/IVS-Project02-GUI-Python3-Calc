@@ -37,3 +37,23 @@ def root(x, n):
     if x < 0 or n <= 0:
         raise ValueError
     return x ** (1 / n)
+
+
+##
+# Function of logarithm
+#
+# @todo the function should be changed for non-natural numbers
+#
+# @param a Argument
+# @param b Base
+# @return Return exponent
+def log(a, b):
+    if b <= 0 or b == 1 or a <= 0:
+        raise ValueError
+
+    e = 0
+    while a > 1:
+        e += 1
+        a //= b
+
+    return e
