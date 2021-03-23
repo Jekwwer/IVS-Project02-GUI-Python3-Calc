@@ -17,11 +17,11 @@ def add(a, b):
 
 
 ##
-# Function to subtract one number from another
+# Function of subtracting one number from another
 #
-# @param a First number
-# @param b Second number
-# @return Return difference between two numbers
+# @param a Subtrahend
+# @param b Minuend
+# @return Return difference between subtrahend and minuend
 def sub(a, b):
     return a - b
 
@@ -39,9 +39,9 @@ def mul(a, b):
 ##
 # Function to divide two numbers
 #
-# @param a First number
-# @param b Second number
-# @return Return result of division
+# @param a Dividend
+# @param b Divisor
+# @return Return quotient of dividend and divisor
 def div(a, b):
     if b == 0:
         raise ValueError('Division by ZERO')
@@ -51,17 +51,17 @@ def div(a, b):
 ##
 # Power function
 #
-# @param a Number
-# @param b Power
-# @return Return result of power
-def power(a, b):
-    if round(b) != b or b <= 0:                             # According to project specification
+# @param a Base
+# @param b Exponent
+# @return Return base to the power of exponent
+def power(b, exp):
+    if round(exp) != exp or exp <= 0:                       # According to project specification
         raise ValueError('Power must be a natural number')  # power is a natural number
-    return a ** b
+    return b ** exp
 
 
 ##
-# Function of general root two values
+# Function of general root
 #
 # @param x Radicand
 # @param n index of the radical
@@ -92,8 +92,8 @@ def log(a, b):
     if b <= 0 or b == 1 or a <= 0:
         raise ValueError
 
-    # string variable for every digit of result
-    result = ''
+    # string variable for every digit of result exponent
+    exp = ''
 
     # calculating with 10^-11 precision
     for i in range(12):
@@ -108,15 +108,15 @@ def log(a, b):
             nearest_power_of_b = n - 1
 
         # adding nearest powers one by one to result string
-        result += str(nearest_power_of_b)
+        exp += str(nearest_power_of_b)
         if i == 0:
-            result += '.'
+            exp += '.'
 
         # calculating next argument
         a /= b ** nearest_power_of_b    # a = a / b^n
         a **= 10                        # a = a ^ 10
 
-    return round(float(result), 10)
+    return round(float(exp), 10)
 
 
 ##
