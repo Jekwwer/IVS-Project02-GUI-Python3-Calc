@@ -29,8 +29,8 @@ def sub(a, b):
 ##
 # Function of multiplying two values
 #
-# @param a First factor
-# @param b Second factor
+# @param a Multiplicand
+# @param b Multiplier
 # @return  Returns product of two values
 def mul(a, b):
     return round((a * b), 10)
@@ -143,7 +143,7 @@ def log(a, b):
 # Natural logarithm function
 #
 # @param a Argument
-# @return Returns exponent
+# @return  Returns exponent
 def ln(a):
     e = 2.718281828459045
     return log(a, e)
