@@ -13,7 +13,13 @@ def diameter(list_numbers):
 
 
 def standard_deviation(list_numbers):
-    return
+    a = 0
+    for number in list_numbers:
+        a = math_lib.add(a, math_lib.power(int(number), 2))
+
+    b = math_lib.mul(len(list_numbers), math_lib.power(diameter(list_numbers), 2))
+    s = math_lib.root(math_lib.div(math_lib.sub(a, b), math_lib.sub(len(list_numbers), 1)), 2)
+    return s
 
 
 if __name__ == "__main__":
@@ -21,3 +27,5 @@ if __name__ == "__main__":
     num_list = string_input.replace("\t", " ").replace("\n", " ").split(" ")
     my_diam = diameter(num_list)
     print(my_diam)
+    deviation = standard_deviation(num_list)
+    print(deviation)
