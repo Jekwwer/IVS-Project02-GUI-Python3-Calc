@@ -1,11 +1,19 @@
 import math_lib
 
 
-def diameter(list_numbers):
-    sum_numbers = 0
+def sum_numbers(list_numbers):
+    total = 0
     for number in list_numbers:
-        sum_numbers = math_lib.add(sum_numbers, int(number))
-    return sum_numbers / len(list_numbers)
+        total = math_lib.add(total, int(number))
+    return total
+
+
+def diameter(list_numbers):
+    return sum_numbers(list_numbers) / len(list_numbers)
+
+
+def standard_deviation(list_numbers):
+    return
 
 
 if __name__ == "__main__":
