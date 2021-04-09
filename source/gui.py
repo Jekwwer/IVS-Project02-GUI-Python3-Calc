@@ -23,6 +23,7 @@ ui_root.resizable(0, 0)
 
 # Fields
 input_field = Entry(ui_root)
+user_input_field = Entry(ui_root)
 # input_field.insert(0, "Enter your expression")
 input_field.grid(row=0, column=0, columnspan=3, sticky=N + S + E + W)
 
@@ -56,6 +57,32 @@ def backspace_button_click():
     input_field.insert(0, current_state[:-1])
 
 
+# Other functions
+
+##
+# Function that changes all commas in the string to dots (for mathematical operations)
+#
+# @param str_line Input string
+# @return Modified input string
+def commas_to_dots(str_line):
+    for i in range(len(str_line)):
+        if str_line[i] == ",":
+            str_line = str_line[:i] + "." + str_line[i + 1:]
+    return str_line
+
+
+##
+# Function that changes all dots in the string to commas (for region format)
+#
+# @param str_line Input string
+# @return Modified input string
+def dots_to_commas(str_line):
+    for i in range(len(str_line)):
+        if str_line[i] == ".":
+            str_line = str_line[:i] + "," + str_line[i + 1:]
+    return str_line
+
+
 ##
 # Function that calculates the expression
 #
@@ -83,8 +110,8 @@ def calculate(operator, args):
         except ValueError:
             result = f"Factorial Error: {args[0]} must NOT be decimal or negative!"
             state = 1
-    elif operator == "\u221A":
-        result = root(args[1], args[0])
+    elif operator == "√":
+        result = root(args[1], args[0])  # TODO try-catch
     else:
         result = f"Operation Error: Used unknown operation sign!"
         state = 1
@@ -112,7 +139,7 @@ def get_output_str(operator, args, result):
 ##
 # Function that prints the result to the output field
 def evaluate():
-    input_str = input_field.get()
+    input_str = commas_to_dots(input_field.get())
     if input_str == "":                                 # if the input field is empty
         output_str = output_field["text"]                   # get the text from output
         i = output_str.rfind("=")                           # get the index of '=' sign
@@ -141,7 +168,8 @@ def evaluate():
     input_field.delete(0, END)                          # clear the input field
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
-        output_str = get_output_str(operator,args,result)
+        output_str = get_output_str(operator, args, result)
+        output_str = dots_to_commas(output_str)
     else:
         output_str = result
     output_field.config(text=output_str)                # put the result to the output field
@@ -171,7 +199,7 @@ num3_button.grid(row=4, column=2)
 
 num0_button = Button(ui_root, text="0", height=2, width=12, command=lambda: input_button_click(0))
 num0_button.grid(row=5, columnspan=2)
-dec_point_button = Button(ui_root, text=",", height=2, width=4)
+dec_point_button = Button(ui_root, text=",", height=2, width=4, command=lambda: input_button_click(","))
 dec_point_button.grid(row=5, column=2)
 
 # Basic operation buttons
