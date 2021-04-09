@@ -14,6 +14,8 @@ from math_lib import *
 # the root of the program
 root = Tk()
 root.title("BHitW Calculator ")
+root.geometry('260x240')
+root.resizable(0, 0)
 
 # Fields
 input_field = Entry(root)
