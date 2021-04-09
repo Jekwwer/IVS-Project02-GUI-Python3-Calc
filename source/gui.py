@@ -9,6 +9,8 @@
 # TODO UNACTIVE BUTTONS AFTER OPERATIONS
 # TODO UNACTIVE BUTTIONS AFTER ERRORS
 # TODO NO SPACES IN INPUT LINE
+# TODO NOT WORKING WITH NEGATIVE NUMBERS
+# TODO SUBTRACTION FIXING
 
 from tkinter import *
 from math_lib import *
@@ -52,6 +54,7 @@ def clear_button_click():
 # @param operator Expression operation
 # @param args Expression arguments
 # @return Result of the expression
+# @exception Result ot the function execution
 def calculate(operator, args):
     state = 0
     if operator == "+":
@@ -80,9 +83,16 @@ def calculate(operator, args):
     return state, result
 
 
+##
+# Function preparing the output string for output field
+#
+# @param operator Expression operation
+# @param args Expression arguments
+# @param result Expression result
+# @return String of the equation
 def get_output_str(operator, args, result):
     if len(args) == 2:
-        output_str = "{opr1}{operator}{opr2} = {result}".format(
+        output_str = "{opr1} {operator} {opr2} = {result}".format(
             opr1=args[0], opr2=args[1], operator=operator, result=result)
     elif len(args) == 1:
         output_str = "{opr1}{operator} = {result}".format(
@@ -105,7 +115,7 @@ def evaluate():
 
     operator = "?"
     for i in range(len(input_str)):                     # find the operation sign
-        if input_str[i] in ["+", "-", "/", "*", "\u221A"]:  # TODO one operand operations
+        if input_str[i] in ["+", "/", "*", "√"]:
             operator = input_str[i]
             args = [float(num) for num in input_str.split(operator)]
             break
