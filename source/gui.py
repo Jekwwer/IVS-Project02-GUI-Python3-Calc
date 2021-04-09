@@ -64,5 +64,11 @@ exponent_button.grid(row=4, column=5)
 equals_button = Button(root, text="\u003D")
 equals_button.grid(row=5, column=5)
 
+# Special buttons
+equals_button = Button(root, text="\u232B")
+equals_button.grid(row=0, column=4)
+clear_button = Button(root, text="C")
+clear_button.grid(row=0, column=5)
+
 # MAIN loop
 root.mainloop()
