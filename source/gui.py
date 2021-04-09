@@ -6,10 +6,10 @@ root = Tk()
 # Fields
 input_field = Entry(root)
 input_field.insert(0, "Enter your expression")
-input_field.grid(row=0, column=0)
+input_field.grid(row=0, columnspan=3)
 
 output_field = Label(root)
-output_field.grid(row=1, column=0)
+output_field.grid(row=1, columnspan=3)
 
 num7_button = Button(root, text="7")
 num7_button.grid(row=2, column=0)
