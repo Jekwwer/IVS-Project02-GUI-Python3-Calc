@@ -1,3 +1,10 @@
+# GIU
+
+##
+# @file    gui.py
+# @brief   Graphic User Interface for the mathematical library
+# @author Evgenii Shiliaev  (xshili00)
+
 from tkinter import *
 
 # the root of the program
@@ -14,11 +21,19 @@ output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 
 
 # Buttons functions
-def input_button_click(num):
+
+##
+# Function of adding button value to the input field
+#
+# @param num Button value
+def input_button_click(value):
     current_state = input_field.get()
     input_field.delete(0, END)
-    input_field.insert(0, str(current_state) + str(num))
+    input_field.insert(0, str(current_state) + str(value))
 
+
+##
+# Function of clearing the input field
 def clear_button_click():
     input_field.delete(0, END)
 
