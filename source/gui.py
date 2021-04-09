@@ -38,5 +38,15 @@ num0_button.grid(row=5, columnspan=2)
 dec_point_button = Button(root, text=",")
 dec_point_button.grid(row=5, column=2)
 
+# Operation buttons
+divide_button = Button(root, text="\u00F7")
+divide_button.grid(row=2, column=4)
+multiply_button = Button(root, text="\u00D7")
+multiply_button.grid(row=3, column=4)
+minis_button = Button(root, text="\u2212")
+minis_button.grid(row=4, column=4)
+plus_button = Button(root, text="\u002B")
+plus_button.grid(row=5, column=4)
+
 # MAIN loop
 root.mainloop()
