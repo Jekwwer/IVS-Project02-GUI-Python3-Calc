@@ -44,13 +44,24 @@ def clear_button_click():
     input_field.delete(0, END)
 
 
+##
+# Function that prints the result to the output field
 def evaluate():
-    str = input_field.get()
-    args = [int(num) for num in str.split("+")]
-    input_field.delete(0, END)
+    input_str = input_field.get()
+    if input_str == "":                                 # if the input field is empty
+        output_str = output_field["text"]                   # get the text from output
+        i = output_str.rfind("=")                           # get the index of '=' sign
+        if i == -1:                                         # if there isn't
+            return                                              # do nothing
+        input_field.insert(0, output_str[i + 2:])           # else put the result of last operation to input field
+        return
+
+    args = [int(num) for num in input_str.split("+")]   # else get list of operands
+    input_field.delete(0, END)                          # clear input field
+    result = add(args[0], args[1])                      # get the result
     output_str = "{opr1} + {opr2} = {result}".format(
-        opr1=args[0], opr2=args[1], result=add(args[0], args[1]))
-    output_field.config(text=output_str)
+        opr1=args[0], opr2=args[1], result=result)
+    output_field.config(text=output_str)                # put the result to the output field
 
 
 # NUM Buttons
