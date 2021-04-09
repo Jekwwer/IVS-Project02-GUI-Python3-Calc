@@ -11,5 +11,26 @@ input_field.grid(row=0, column=0)
 output_field = Label(root)
 output_field.grid(row=1, column=0)
 
+num7_button = Button(root, text="7")
+num7_button.grid(row=2, column=0)
+num8_button = Button(root, text="8")
+num8_button.grid(row=2, column=1)
+num9_button = Button(root, text="9")
+num9_button.grid(row=2, column=2)
+
+num4_button = Button(root, text="4")
+num4_button.grid(row=3, column=0)
+num5_button = Button(root, text="5")
+num5_button.grid(row=3, column=1)
+num6_button = Button(root, text="6")
+num6_button.grid(row=3, column=2)
+
+num1_button = Button(root, text="1")
+num1_button.grid(row=4, column=0)
+num2_button = Button(root, text="2")
+num2_button.grid(row=4, column=1)
+num3_button = Button(root, text="3")
+num3_button.grid(row=4, column=2)
+
 # MAIN loop
 root.mainloop()
