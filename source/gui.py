@@ -45,6 +45,26 @@ def clear_button_click():
 
 
 ##
+# Function that calculates the expression
+#
+# @param operator Expression operation
+# @param args Expression arguments
+# @return Result of the expression
+def calculate(operator, args):
+    if operator == "+":
+        result = add(args[0], args[1])
+    elif operator == "-":
+        result = sub(args[0], args[1])
+    elif operator == "*":
+        result = mul(args[0], args[1])
+    elif operator == "/":               # TODO zero division
+        result = div(args[0], args[1])
+    else:
+        result = "TODO"
+    return result
+
+
+##
 # Function that prints the result to the output field
 def evaluate():
     input_str = input_field.get()
@@ -56,9 +76,15 @@ def evaluate():
         input_field.insert(0, output_str[i + 2:])           # else put the result of last operation to input field
         return
 
-    args = [int(num) for num in input_str.split("+")]   # else get list of operands
-    input_field.delete(0, END)                          # clear input field
-    result = add(args[0], args[1])                      # get the result
+    operator = -1
+    for i in range(len(input_str)):
+        if input_str[i] in ["+", "-", "/", "*"]:
+            operator = input_str[i]                     # TODO no operand
+    # else get list of operands
+    # TODO no .0 in integer results
+    args = [float(num) for num in input_str.split(operator)]
+    input_field.delete(0, END)                          # clear the input field
+    result = calculate(operator, args)                  # get result
     output_str = "{opr1} + {opr2} = {result}".format(
         opr1=args[0], opr2=args[1], result=result)
     output_field.config(text=output_str)                # put the result to the output field
@@ -92,11 +118,11 @@ dec_point_button = Button(root, text=",", height=2, width=4)
 dec_point_button.grid(row=5, column=2)
 
 # Basic operation buttons
-divide_button = Button(root, text="\u00F7", height=2, width=2)
+divide_button = Button(root, text="\u00F7", height=2, width=2, command=lambda: input_button_click("/"))
 divide_button.grid(row=2, column=4)
-multiply_button = Button(root, text="\u00D7", height=2, width=2)
+multiply_button = Button(root, text="\u00D7", height=2, width=2, command=lambda: input_button_click("*"))
 multiply_button.grid(row=3, column=4)
-minis_button = Button(root, text="\u2212", height=2, width=2)
+minis_button = Button(root, text="\u2212", height=2, width=2, command=lambda: input_button_click("-"))
 minis_button.grid(row=4, column=4)
 plus_button = Button(root, text="\u002B", height=2, width=2, command=lambda: input_button_click("+"))
 plus_button.grid(row=5, column=4)
