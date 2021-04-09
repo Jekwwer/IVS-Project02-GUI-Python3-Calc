@@ -19,6 +19,9 @@ def input_button_click(num):
     input_field.delete(0, END)
     input_field.insert(0, str(current_state) + str(num))
 
+def clear_button_click():
+    input_field.delete(0, END)
+
 
 # NUM Buttons
 num7_button = Button(root, text="7", height=2, width=4, command=lambda: input_button_click(7))
@@ -76,7 +79,7 @@ equals_button.grid(row=5, column=5)
 # Special buttons
 equals_button = Button(root, text="\u232B", height=2, width=2)
 equals_button.grid(row=0, column=4)
-clear_button = Button(root, text="C", height=2, width=2)
+clear_button = Button(root, text="C", height=2, width=2, command=clear_button_click)
 clear_button.grid(row=0, column=5)
 
 # MAIN loop
