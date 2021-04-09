@@ -14,7 +14,7 @@ from math_lib import *
 # the root of the program
 root = Tk()
 root.title("BHitW Calculator ")
-root.geometry('260x240')
+root.geometry('272x288')
 root.resizable(0, 0)
 
 # Fields
@@ -46,9 +46,11 @@ def clear_button_click():
 
 def evaluate():
     str = input_field.get()
-    args =[int(num) for num in str.split("+")]
+    args = [int(num) for num in str.split("+")]
     input_field.delete(0, END)
-    output_field.config(text=add(args[0], args[1]))
+    output_str = "{opr1} + {opr2} = {result}".format(
+        opr1=args[0], opr2=args[1], result=add(args[0], args[1]))
+    output_field.config(text=output_str)
 
 
 # NUM Buttons
