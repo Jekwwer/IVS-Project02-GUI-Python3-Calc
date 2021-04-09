@@ -59,14 +59,15 @@ def calculate(operator, args):
         result = sub(args[0], args[1])
     elif operator == "*":
         result = mul(args[0], args[1])
-    elif operator == "/":               # TODO zero division
+    elif operator == "/":
         try:
             result = div(args[0], args[1])
         except ValueError:
             result = f"Zero Division Error: {args[0]} / {args[1]} is NOT possible!"
             state = 1
     else:
-        result = "TODO"
+        result = f"Operation Error: Used unknown operation sign!"
+        state = 1
     return state, result
 
 
@@ -80,18 +81,23 @@ def evaluate():
         if i == -1:                                         # if there isn't
             return                                              # do nothing
         input_field.insert(0, output_str[i + 2:])           # else put the result of last operation to input field
+        return                                              # end the function
+
+    operator = "?"
+    for i in range(len(input_str)):                     # find the operation sign
+        if input_str[i] in ["+", "-", "/", "*"]:
+            operator = input_str[i]
+
+    if operator == "?":
+        output_field.config(text="Operation Error: Used unknown operation sign!")
         return
 
-    operator = -1
-    for i in range(len(input_str)):
-        if input_str[i] in ["+", "-", "/", "*"]:
-            operator = input_str[i]                     # TODO no operand
-    # else get list of operands
+    # get list of operands
     # TODO no .0 in integer results
     args = [float(num) for num in input_str.split(operator)]
     input_field.delete(0, END)                          # clear the input field
     exec_output, result = calculate(operator, args)     # get result
-    if exec_output == 0:
+    if exec_output == 0:                                # if function ends successfully
         output_str = "{opr1} + {opr2} = {result}".format(
             opr1=args[0], opr2=args[1], result=result)
     else:
