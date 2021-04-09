@@ -43,9 +43,17 @@ def input_button_click(value):
 
 
 ##
-# Function of clearing the input field
+# Function that clears the input field
 def clear_button_click():
     input_field.delete(0, END)
+
+
+##
+# Function that deletes the last character from the input field
+def backspace_button_click():
+    current_state = input_field.get()
+    input_field.delete(0, END)
+    input_field.insert(0, current_state[:-1])
 
 
 ##
@@ -193,8 +201,8 @@ equals_button = Button(ui_root, text="\u003D", height=2, width=2, command=evalua
 equals_button.grid(row=5, column=5)
 
 # Special buttons
-equals_button = Button(ui_root, text="\u232B", height=2, width=2)
-equals_button.grid(row=0, column=4)
+backspace_button = Button(ui_root, text="\u232B", height=2, width=2, command=backspace_button_click)
+backspace_button.grid(row=0, column=4)
 clear_button = Button(ui_root, text="C", height=2, width=2, command=clear_button_click)
 clear_button.grid(row=0, column=5)
 
