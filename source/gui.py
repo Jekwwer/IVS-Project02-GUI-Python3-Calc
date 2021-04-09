@@ -2,40 +2,41 @@ from tkinter import *
 
 # the root of the program
 root = Tk()
+root.title("BHitW Calculator ")
 
 # Fields
 input_field = Entry(root)
 input_field.insert(0, "Enter your expression")
-input_field.grid(row=0, columnspan=3, sticky=N+S+E+W)
+input_field.grid(row=0, column=0, columnspan=3, sticky=N + S + E + W)
 
 output_field = Label(root, bg="white", relief="sunken")
-output_field.grid(row=1, columnspan=3, sticky=N+S+E+W)
+output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 
 # NUM Buttons
-num7_button = Button(root, text="7", height=2, width=2)
+num7_button = Button(root, text="7", height=2, width=4)
 num7_button.grid(row=2, column=0)
-num8_button = Button(root, text="8", height=2, width=2)
+num8_button = Button(root, text="8", height=2, width=4)
 num8_button.grid(row=2, column=1)
-num9_button = Button(root, text="9", height=2, width=2)
+num9_button = Button(root, text="9", height=2, width=4)
 num9_button.grid(row=2, column=2)
 
-num4_button = Button(root, text="4", height=2, width=2)
+num4_button = Button(root, text="4", height=2, width=4)
 num4_button.grid(row=3, column=0)
-num5_button = Button(root, text="5", height=2, width=2)
+num5_button = Button(root, text="5", height=2, width=4)
 num5_button.grid(row=3, column=1)
-num6_button = Button(root, text="6", height=2, width=2)
+num6_button = Button(root, text="6", height=2, width=4)
 num6_button.grid(row=3, column=2)
 
-num1_button = Button(root, text="1", height=2, width=2)
+num1_button = Button(root, text="1", height=2, width=4)
 num1_button.grid(row=4, column=0)
-num2_button = Button(root, text="2", height=2, width=2)
+num2_button = Button(root, text="2", height=2, width=4)
 num2_button.grid(row=4, column=1)
-num3_button = Button(root, text="3", height=2, width=2)
+num3_button = Button(root, text="3", height=2, width=4)
 num3_button.grid(row=4, column=2)
 
-num0_button = Button(root, text="0", height=2, width=9)
+num0_button = Button(root, text="0", height=2, width=12)
 num0_button.grid(row=5, columnspan=2)
-dec_point_button = Button(root, text=",", height=2, width=2)
+dec_point_button = Button(root, text=",", height=2, width=4)
 dec_point_button.grid(row=5, column=2)
 
 # Basic operation buttons
