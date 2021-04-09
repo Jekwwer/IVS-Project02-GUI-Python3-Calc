@@ -5,7 +5,11 @@
 # @brief   Graphic User Interface for the mathematical library
 # @author Evgenii Shiliaev  (xshili00)
 
+# TODO FULL EQUATOIN IN OUTPUT
+# TODO UNACTIVE BUTTONS AFTER OPERATIONS
+
 from tkinter import *
+from math_lib import *
 
 # the root of the program
 root = Tk()
@@ -36,6 +40,13 @@ def input_button_click(value):
 # Function of clearing the input field
 def clear_button_click():
     input_field.delete(0, END)
+
+
+def evaluate():
+    str = input_field.get()
+    args =[int(num) for num in str.split("+")]
+    input_field.delete(0, END)
+    output_field.config(text=add(args[0], args[1]))
 
 
 # NUM Buttons
@@ -72,7 +83,7 @@ multiply_button = Button(root, text="\u00D7", height=2, width=2)
 multiply_button.grid(row=3, column=4)
 minis_button = Button(root, text="\u2212", height=2, width=2)
 minis_button.grid(row=4, column=4)
-plus_button = Button(root, text="\u002B", height=2, width=2)
+plus_button = Button(root, text="\u002B", height=2, width=2, command=lambda: input_button_click("+"))
 plus_button.grid(row=5, column=4)
 
 # Advanced operation buttons
@@ -88,7 +99,7 @@ exponent_button = Button(root, text="x\u207F", height=2, width=2)
 exponent_button.grid(row=4, column=5)
 
 # Equals button
-equals_button = Button(root, text="\u003D", height=2, width=2)
+equals_button = Button(root, text="\u003D", height=2, width=2, command=evaluate)
 equals_button.grid(row=5, column=5)
 
 # Special buttons
