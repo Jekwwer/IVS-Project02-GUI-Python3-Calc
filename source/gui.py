@@ -8,6 +8,7 @@
 # TODO FULL EQUATOIN IN OUTPUT
 # TODO UNACTIVE BUTTONS AFTER OPERATIONS
 # TODO UNACTIVE BUTTIONS AFTER ERRORS
+# TODO NO SPACES IN INPUT LINE
 
 from tkinter import *
 from math_lib import *
@@ -66,13 +67,28 @@ def calculate(operator, args):
             result = f"Zero Division Error: {args[0]} / {args[1]} is NOT possible!"
             state = 1
     elif operator == "!":
-        result = fac(args[0])  # TODO try catch
+        try:
+            result = fac(int(args[0]))
+        except ValueError:
+            result = f"Factorial Error: {args[0]} must NOT be decimal or negative!"
+            state = 1
     elif operator == "\u221A":
         result = root(args[1], args[0])
     else:
         result = f"Operation Error: Used unknown operation sign!"
         state = 1
     return state, result
+
+
+def get_output_str(operator, args, result):
+    if len(args) == 2:
+        output_str = "{opr1}{operator}{opr2} = {result}".format(
+            opr1=args[0], opr2=args[1], operator=operator, result=result)
+    elif len(args) == 1:
+        output_str = "{opr1}{operator} = {result}".format(
+            opr1=args[0], operator=operator, result=result)
+    # TODO else
+    return output_str
 
 
 ##
@@ -89,21 +105,25 @@ def evaluate():
 
     operator = "?"
     for i in range(len(input_str)):                     # find the operation sign
-        if input_str[i] in ["+", "-", "/", "*", "!", "\u221A"]:  # TODO one operand operations
+        if input_str[i] in ["+", "-", "/", "*", "\u221A"]:  # TODO one operand operations
             operator = input_str[i]
+            args = [float(num) for num in input_str.split(operator)]
+            break
+        elif input_str[i] in ["!"]:
+            operator = input_str[i]
+            num = float(input_str[:-1])
+            args = [num]
+            break
 
     if operator == "?":                                 # if the operation sign hadn't been changed
         output_field.config(text="Operation Error: Used unknown operation sign!")
         return
 
-    # get list of operands
     # TODO no .0 in integer results
-    args = [float(num) for num in input_str.split(operator)]
     input_field.delete(0, END)                          # clear the input field
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
-        output_str = "{opr1} {operator} {opr2} = {result}".format(
-            opr1=args[0], opr2=args[1], operator=operator result=result)
+        output_str = get_output_str(operator,args,result)
     else:
         output_str = result
     output_field.config(text=output_str)                # put the result to the output field
