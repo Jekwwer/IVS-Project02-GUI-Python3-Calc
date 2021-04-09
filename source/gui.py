@@ -7,6 +7,7 @@
 
 # TODO FULL EQUATOIN IN OUTPUT
 # TODO UNACTIVE BUTTONS AFTER OPERATIONS
+# TODO UNACTIVE BUTTIONS AFTER ERRORS
 
 from tkinter import *
 from math_lib import *
@@ -51,6 +52,7 @@ def clear_button_click():
 # @param args Expression arguments
 # @return Result of the expression
 def calculate(operator, args):
+    state = 0
     if operator == "+":
         result = add(args[0], args[1])
     elif operator == "-":
@@ -58,10 +60,14 @@ def calculate(operator, args):
     elif operator == "*":
         result = mul(args[0], args[1])
     elif operator == "/":               # TODO zero division
-        result = div(args[0], args[1])
+        try:
+            result = div(args[0], args[1])
+        except ValueError:
+            result = f"Zero Division Error: {args[0]} / {args[1]} is NOT possible!"
+            state = 1
     else:
         result = "TODO"
-    return result
+    return state, result
 
 
 ##
@@ -84,9 +90,12 @@ def evaluate():
     # TODO no .0 in integer results
     args = [float(num) for num in input_str.split(operator)]
     input_field.delete(0, END)                          # clear the input field
-    result = calculate(operator, args)                  # get result
-    output_str = "{opr1} + {opr2} = {result}".format(
-        opr1=args[0], opr2=args[1], result=result)
+    exec_output, result = calculate(operator, args)     # get result
+    if exec_output == 0:
+        output_str = "{opr1} + {opr2} = {result}".format(
+            opr1=args[0], opr2=args[1], result=result)
+    else:
+        output_str = result
     output_field.config(text=output_str)                # put the result to the output field
 
 
