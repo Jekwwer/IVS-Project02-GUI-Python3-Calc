@@ -11,6 +11,7 @@ input_field.grid(row=0, columnspan=3)
 output_field = Label(root)
 output_field.grid(row=1, columnspan=3)
 
+# NUM Buttons
 num7_button = Button(root, text="7")
 num7_button.grid(row=2, column=0)
 num8_button = Button(root, text="8")
@@ -31,6 +32,11 @@ num2_button = Button(root, text="2")
 num2_button.grid(row=4, column=1)
 num3_button = Button(root, text="3")
 num3_button.grid(row=4, column=2)
+
+num0_button = Button(root, text="0")
+num0_button.grid(row=5, columnspan=2)
+dec_point_button = Button(root, text=",")
+dec_point_button.grid(row=5, column=2)
 
 # MAIN loop
 root.mainloop()
