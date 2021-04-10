@@ -30,6 +30,9 @@ input_field.grid(row=0, column=0, columnspan=3, sticky=N + S + E + W)
 output_field = Label(ui_root, bg="white", relief="sunken")
 output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 
+# Operation list
+operations_signs = ["+", "/", "*", "√", "!"]
+
 
 # Buttons functions
 
@@ -39,8 +42,11 @@ output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 # @param num Button value
 def input_button_click(value):
     current_state = input_field.get()
-    if current_state[-1:] == ",":
+    if current_state[-1:] == "," and value == ",":
         return
+    elif current_state[-1:] in operations_signs and value in operations_signs:
+        current_state = current_state[:-1]
+
     input_field.delete(0, END)
     input_field.insert(0, str(current_state) + str(value))
 
