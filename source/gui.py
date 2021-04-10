@@ -152,6 +152,13 @@ def calculate(operator, args):
         except ValueError:
             result = f"Natural Logarithm Error: {args[0]} MUST be greater than zero."
             state = 1
+    elif operator == "㏒":
+        try:
+            result = log(args[1], args[0])
+        except ValueError:
+            result = "Logarithm Error: Invalid arguments\n" \
+                     "Check 'Help' or 'User Manual' for more information"
+            state = 1
     else:
         result = f"Operation Error: Used unknown operation sign!"
         state = 1
@@ -168,7 +175,7 @@ def calculate(operator, args):
 def get_output_str(operator, args, result):
     output_str = ""
     if len(args) == 2:
-        if operator == "^":
+        if operator == "^" or operator == "㏒":
             output_str = "{opr1}{operator}{opr2} = {result}".format(
                 opr1=args[0], opr2=args[1], operator=operator, result=result)
         else:
@@ -199,7 +206,7 @@ def evaluate():
 
     operator = "?"
     for i in range(len(input_str)):                     # find the operation sign
-        if input_str[i] in ["+", "/", "*", "√", "^"]:
+        if input_str[i] in ["+", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             args = [float(num) for num in input_str.split(operator)]
             break
@@ -265,7 +272,7 @@ plus_button.grid(row=5, column=4)
 # Advanced operation buttons
 nat_log_button = Button(ui_root, text="㏑", height=2, width=2, command=lambda: input_button_click("㏑"))
 nat_log_button.grid(row=1, column=4)
-log_button = Button(ui_root, text="㏒", height=2, width=2)
+log_button = Button(ui_root, text="㏒", height=2, width=2, command=lambda: input_button_click("㏒"))
 log_button.grid(row=1, column=5)
 factorial_button = Button(ui_root, text="n!", height=2, width=2, command=lambda: input_button_click("!"))
 factorial_button.grid(row=2, column=5)
