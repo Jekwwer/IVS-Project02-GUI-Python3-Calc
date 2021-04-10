@@ -26,7 +26,7 @@ output_field = Label(ui_root, bg="white", relief="sunken")
 output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 
 # Operation list
-operations_signs = ["+", "-", "/", "*", "√", "!", "^", "㏒", "㏑"]
+operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 
 
 # Buttons functions
@@ -38,6 +38,13 @@ operations_signs = ["+", "-", "/", "*", "√", "!", "^", "㏒", "㏑"]
 def input_button_click(value):
     current_state = input_field.get()
 
+    # Feature "Continue the calculating"
+    # If after last expression user will write an operation sign
+    # Last result will copy to the input field with an operation sign
+    if value in operations_signs and current_state == "":
+        input_field.insert(0, get_last_result() + str(value))
+        return
+
     if value == ",":                                # if was written decimal point
         dec_point_button.config(state=DISABLED)     # disable the decimal point button
     elif value in operations_signs:                 # else if was written an operation sign
@@ -45,6 +52,10 @@ def input_button_click(value):
 
     if find_operation_sign(current_state) and value not in operations_signs:
         disable_operation_buttons()
+    # Feature "Change the operation sign"
+    # Before setting 2nd operand in such operations
+    # User can change the operation sign by setting the other one
+    # without a Backspace or Clear
     elif current_state[-1:] in operations_signs and value in operations_signs:
         current_state = current_state[:-1]
     elif current_state[-1:].isdigit() and value == "-":
@@ -241,16 +252,29 @@ def get_output_str(operator, args, result):
 
 
 ##
+# Function preparing the output string for output field
+#
+# @return Result of the last expression or an empty string
+def get_last_result():
+    output_str = output_field["text"]       # get the text from output
+    i = output_str.rfind("=")               # get the index of '=' sign
+    if i == -1:                             # if there isn't
+        return ""                           # return nothing
+    else:                                   # else
+        return output_str[i+1:]             # return result
+
+
+##
 # Function that prints the result to the output field
 def evaluate():
     input_str = commas_to_dots(input_field.get())
+
+    # Feature "Get last result"
+    # If after last expression user will write an equation sign again
+    # Last result will copy to the input field
     if input_str == "":                                 # if the input field is empty
-        output_str = output_field["text"]                   # get the text from output
-        i = output_str.rfind("=")                           # get the index of '=' sign
-        if i == -1:                                         # if there isn't
-            return                                              # do nothing
-        input_field.insert(0, output_str[i + 2:])           # else put the result of last operation to input field
-        return                                              # end the function
+        input_field.insert(0, get_last_result())        # put the result of last operation to input field
+        return                                          # end the function
 
     operator = "?"
     for i in range(len(input_str)):                     # find the operation sign
