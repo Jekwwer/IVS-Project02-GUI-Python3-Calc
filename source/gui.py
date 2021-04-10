@@ -5,9 +5,9 @@
 # @brief   Graphic User Interface for the mathematical library
 # @author Evgenii Shiliaev  (xshili00)
 
-# TODO FULL EQUATOIN IN OUTPUT
-# TODO UNACTIVE BUTTONS AFTER OPERATIONS
-# TODO UNACTIVE BUTTIONS AFTER ERRORS
+# TODO FULL EQUATION IN OUTPUT
+# TODO INACTIVE BUTTONS AFTER OPERATIONS
+# TODO INACTIVE BUTTONS AFTER ERRORS
 # TODO NO SPACES IN INPUT LINE
 # TODO NOT WORKING WITH NEGATIVE NUMBERS
 # TODO SUBTRACTION FIXING
@@ -39,6 +39,8 @@ output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 # @param num Button value
 def input_button_click(value):
     current_state = input_field.get()
+    if current_state[-1:] == ",":
+        return
     input_field.delete(0, END)
     input_field.insert(0, str(current_state) + str(value))
 
@@ -126,6 +128,7 @@ def calculate(operator, args):
 # @param result Expression result
 # @return String of the equation
 def get_output_str(operator, args, result):
+    output_str = ""
     if len(args) == 2:
         output_str = "{opr1} {operator} {opr2} = {result}".format(
             opr1=args[0], opr2=args[1], operator=operator, result=result)
