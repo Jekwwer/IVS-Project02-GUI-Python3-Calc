@@ -31,7 +31,7 @@ output_field = Label(ui_root, bg="white", relief="sunken")
 output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 
 # Operation list
-operations_signs = ["+", "/", "*", "√", "!"]
+operations_signs = ["+", "-", "/", "*", "√", "!", "^", "㏒", "㏑"]
 
 
 # Buttons functions
@@ -46,6 +46,8 @@ def input_button_click(value):
         return
     elif current_state[-1:] in operations_signs and value in operations_signs:
         current_state = current_state[:-1]
+    elif current_state[-1:].isdigit() and value == "-":
+        value = "−"
 
     input_field.delete(0, END)
     input_field.insert(0, str(current_state) + str(value))
@@ -117,7 +119,7 @@ def calculate(operator, args):
     state = 0
     if operator == "+":
         result = add(args[0], args[1])
-    elif operator == "-":
+    elif operator == "−":
         result = sub(args[0], args[1])
     elif operator == "*":
         result = mul(args[0], args[1])
@@ -206,7 +208,7 @@ def evaluate():
 
     operator = "?"
     for i in range(len(input_str)):                     # find the operation sign
-        if input_str[i] in ["+", "/", "*", "√", "^", "㏒"]:
+        if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             args = [float(num) for num in input_str.split(operator)]
             break
