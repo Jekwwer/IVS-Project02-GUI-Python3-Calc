@@ -87,7 +87,7 @@ def backspace_button_click():
     # if last character was a decimal point, enable the decimal point button
     if current_state[-1:] == ",":
         dec_point_button.config(state=NORMAL)
-    # if last character was an oparetion sign, enable the operation buttons
+    # if last character was an operation sign, enable the operation buttons
     if current_state[-1:] in operations_signs:
         enable_operation_buttons()
 
