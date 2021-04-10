@@ -133,13 +133,19 @@ def calculate(operator, args):
         except ValueError:
             result = f"Factorial Error: {args[0]} must NOT be decimal or negative!"
             state = 1
+    elif operator == "^":
+        try:
+            result = power(args[0], args[1])
+        except ValueError:
+            result = f"Power Error: {args[1]} MUST be a natural number!"
+            state = 1
     elif operator == "√":
         try:
             result = root(args[1], args[0])
         except ValueError:
             result = f"Nth Root Error: Invalid arguments\n" \
                      f"Check 'Help' or 'User Manual' for more information"
-        state = 1
+            state = 1
     else:
         result = f"Operation Error: Used unknown operation sign!"
         state = 1
@@ -156,8 +162,12 @@ def calculate(operator, args):
 def get_output_str(operator, args, result):
     output_str = ""
     if len(args) == 2:
-        output_str = "{opr1} {operator} {opr2} = {result}".format(
-            opr1=args[0], opr2=args[1], operator=operator, result=result)
+        if operator == "^":
+            output_str = "{opr1}{operator}{opr2} = {result}".format(
+                opr1=args[0], opr2=args[1], operator=operator, result=result)
+        else:
+            output_str = "{opr1} {operator} {opr2} = {result}".format(
+                opr1=args[0], opr2=args[1], operator=operator, result=result)
     elif len(args) == 1:
         output_str = "{opr1}{operator} = {result}".format(
             opr1=args[0], operator=operator, result=result)
@@ -179,7 +189,7 @@ def evaluate():
 
     operator = "?"
     for i in range(len(input_str)):                     # find the operation sign
-        if input_str[i] in ["+", "/", "*", "√"]:
+        if input_str[i] in ["+", "/", "*", "√", "^"]:
             operator = input_str[i]
             args = [float(num) for num in input_str.split(operator)]
             break
@@ -248,9 +258,9 @@ log_button = Button(ui_root, text="\u33D2", height=2, width=2)
 log_button.grid(row=1, column=5)
 factorial_button = Button(ui_root, text="n!", height=2, width=2, command=lambda: input_button_click("!"))
 factorial_button.grid(row=2, column=5)
-root_button = Button(ui_root, text="\u221A", height=2, width=2, command=lambda: input_button_click("\u221A"))
+root_button = Button(ui_root, text="\u221A", height=2, width=2, command=lambda: input_button_click("√"))
 root_button.grid(row=3, column=5)
-exponent_button = Button(ui_root, text="x\u207F", height=2, width=2)
+exponent_button = Button(ui_root, text="xⁿ", height=2, width=2, command=lambda: input_button_click("^"))
 exponent_button.grid(row=4, column=5)
 
 # Equals button
