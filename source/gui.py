@@ -11,6 +11,7 @@
 # TODO NO SPACES IN INPUT LINE
 # TODO NOT WORKING WITH NEGATIVE NUMBERS
 # TODO SUBTRACTION FIXING
+# TODO MULTIPLE DECIMAL DOTS IN ONE NUMBER
 
 from tkinter import *
 from math_lib import *
@@ -88,6 +89,21 @@ def dots_to_commas(str_line):
     for i in range(len(str_line)):
         if str_line[i] == ".":
             str_line = str_line[:i] + "," + str_line[i + 1:]
+    return str_line
+
+
+##
+# Function that removes useles decimal points in integer numbers (for better appearance)
+#
+# @param str_line Input string
+# @return Modified input string
+def remove_empty_decimal_part(str_line):
+    i = 0
+    while str_line.find(".0", i) != -1:
+        i = str_line.find(".0", i)
+        if not str_line[i + 2:i + 3].isdigit():
+            str_line = str_line[:i] + str_line[i+2:]
+        i += 1
     return str_line
 
 
@@ -173,11 +189,11 @@ def evaluate():
         output_field.config(text="Operation Error: Used unknown operation sign!")
         return
 
-    # TODO no .0 in integer results
     input_field.delete(0, END)                          # clear the input field
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
         output_str = get_output_str(operator, args, result)
+        output_str = remove_empty_decimal_part(output_str)
         output_str = dots_to_commas(output_str)
     else:
         output_str = result
