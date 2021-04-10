@@ -5,8 +5,6 @@
 # @brief   Graphic User Interface for the mathematical library
 # @author  Evgenii Shiliaev  (xshili00)
 
-# TODO INACTIVE BUTTONS AFTER OPERATIONS
-# TODO INACTIVE BUTTONS AFTER ERRORS
 # TODO BETTER SUBTRACTION OUTPUT FIELD APPEARANCE
 
 from tkinter import *
@@ -292,9 +290,9 @@ def evaluate():
         output_field.config(text="Operation Error: Used unknown operation sign!")
         return
 
-    input_field.delete(0, END)                          # clear the input field
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
+        input_field.delete(0, END)                      # clear the input field
         output_str = get_output_str(operator, args, result)
     else:
         output_str = result
