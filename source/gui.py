@@ -5,8 +5,6 @@
 # @brief   Graphic User Interface for the mathematical library
 # @author  Evgenii Shiliaev  (xshili00)
 
-# TODO BETTER SUBTRACTION OUTPUT FIELD APPEARANCE
-
 from tkinter import *
 from math_lib import *
 
@@ -26,8 +24,8 @@ output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
 # Operation list
 operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 
+# Functions
 
-# Buttons functions
 
 ##
 # Function of adding button value to the input field
@@ -43,13 +41,10 @@ def input_button_click(value):
         input_field.insert(0, get_last_result() + str(value))
         return
 
-    if value == ",":                                # if was written decimal point
-        dec_point_button.config(state=DISABLED)     # disable the decimal point button
-    elif value in operations_signs:                 # else if was written an operation sign
-        dec_point_button.config(state=NORMAL)       # enable the decimal point button
-
+    # If was added a number after an operation sign, disable the buttons
     if find_operation_sign(current_state) and value not in operations_signs:
         disable_operation_buttons()
+
     # Feature "Change the operation sign"
     # Before setting 2nd operand in such operations
     # User can change the operation sign by setting the other one
@@ -59,6 +54,15 @@ def input_button_click(value):
     elif current_state[-1:].isdigit() and value == "-":
         value = "−"
 
+    # If was written decimal point, disable the decimal point button
+    if value == ",":
+        dec_point_button.config(state=DISABLED)
+
+    # If was written an operation sign, enable the decimal point button
+    if value in operations_signs:
+        dec_point_button.config(state=NORMAL)
+
+    # Add a value to the input field
     input_field.delete(0, END)
     input_field.insert(0, str(current_state) + str(value))
 
@@ -67,6 +71,7 @@ def input_button_click(value):
 # Function that clears the input field
 def clear_button_click():
     input_field.delete(0, END)
+
     # Enable disabled buttons
     dec_point_button.config(state=NORMAL)
     enable_operation_buttons()
@@ -78,9 +83,12 @@ def backspace_button_click():
     current_state = input_field.get()
     input_field.delete(0, END)
     input_field.insert(0, current_state[:-1])
+
+    # if last character was a decimal point, enable the decimal point button
     if current_state[-1:] == ",":
         dec_point_button.config(state=NORMAL)
-    elif current_state[-1:] in operations_signs:
+    # if last character was an oparetion sign, enable the operation buttons
+    if current_state[-1:] in operations_signs:
         enable_operation_buttons()
 
 
@@ -157,6 +165,7 @@ def remove_empty_decimal_part(str_line):
     i = 0
     while str_line.find(".0", i) != -1:
         i = str_line.find(".0", i)
+        # If decimal part is equal to zero, remove it
         if not str_line[i + 2:i + 3].isdigit():
             str_line = str_line[:i] + str_line[i+2:]
         i += 1
@@ -231,6 +240,8 @@ def calculate(operator, args):
 # @return String of the equation
 def get_output_str(operator, args, result):
     output_str = ""
+
+    # Check numbers negativity
     if args[0] < 0:
         args[0] = f"({args[0]})"
     if result < 0:
@@ -249,6 +260,7 @@ def get_output_str(operator, args, result):
         else:
             output_str = "{opr1} {operator} {opr2} = {result}".format(
                 opr1=args[0], opr2=args[1], operator=operator, result=result)
+
     elif len(args) == 1:
         if operator == "㏑":
             output_str = "{operator}({opr1}) = {result}".format(
@@ -269,7 +281,7 @@ def get_last_result():
     i = output_str.rfind("=")               # get the index of '=' sign
     if i == -1:                             # if there isn't
         return ""                           # return nothing
-    else:                                   # else
+    else:
         return remove_parentheses(output_str[i+1:])
 
 
@@ -301,9 +313,12 @@ def evaluate():
         input_field.insert(0, get_last_result())        # put the result of last operation to input field
         return                                          # end the function
 
+    # Default values
     operator = "?"
-    args = []
-    for i in range(len(input_str)):                     # find the operation sign
+    args = []  # TODO INVALID OPERANDS
+
+    # Find the operation sign and set the arguments
+    for i in range(len(input_str)):
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             args = [float(num) for num in input_str.split(operator)]
@@ -323,7 +338,7 @@ def evaluate():
         input_field.delete(0, END)                      # clear the input field
         output_str = get_output_str(operator, args, result)
     else:
-        output_str = result
+        output_str = result                             # else put error message to the
 
     output_str = remove_empty_decimal_part(output_str)  # Remove useless decimal parts
     output_str = dots_to_commas(output_str)             # Replace dots with commas
