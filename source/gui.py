@@ -7,10 +7,7 @@
 
 # TODO INACTIVE BUTTONS AFTER OPERATIONS
 # TODO INACTIVE BUTTONS AFTER ERRORS
-# TODO NO SPACES IN INPUT LINE
-# TODO NOT WORKING WITH NEGATIVE NUMBERS
-# TODO SUBTRACTION FIXING
-# TODO MULTIPLE DECIMAL DOTS IN ONE NUMBER
+# TODO BETTER SUBTRACTION
 
 from tkinter import *
 from math_lib import *
@@ -23,8 +20,6 @@ ui_root.resizable(0, 0)
 
 # Fields
 input_field = Entry(ui_root)
-user_input_field = Entry(ui_root)
-# input_field.insert(0, "Enter your expression")
 input_field.grid(row=0, column=0, columnspan=3, sticky=N + S + E + W)
 
 output_field = Label(ui_root, bg="white", relief="sunken")
@@ -42,8 +37,11 @@ operations_signs = ["+", "-", "/", "*", "√", "!", "^", "㏒", "㏑"]
 # @param num Button value
 def input_button_click(value):
     current_state = input_field.get()
-    if current_state[-1:] == "," and value == ",":
-        return
+
+    if value == ",":                                # if was written decimal point
+        dec_point_button.config(state=DISABLED)     # disable the decimal point button
+    elif value in operations_signs:                 # else if was written an operation sign
+        dec_point_button.config(state=NORMAL)       # enable the decimal point button
     elif current_state[-1:] in operations_signs and value in operations_signs:
         current_state = current_state[:-1]
     elif current_state[-1:].isdigit() and value == "-":
@@ -57,6 +55,8 @@ def input_button_click(value):
 # Function that clears the input field
 def clear_button_click():
     input_field.delete(0, END)
+    # Enable disabled buttons
+    dec_point_button.config(state=NORMAL)
 
 
 ##
@@ -65,6 +65,8 @@ def backspace_button_click():
     current_state = input_field.get()
     input_field.delete(0, END)
     input_field.insert(0, current_state[:-1])
+    if current_state[-1:] == ",":
+        dec_point_button.config(state=NORMAL)
 
 
 # Other functions
