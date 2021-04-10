@@ -3,9 +3,8 @@
 ##
 # @file    gui.py
 # @brief   Graphic User Interface for the mathematical library
-# @author Evgenii Shiliaev  (xshili00)
+# @author  Evgenii Shiliaev  (xshili00)
 
-# TODO FULL EQUATION IN OUTPUT
 # TODO INACTIVE BUTTONS AFTER OPERATIONS
 # TODO INACTIVE BUTTONS AFTER ERRORS
 # TODO NO SPACES IN INPUT LINE
@@ -130,7 +129,7 @@ def calculate(operator, args):
             state = 1
     elif operator == "!":
         try:
-            result = fac(int(args[0]))
+            result = fac(args[0])
         except ValueError:
             result = f"Factorial Error: {args[0]} must NOT be decimal or negative!"
             state = 1
