@@ -70,6 +70,7 @@ def fac(a):
     # Factorial does not exist for negative or decimal numbers
     if round(a) != a or a < 0:
         raise ValueError
+    a = int(a)
     factorial = 1
     # Factorial of 1 is 0
     if a == 0:
