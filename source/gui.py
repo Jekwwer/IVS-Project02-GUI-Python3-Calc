@@ -7,7 +7,7 @@
 
 # TODO INACTIVE BUTTONS AFTER OPERATIONS
 # TODO INACTIVE BUTTONS AFTER ERRORS
-# TODO BETTER SUBTRACTION
+# TODO BETTER SUBTRACTION OUTPUT FIELD APPEARANCE
 
 from tkinter import *
 from math_lib import *
@@ -42,6 +42,9 @@ def input_button_click(value):
         dec_point_button.config(state=DISABLED)     # disable the decimal point button
     elif value in operations_signs:                 # else if was written an operation sign
         dec_point_button.config(state=NORMAL)       # enable the decimal point button
+
+    if find_operation_sign(current_state) and value not in operations_signs:
+        disable_operation_buttons()
     elif current_state[-1:] in operations_signs and value in operations_signs:
         current_state = current_state[:-1]
     elif current_state[-1:].isdigit() and value == "-":
@@ -57,6 +60,7 @@ def clear_button_click():
     input_field.delete(0, END)
     # Enable disabled buttons
     dec_point_button.config(state=NORMAL)
+    enable_operation_buttons()
 
 
 ##
@@ -67,9 +71,49 @@ def backspace_button_click():
     input_field.insert(0, current_state[:-1])
     if current_state[-1:] == ",":
         dec_point_button.config(state=NORMAL)
+    elif current_state[-1:] in operations_signs:
+        enable_operation_buttons()
 
 
 # Other functions
+
+##
+# Function that finds any operation sign in the string
+#
+# @param str_line Input string
+# @return Boolean value
+def find_operation_sign(str_line):
+    for op in operations_signs:
+        if str_line.find(op) != -1:
+            return True
+    return False
+
+
+##
+# Function that disables all operation buttons
+def disable_operation_buttons():
+    plus_button.config(state=DISABLED)
+    multiply_button.config(state=DISABLED)
+    divide_button.config(state=DISABLED)
+    exponent_button.config(state=DISABLED)
+    root_button.config(state=DISABLED)
+    factorial_button.config(state=DISABLED)
+    log_button.config(state=DISABLED)
+    nat_log_button.config(state=DISABLED)
+
+
+##
+# Function that disables all operation buttons
+def enable_operation_buttons():
+    plus_button.config(state=NORMAL)
+    multiply_button.config(state=NORMAL)
+    divide_button.config(state=NORMAL)
+    exponent_button.config(state=NORMAL)
+    root_button.config(state=NORMAL)
+    factorial_button.config(state=NORMAL)
+    log_button.config(state=NORMAL)
+    nat_log_button.config(state=NORMAL)
+
 
 ##
 # Function that changes all commas in the string to dots (for mathematical operations)
@@ -234,6 +278,7 @@ def evaluate():
     output_str = remove_empty_decimal_part(output_str)  # Remove useless decimal parts
     output_str = dots_to_commas(output_str)             # Replace dots with commas
     output_field.config(text=output_str)                # put the result to the output field
+    enable_operation_buttons()
 
 
 # NUM Buttons
