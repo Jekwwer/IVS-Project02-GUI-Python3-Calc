@@ -143,8 +143,14 @@ def calculate(operator, args):
         try:
             result = root(args[1], args[0])
         except ValueError:
-            result = f"Nth Root Error: Invalid arguments\n" \
-                     f"Check 'Help' or 'User Manual' for more information"
+            result = "Nth Root Error: Invalid arguments\n" \
+                     "Check 'Help' or 'User Manual' for more information"
+            state = 1
+    elif operator == "㏑":
+        try:
+            result = ln(args[0])
+        except ValueError:
+            result = f"Natural Logarithm Error: {args[0]} MUST be greater than zero."
             state = 1
     else:
         result = f"Operation Error: Used unknown operation sign!"
@@ -169,8 +175,12 @@ def get_output_str(operator, args, result):
             output_str = "{opr1} {operator} {opr2} = {result}".format(
                 opr1=args[0], opr2=args[1], operator=operator, result=result)
     elif len(args) == 1:
-        output_str = "{opr1}{operator} = {result}".format(
-            opr1=args[0], operator=operator, result=result)
+        if operator == "㏑":
+            output_str = "{operator}({opr1}) = {result}".format(
+                opr1=args[0], operator=operator, result=result)
+        else:
+            output_str = "{opr1}{operator} = {result}".format(
+                opr1=args[0], operator=operator, result=result)
     # TODO else
     return output_str
 
@@ -193,9 +203,9 @@ def evaluate():
             operator = input_str[i]
             args = [float(num) for num in input_str.split(operator)]
             break
-        elif input_str[i] in ["!"]:
+        elif input_str[i] in ["!", "㏑"]:
             operator = input_str[i]
-            num = float(input_str[:-1])
+            num = float(input_str.replace(operator, ""))
             args = [num]
             break
 
@@ -207,10 +217,11 @@ def evaluate():
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
         output_str = get_output_str(operator, args, result)
-        output_str = remove_empty_decimal_part(output_str)
-        output_str = dots_to_commas(output_str)
     else:
         output_str = result
+
+    output_str = remove_empty_decimal_part(output_str)  # Remove useless decimal parts
+    output_str = dots_to_commas(output_str)             # Replace dots with commas
     output_field.config(text=output_str)                # put the result to the output field
 
 
@@ -252,7 +263,7 @@ plus_button = Button(ui_root, text="\u002B", height=2, width=2, command=lambda: 
 plus_button.grid(row=5, column=4)
 
 # Advanced operation buttons
-nat_log_button = Button(ui_root, text="\u33D1", height=2, width=2)
+nat_log_button = Button(ui_root, text="\u33D1", height=2, width=2, command=lambda: input_button_click("㏑"))
 nat_log_button.grid(row=1, column=4)
 log_button = Button(ui_root, text="\u33D2", height=2, width=2)
 log_button.grid(row=1, column=5)
