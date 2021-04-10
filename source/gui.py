@@ -253,33 +253,33 @@ dec_point_button = Button(ui_root, text=",", height=2, width=4, command=lambda: 
 dec_point_button.grid(row=5, column=2)
 
 # Basic operation buttons
-divide_button = Button(ui_root, text="\u00F7", height=2, width=2, command=lambda: input_button_click("/"))
+divide_button = Button(ui_root, text="÷", height=2, width=2, command=lambda: input_button_click("/"))
 divide_button.grid(row=2, column=4)
-multiply_button = Button(ui_root, text="\u00D7", height=2, width=2, command=lambda: input_button_click("*"))
+multiply_button = Button(ui_root, text="×", height=2, width=2, command=lambda: input_button_click("*"))
 multiply_button.grid(row=3, column=4)
-minis_button = Button(ui_root, text="\u2212", height=2, width=2, command=lambda: input_button_click("-"))
+minis_button = Button(ui_root, text="−", height=2, width=2, command=lambda: input_button_click("-"))
 minis_button.grid(row=4, column=4)
-plus_button = Button(ui_root, text="\u002B", height=2, width=2, command=lambda: input_button_click("+"))
+plus_button = Button(ui_root, text="+", height=2, width=2, command=lambda: input_button_click("+"))
 plus_button.grid(row=5, column=4)
 
 # Advanced operation buttons
-nat_log_button = Button(ui_root, text="\u33D1", height=2, width=2, command=lambda: input_button_click("㏑"))
+nat_log_button = Button(ui_root, text="㏑", height=2, width=2, command=lambda: input_button_click("㏑"))
 nat_log_button.grid(row=1, column=4)
-log_button = Button(ui_root, text="\u33D2", height=2, width=2)
+log_button = Button(ui_root, text="㏒", height=2, width=2)
 log_button.grid(row=1, column=5)
 factorial_button = Button(ui_root, text="n!", height=2, width=2, command=lambda: input_button_click("!"))
 factorial_button.grid(row=2, column=5)
-root_button = Button(ui_root, text="\u221A", height=2, width=2, command=lambda: input_button_click("√"))
+root_button = Button(ui_root, text="√", height=2, width=2, command=lambda: input_button_click("√"))
 root_button.grid(row=3, column=5)
 exponent_button = Button(ui_root, text="xⁿ", height=2, width=2, command=lambda: input_button_click("^"))
 exponent_button.grid(row=4, column=5)
 
 # Equals button
-equals_button = Button(ui_root, text="\u003D", height=2, width=2, command=evaluate)
+equals_button = Button(ui_root, text="=", height=2, width=2, command=evaluate)
 equals_button.grid(row=5, column=5)
 
 # Special buttons
-backspace_button = Button(ui_root, text="\u232B", height=2, width=2, command=backspace_button_click)
+backspace_button = Button(ui_root, text="⌫", height=2, width=2, command=backspace_button_click)
 backspace_button.grid(row=0, column=4)
 clear_button = Button(ui_root, text="C", height=2, width=2, command=clear_button_click)
 clear_button.grid(row=0, column=5)
