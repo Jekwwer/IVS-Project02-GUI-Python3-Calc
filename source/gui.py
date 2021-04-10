@@ -36,10 +36,10 @@ operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 def input_button_click(value):
     current_state = input_field.get()
 
-    # Feature "Continue the calculating"
+    # Feature "Continue the calculating" (not working with logarithms)
     # If after last expression user will write an operation sign
     # Last result will copy to the input field with an operation sign
-    if value in operations_signs and current_state == "":
+    if value in operations_signs[:-2] and current_state == "":
         input_field.insert(0, get_last_result() + str(value))
         return
 
@@ -231,9 +231,20 @@ def calculate(operator, args):
 # @return String of the equation
 def get_output_str(operator, args, result):
     output_str = ""
+    if args[0] < 0:
+        args[0] = f"({args[0]})"
+    if result < 0:
+        result = f"({result})"
+
     if len(args) == 2:
+        if args[1] < 0:
+            args[1] = f"({args[1]})"
+
         if operator == "^" or operator == "㏒":
             output_str = "{opr1}{operator}{opr2} = {result}".format(
+                opr1=args[0], opr2=args[1], operator=operator, result=result)
+        elif operator == "−":
+            output_str = "{opr1} {operator} {opr2} = {result}".format(
                 opr1=args[0], opr2=args[1], operator=operator, result=result)
         else:
             output_str = "{opr1} {operator} {opr2} = {result}".format(
@@ -245,7 +256,7 @@ def get_output_str(operator, args, result):
         else:
             output_str = "{opr1}{operator} = {result}".format(
                 opr1=args[0], operator=operator, result=result)
-    # TODO else
+
     return output_str
 
 
@@ -259,7 +270,23 @@ def get_last_result():
     if i == -1:                             # if there isn't
         return ""                           # return nothing
     else:                                   # else
-        return output_str[i+1:]             # return result
+        return remove_parentheses(output_str[i+1:])
+
+
+##
+# Function that removes parentheses in string
+#
+# @param str_line Input string
+# @return Modified input string
+def remove_parentheses(str_line):
+    for p in "()":
+        i = 0
+        while str_line.find(p, i) != -1:
+            i = str_line.find(p, i)
+            if i > 0:
+                str_line = str_line[:i] + str_line[i + 1:]
+            i += 1
+    return str_line
 
 
 ##
@@ -267,7 +294,7 @@ def get_last_result():
 def evaluate():
     input_str = commas_to_dots(input_field.get())
 
-    # Feature "Get last result"
+    # Feature "Get last result" (not working with basic logarithm properly)
     # If after last expression user will write an equation sign again
     # Last result will copy to the input field
     if input_str == "":                                 # if the input field is empty
@@ -275,6 +302,7 @@ def evaluate():
         return                                          # end the function
 
     operator = "?"
+    args = []
     for i in range(len(input_str)):                     # find the operation sign
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
