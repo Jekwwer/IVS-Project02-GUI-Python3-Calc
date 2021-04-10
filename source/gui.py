@@ -92,7 +92,7 @@ def dots_to_commas(str_line):
 
 
 ##
-# Function that removes useles decimal points in integer numbers (for better appearance)
+# Function that removes useless decimal points in integer numbers (for better appearance)
 #
 # @param str_line Input string
 # @return Modified input string
@@ -134,7 +134,12 @@ def calculate(operator, args):
             result = f"Factorial Error: {args[0]} must NOT be decimal or negative!"
             state = 1
     elif operator == "√":
-        result = root(args[1], args[0])  # TODO try-catch
+        try:
+            result = root(args[1], args[0])
+        except ValueError:
+            result = f"Nth Root Error: Invalid arguments\n" \
+                     f"Check 'Help' or 'User Manual' for more information"
+        state = 1
     else:
         result = f"Operation Error: Used unknown operation sign!"
         state = 1
