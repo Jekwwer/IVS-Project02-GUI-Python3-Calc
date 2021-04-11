@@ -3,7 +3,8 @@
 ##
 # @file    gui.py
 # @brief   Graphic User Interface for the mathematical library
-# @author  Evgenii Shiliaev  (xshili00)
+# @authors Evgenii Shiliaev  (xshili00)
+#          Marko Kubrachenko (xkubra00)
 
 from tkinter import *
 from math_lib import *
@@ -11,15 +12,29 @@ from math_lib import *
 # the root of the program
 ui_root = Tk()
 ui_root.title("BHitW Calculator ")
-ui_root.geometry('272x288')
-ui_root.resizable(0, 0)
+#ui_root.resizable(0, 0)
+ui_root.geometry("300x300")
 
+
+##
+# Menu test
+menu = Menu(ui_root)
+ui_root.config(menu=menu)
+helpmenu = Menu(menu)
+menu.add_cascade(label='Help', menu=helpmenu)
+helpmenu.add_command(label='About')
+
+
+
+##
 # Fields
-input_field = Entry(ui_root)
-input_field.grid(row=0, column=0, columnspan=3, sticky=N + S + E + W)
+input_field = Entry(ui_root, bd=0)
+input_field.place(relheight=0.2, relwidth=0.75,
+                  relx=0, rely=0)
 
-output_field = Label(ui_root, bg="white", relief="sunken")
-output_field.grid(row=1, column=0, columnspan=3, sticky=N + S + E + W)
+output_field = Label(ui_root, bd=0, bg="white", relief="sunken")
+output_field.place(relheight=0.2, relwidth=0.75,
+                   relx=0, rely=0.2)
 
 # Operation list
 operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
@@ -347,63 +362,102 @@ def evaluate():
 
 
 # NUM Buttons
-num7_button = Button(ui_root, text="7", height=2, width=4, command=lambda: input_button_click(7))
-num7_button.grid(row=2, column=0)
-num8_button = Button(ui_root, text="8", height=2, width=4, command=lambda: input_button_click(8))
-num8_button.grid(row=2, column=1)
-num9_button = Button(ui_root, text="9", height=2, width=4, command=lambda: input_button_click(9))
-num9_button.grid(row=2, column=2)
+num7_button = Button(ui_root, text="7", command=lambda: input_button_click(7))
+num7_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0, rely=0.4)
 
-num4_button = Button(ui_root, text="4", height=2, width=4, command=lambda: input_button_click(4))
-num4_button.grid(row=3, column=0)
-num5_button = Button(ui_root, text="5", height=2, width=4, command=lambda: input_button_click(5))
-num5_button.grid(row=3, column=1)
-num6_button = Button(ui_root, text="6", height=2, width=4, command=lambda: input_button_click(6))
-num6_button.grid(row=3, column=2)
+num8_button = Button(ui_root, text="8", command=lambda: input_button_click(8))
+num8_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0.25, rely=0.4)
 
-num1_button = Button(ui_root, text="1", height=2, width=4, command=lambda: input_button_click(1))
-num1_button.grid(row=4, column=0)
-num2_button = Button(ui_root, text="2", height=2, width=4, command=lambda: input_button_click(2))
-num2_button.grid(row=4, column=1)
-num3_button = Button(ui_root, text="3", height=2, width=4, command=lambda: input_button_click(3))
-num3_button.grid(row=4, column=2)
+num9_button = Button(ui_root, text="9", command=lambda: input_button_click(9))
+num9_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0.5, rely=0.4)
 
-num0_button = Button(ui_root, text="0", height=2, width=12, command=lambda: input_button_click(0))
-num0_button.grid(row=5, columnspan=2)
-dec_point_button = Button(ui_root, text=",", height=2, width=4, command=lambda: input_button_click(","))
-dec_point_button.grid(row=5, column=2)
+num4_button = Button(ui_root, text="4", command=lambda: input_button_click(4))
+num4_button.place(relheight=0.15, relwidth=0.25,
+                 relx=0, rely=0.55)
+
+num5_button = Button(ui_root, text="5", command=lambda: input_button_click(5))
+num5_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0.25, rely=0.55)
+
+num6_button = Button(ui_root, text="6", command=lambda: input_button_click(6))
+num6_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0.5, rely=0.55)
+
+num1_button = Button(ui_root, text="1", command=lambda: input_button_click(1))
+num1_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0, rely=0.7)
+
+num2_button = Button(ui_root, text="2", command=lambda: input_button_click(2))
+num2_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0.25, rely=0.7)
+
+num3_button = Button(ui_root, text="3", command=lambda: input_button_click(3))
+num3_button.place(relheight=0.15, relwidth=0.25,
+                  relx=0.5, rely=0.7)
+
+num0_button = Button(ui_root, text="0", command=lambda: input_button_click(0))
+num0_button.place(relheight=0.15, relwidth=0.5,
+                  relx=0, rely=0.85)
+
+dec_point_button = Button(ui_root, text=",", command=lambda: input_button_click(","))
+dec_point_button.place(relheight=0.15, relwidth=0.25,
+                       relx=0.5, rely=0.85)
 
 # Basic operation buttons
-divide_button = Button(ui_root, text="÷", height=2, width=2, command=lambda: input_button_click("/"))
-divide_button.grid(row=2, column=4)
-multiply_button = Button(ui_root, text="×", height=2, width=2, command=lambda: input_button_click("*"))
-multiply_button.grid(row=3, column=4)
-minis_button = Button(ui_root, text="−", height=2, width=2, command=lambda: input_button_click("-"))
-minis_button.grid(row=4, column=4)
-plus_button = Button(ui_root, text="+", height=2, width=2, command=lambda: input_button_click("+"))
-plus_button.grid(row=5, column=4)
+divide_button = Button(ui_root, text="÷", command=lambda: input_button_click("/"))
+divide_button.place(relheight=0.15, relwidth=0.125,
+                    relx=0.75, rely=0.4)
+
+multiply_button = Button(ui_root, text="×", command=lambda: input_button_click("*"))
+multiply_button.place(relheight=0.15, relwidth=0.125,
+                      relx=0.75, rely=0.55)
+
+minis_button = Button(ui_root, text="−", command=lambda: input_button_click("-"))
+minis_button.place(relheight=0.15, relwidth=0.125,
+                   relx=0.75, rely=0.7)
+
+plus_button = Button(ui_root, text="+", command=lambda: input_button_click("+"))
+plus_button.place(relheight=0.15, relwidth=0.125,
+                  relx=0.75, rely=0.85)
 
 # Advanced operation buttons
-nat_log_button = Button(ui_root, text="㏑", height=2, width=2, command=lambda: input_button_click("㏑"))
-nat_log_button.grid(row=1, column=4)
-log_button = Button(ui_root, text="㏒", height=2, width=2, command=lambda: input_button_click("㏒"))
-log_button.grid(row=1, column=5)
-factorial_button = Button(ui_root, text="n!", height=2, width=2, command=lambda: input_button_click("!"))
-factorial_button.grid(row=2, column=5)
-root_button = Button(ui_root, text="√", height=2, width=2, command=lambda: input_button_click("√"))
-root_button.grid(row=3, column=5)
-exponent_button = Button(ui_root, text="xⁿ", height=2, width=2, command=lambda: input_button_click("^"))
-exponent_button.grid(row=4, column=5)
+nat_log_button = Button(ui_root, text="㏑", command=lambda: input_button_click("㏑"))
+nat_log_button.place(relheight=0.2, relwidth=0.125,
+                     relx=0.75, rely=0.2)
+
+log_button = Button(ui_root, text="㏒", command=lambda: input_button_click("㏒"))
+log_button.place(relheight=0.2, relwidth=0.125,
+                 relx=0.875, rely=0.2)
+
+factorial_button = Button(ui_root, text="n!", command=lambda: input_button_click("!"))
+factorial_button.place(relheight=0.15, relwidth=0.125,
+                       relx=0.875, rely=0.4)
+
+root_button = Button(ui_root, text="√", command=lambda: input_button_click("√"))
+root_button.place(relheight=0.15, relwidth=0.125,
+                  relx=0.875, rely=0.55)
+
+exponent_button = Button(ui_root, text="xⁿ", command=lambda: input_button_click("^"))
+exponent_button.place(relheight=0.15, relwidth=0.125,
+                      relx=0.875, rely=0.7)
 
 # Equals button
-equals_button = Button(ui_root, text="=", height=2, width=2, command=evaluate)
-equals_button.grid(row=5, column=5)
+equals_button = Button(ui_root, text="=", command=evaluate)
+equals_button.place(relheight=0.15, relwidth=0.125,
+                    relx=0.875, rely=0.85)
 
 # Special buttons
-backspace_button = Button(ui_root, text="⌫", height=2, width=2, command=backspace_button_click)
-backspace_button.grid(row=0, column=4)
-clear_button = Button(ui_root, text="C", height=2, width=2, command=clear_button_click)
-clear_button.grid(row=0, column=5)
+backspace_button = Button(ui_root, text="⌫", command=backspace_button_click)
+backspace_button.place(relheight=0.2, relwidth=0.125,
+                       relx=0.75, rely=0)
+
+clear_button = Button(ui_root, text="C", command=clear_button_click)
+clear_button.place(relheight=0.2, relwidth=0.125,
+                   relx=0.875, rely=0)
 
 # MAIN loop
 ui_root.mainloop()
+
