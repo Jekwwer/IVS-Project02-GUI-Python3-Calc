@@ -45,7 +45,7 @@ def standard_deviation(list_numbers):
 
 
 if __name__ == "__main__":
-    string_input = input("Insert numbers for profiling (max 1000 numbers):")
+    string_input = input()
     num_list = string_input.replace("\t", " ").replace("\n", " ").split(" ")
     deviation = standard_deviation(num_list)
-    print("The value of standard deviation is:", deviation)
+    print(deviation)
