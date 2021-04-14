@@ -12,34 +12,46 @@ from math_lib import *
 # the root of the program
 ui_root = Tk()
 ui_root.title("BHitW Calculator ")
-# ui_root.resizable(0, 0)
-ui_root.geometry("300x300")
-
-
-##
-# Menu test
-menu = Menu(ui_root)
-ui_root.config(menu=menu)
-helpmenu = Menu(menu)
-menu.add_cascade(label='Help', menu=helpmenu)
-helpmenu.add_command(label='About')
-
+ui_root.resizable(0, 0)
+ui_root.geometry("350x360")
 
 ##
+# Function to open About window
+def open_about_window():
+    new_window = Toplevel(ui_root)
+    new_window.title("New Window")
+    new_window.geometry("350x360")
+    Label(new_window, text ="This is a about window").pack()
+
+##
+# Function to open Help window
+def open_help_window():
+    new_window = Toplevel(ui_root)
+    new_window.title("New Window")
+    new_window.geometry("350x360")
+    Label(new_window, text ="This is a help window").pack()
+
+# Menu
+main_menu = Menu(ui_root)
+ui_root.config(menu=main_menu)
+main_menu.add_command(label='About', command=open_about_window)
+main_menu.add_command(label='Help', command=open_help_window)
+
 # Fields
-input_field = Entry(ui_root, bd=0)
+input_field = Entry(ui_root, font=("Arial", 18))
+input_field.config(bg='#c9e9f6', borderwidth=0, bd=0, relief=SOLID)
 input_field.place(relheight=0.2, relwidth=0.75,
                   relx=0, rely=0)
 
-output_field = Label(ui_root, bd=0, bg="white", relief="sunken")
+output_field = Label(ui_root, borderwidth=0, bg="#c9e9f6", relief=SOLID, font=("Arial, 14"))
 output_field.place(relheight=0.2, relwidth=0.75,
-                   relx=0, rely=0.2)
+relx=0, rely=0.2)
 
 # Operation list
 operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 
-# Functions
 
+# Functions
 
 ##
 # Function of adding button value to the input field
@@ -362,142 +374,181 @@ def evaluate(event=None):
 
 # NUM Buttons
 num7_button = Button(ui_root, text="7", command=lambda: input_button_click(7))
-num7_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0, rely=0.4)
+num7_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num7_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.4)
+
 ui_root.bind("<Key-7>", lambda value: input_button_click(7))
 ui_root.bind("<KP_7>", lambda value: input_button_click(7))
 
 
 num8_button = Button(ui_root, text="8", command=lambda: input_button_click(8))
-num8_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0.25, rely=0.4)
+num8_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num8_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.4)
+
 ui_root.bind("<Key-8>", lambda value: input_button_click(8))
 ui_root.bind("<KP_8>", lambda value: input_button_click(8))
 
 
 num9_button = Button(ui_root, text="9", command=lambda: input_button_click(9))
-num9_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0.5, rely=0.4)
+num9_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num9_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.4)
+
 ui_root.bind("<Key-9>", lambda value: input_button_click(9))
 ui_root.bind("<KP_9>", lambda value: input_button_click(9))
 
 
 num4_button = Button(ui_root, text="4", command=lambda: input_button_click(4))
-num4_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0, rely=0.55)
+num4_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num4_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.55)
+
 ui_root.bind("<Key-4>", lambda value: input_button_click(4))
 ui_root.bind("<KP_4>", lambda value: input_button_click(4))
 
 
 num5_button = Button(ui_root, text="5", command=lambda: input_button_click(5))
-num5_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0.25, rely=0.55)
+num5_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num5_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.55)
+
 ui_root.bind("<Key-5>", lambda value: input_button_click(5))
 ui_root.bind("<KP_5>", lambda value: input_button_click(5))
 
 
 num6_button = Button(ui_root, text="6", command=lambda: input_button_click(6))
-num6_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0.5, rely=0.55)
+num6_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num6_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.55)
+
 ui_root.bind("<Key-6>", lambda value: input_button_click(6))
 ui_root.bind("<KP_6>", lambda value: input_button_click(6))
 
 
 num1_button = Button(ui_root, text="1", command=lambda: input_button_click(1))
-num1_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0, rely=0.7)
+num1_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num1_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.7)
+
 ui_root.bind("<Key-1>", lambda value: input_button_click(1))
 ui_root.bind("<KP_1>", lambda value: input_button_click(1))
 
 
 num2_button = Button(ui_root, text="2", command=lambda: input_button_click(2))
-num2_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0.25, rely=0.7)
+num2_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                  fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num2_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.7)
+
 ui_root.bind("<Key-2>", lambda value: input_button_click(2))
 ui_root.bind("<KP_2>", lambda value: input_button_click(2))
 
 
 num3_button = Button(ui_root, text="3", command=lambda: input_button_click(3))
-num3_button.place(relheight=0.15, relwidth=0.25,
-                  relx=0.5, rely=0.7)
+num3_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                  fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num3_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.7)
+
 ui_root.bind("<Key-3>", lambda value: input_button_click(3))
 ui_root.bind("<KP_3>", lambda value: input_button_click(3))
 
 
 num0_button = Button(ui_root, text="0", command=lambda: input_button_click(0))
-num0_button.place(relheight=0.15, relwidth=0.5,
-                  relx=0, rely=0.85)
+num0_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                  fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+num0_button.place(relheight=0.15, relwidth=0.5, relx=0, rely=0.85)
+
 ui_root.bind("<Key-0>", lambda value: input_button_click(0))
 ui_root.bind("<KP_0>", lambda value: input_button_click(0))
 
 
 dec_point_button = Button(ui_root, text=",", command=lambda: input_button_click(","))
-dec_point_button.place(relheight=0.15, relwidth=0.25,
-                       relx=0.5, rely=0.85)
+dec_point_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                  fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+dec_point_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.85)
+
 ui_root.bind("<Key-comma>", lambda value: input_button_click(","))
 ui_root.bind("<KP_Decimal>", lambda value: input_button_click(","))
 
 
 # Basic operation buttons
 divide_button = Button(ui_root, text="÷", command=lambda: input_button_click("/"))
-divide_button.place(relheight=0.15, relwidth=0.125,
-                    relx=0.75, rely=0.4)
+divide_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+divide_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.4)
+
 ui_root.bind("<Key-slash>", lambda value: input_button_click("/"))
 ui_root.bind("<KP_Divide>", lambda value: input_button_click("/"))
 
 
 multiply_button = Button(ui_root, text="×", command=lambda: input_button_click("*"))
-multiply_button.place(relheight=0.15, relwidth=0.125,
-                      relx=0.75, rely=0.55)
+multiply_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+multiply_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.55)
+
 ui_root.bind("<Key-asterisk>", lambda value: input_button_click("*"))
 ui_root.bind("<KP_Multiply>", lambda value: input_button_click("*"))
 
 
-minus_button = Button(ui_root, text="−", command=lambda: input_button_click("-"))
-minus_button.place(relheight=0.15, relwidth=0.125,
-                   relx=0.75, rely=0.7)
+minis_button = Button(ui_root, text="−", command=lambda: input_button_click("-"))
+minis_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+minis_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.7)
+
 ui_root.bind("<Key-minus>", lambda value: input_button_click("-"))
 ui_root.bind("<KP_Subtract>", lambda value: input_button_click("-"))
 
 
 plus_button = Button(ui_root, text="+", command=lambda: input_button_click("+"))
-plus_button.place(relheight=0.15, relwidth=0.125,
-                  relx=0.75, rely=0.85)
+plus_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+plus_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.85)
+
 ui_root.bind("<Key-plus>", lambda value: input_button_click("+"))
 ui_root.bind("<KP_Add>", lambda value: input_button_click("+"))
 
 # Advanced operation buttons
 nat_log_button = Button(ui_root, text="㏑", command=lambda: input_button_click("㏑"))
-nat_log_button.place(relheight=0.2, relwidth=0.125,
-                     relx=0.75, rely=0.2)
+nat_log_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+nat_log_button.place(relheight=0.2, relwidth=0.125, relx=0.75, rely=0.2)
 
 
 log_button = Button(ui_root, text="㏒", command=lambda: input_button_click("㏒"))
-log_button.place(relheight=0.2, relwidth=0.125,
-                 relx=0.875, rely=0.2)
+log_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+log_button.place(relheight=0.2, relwidth=0.125, relx=0.875, rely=0.2)
 
 
 factorial_button = Button(ui_root, text="n!", command=lambda: input_button_click("!"))
-factorial_button.place(relheight=0.15, relwidth=0.125,
-                       relx=0.875, rely=0.4)
+factorial_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+factorial_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.4)
+
 ui_root.bind("<Key-exclam>", lambda value: input_button_click("!"))
 
 
 root_button = Button(ui_root, text="√", command=lambda: input_button_click("√"))
-root_button.place(relheight=0.15, relwidth=0.125,
-                  relx=0.875, rely=0.55)
+root_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+root_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.55)
 
 
 exponent_button = Button(ui_root, text="xⁿ", command=lambda: input_button_click("^"))
-exponent_button.place(relheight=0.15, relwidth=0.125,
-                      relx=0.875, rely=0.7)
+exponent_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+exponent_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.7)
+
 ui_root.bind("<Key-asciicircum>", lambda value: input_button_click("^"))
 
 
 # Equals button
 equals_button = Button(ui_root, text="=", command=evaluate)
-equals_button.place(relheight=0.15, relwidth=0.125,
-                    relx=0.875, rely=0.85)
+equals_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+equals_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.85)
+
 ui_root.bind("<Return>", evaluate)
 ui_root.bind("<KP_Enter>", evaluate)
 ui_root.bind("<Key-equal>", evaluate)
@@ -505,15 +556,19 @@ ui_root.bind("<Key-equal>", evaluate)
 
 # Special buttons
 backspace_button = Button(ui_root, text="⌫", command=backspace_button_click)
-backspace_button.place(relheight=0.2, relwidth=0.125,
-                       relx=0.75, rely=0)
+backspace_button.config(relief=FLAT, font=("Arial", 18, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+backspace_button.place(relheight=0.2, relwidth=0.125, relx=0.75, rely=0)
+
 ui_root.bind("<Key-BackSpace>", backspace_button_click)
 ui_root.bind("<Key-Delete>", backspace_button_click)
 
 
 clear_button = Button(ui_root, text="C", command=clear_button_click)
-clear_button.place(relheight=0.2, relwidth=0.125,
-                   relx=0.875, rely=0)
+clear_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                   fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+clear_button.place(relheight=0.2, relwidth=0.125, relx=0.875, rely=0)
+
 ui_root.bind("<Key-c>", clear_button_click)
 ui_root.bind("<Key-C>", clear_button_click)
 
