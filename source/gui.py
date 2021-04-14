@@ -83,7 +83,7 @@ def input_button_click(value):
 
 ##
 # Function that clears the input field
-def clear_button_click():
+def clear_button_click(event=None):
     input_field.delete(0, END)
 
     # Enable disabled buttons
@@ -93,7 +93,7 @@ def clear_button_click():
 
 ##
 # Function that deletes the last character from the input field
-def backspace_button_click():
+def backspace_button_click(event=None):
     current_state = input_field.get()
     input_field.delete(0, END)
     input_field.insert(0, current_state[:-1])
@@ -317,7 +317,7 @@ def remove_parentheses(str_line):
 
 ##
 # Function that prints the result to the output field
-def evaluate():
+def evaluate(event=None):
     input_str = commas_to_dots(input_field.get())
 
     # Feature "Get last result" (not working with basic logarithm properly)
@@ -500,6 +500,7 @@ equals_button.place(relheight=0.15, relwidth=0.125,
                     relx=0.875, rely=0.85)
 ui_root.bind("<Return>", evaluate)
 ui_root.bind("<KP_Enter>", evaluate)
+ui_root.bind("<Key-equal>", evaluate)
 
 
 # Special buttons
