@@ -12,7 +12,7 @@ from math_lib import *
 # the root of the program
 ui_root = Tk()
 ui_root.title("BHitW Calculator ")
-#ui_root.resizable(0, 0)
+# ui_root.resizable(0, 0)
 ui_root.geometry("300x300")
 
 
@@ -23,7 +23,6 @@ ui_root.config(menu=menu)
 helpmenu = Menu(menu)
 menu.add_cascade(label='Help', menu=helpmenu)
 helpmenu.add_command(label='About')
-
 
 
 ##
@@ -365,99 +364,158 @@ def evaluate():
 num7_button = Button(ui_root, text="7", command=lambda: input_button_click(7))
 num7_button.place(relheight=0.15, relwidth=0.25,
                   relx=0, rely=0.4)
+ui_root.bind("<Key-7>", lambda value: input_button_click(7))
+ui_root.bind("<KP_7>", lambda value: input_button_click(7))
+
 
 num8_button = Button(ui_root, text="8", command=lambda: input_button_click(8))
 num8_button.place(relheight=0.15, relwidth=0.25,
                   relx=0.25, rely=0.4)
+ui_root.bind("<Key-8>", lambda value: input_button_click(8))
+ui_root.bind("<KP_8>", lambda value: input_button_click(8))
+
 
 num9_button = Button(ui_root, text="9", command=lambda: input_button_click(9))
 num9_button.place(relheight=0.15, relwidth=0.25,
                   relx=0.5, rely=0.4)
+ui_root.bind("<Key-9>", lambda value: input_button_click(9))
+ui_root.bind("<KP_9>", lambda value: input_button_click(9))
+
 
 num4_button = Button(ui_root, text="4", command=lambda: input_button_click(4))
 num4_button.place(relheight=0.15, relwidth=0.25,
-                 relx=0, rely=0.55)
+                  relx=0, rely=0.55)
+ui_root.bind("<Key-4>", lambda value: input_button_click(4))
+ui_root.bind("<KP_4>", lambda value: input_button_click(4))
+
 
 num5_button = Button(ui_root, text="5", command=lambda: input_button_click(5))
 num5_button.place(relheight=0.15, relwidth=0.25,
                   relx=0.25, rely=0.55)
+ui_root.bind("<Key-5>", lambda value: input_button_click(5))
+ui_root.bind("<KP_5>", lambda value: input_button_click(5))
+
 
 num6_button = Button(ui_root, text="6", command=lambda: input_button_click(6))
 num6_button.place(relheight=0.15, relwidth=0.25,
                   relx=0.5, rely=0.55)
+ui_root.bind("<Key-6>", lambda value: input_button_click(6))
+ui_root.bind("<KP_6>", lambda value: input_button_click(6))
+
 
 num1_button = Button(ui_root, text="1", command=lambda: input_button_click(1))
 num1_button.place(relheight=0.15, relwidth=0.25,
                   relx=0, rely=0.7)
+ui_root.bind("<Key-1>", lambda value: input_button_click(1))
+ui_root.bind("<KP_1>", lambda value: input_button_click(1))
+
 
 num2_button = Button(ui_root, text="2", command=lambda: input_button_click(2))
 num2_button.place(relheight=0.15, relwidth=0.25,
                   relx=0.25, rely=0.7)
+ui_root.bind("<Key-2>", lambda value: input_button_click(2))
+ui_root.bind("<KP_2>", lambda value: input_button_click(2))
+
 
 num3_button = Button(ui_root, text="3", command=lambda: input_button_click(3))
 num3_button.place(relheight=0.15, relwidth=0.25,
                   relx=0.5, rely=0.7)
+ui_root.bind("<Key-3>", lambda value: input_button_click(3))
+ui_root.bind("<KP_3>", lambda value: input_button_click(3))
+
 
 num0_button = Button(ui_root, text="0", command=lambda: input_button_click(0))
 num0_button.place(relheight=0.15, relwidth=0.5,
                   relx=0, rely=0.85)
+ui_root.bind("<Key-0>", lambda value: input_button_click(0))
+ui_root.bind("<KP_0>", lambda value: input_button_click(0))
+
 
 dec_point_button = Button(ui_root, text=",", command=lambda: input_button_click(","))
 dec_point_button.place(relheight=0.15, relwidth=0.25,
                        relx=0.5, rely=0.85)
+ui_root.bind("<Key-comma>", lambda value: input_button_click(","))
+ui_root.bind("<KP_Decimal>", lambda value: input_button_click(","))
+
 
 # Basic operation buttons
 divide_button = Button(ui_root, text="÷", command=lambda: input_button_click("/"))
 divide_button.place(relheight=0.15, relwidth=0.125,
                     relx=0.75, rely=0.4)
+ui_root.bind("<Key-slash>", lambda value: input_button_click("/"))
+ui_root.bind("<KP_Divide>", lambda value: input_button_click("/"))
+
 
 multiply_button = Button(ui_root, text="×", command=lambda: input_button_click("*"))
 multiply_button.place(relheight=0.15, relwidth=0.125,
                       relx=0.75, rely=0.55)
+ui_root.bind("<Key-asterisk>", lambda value: input_button_click("*"))
+ui_root.bind("<KP_Multiply>", lambda value: input_button_click("*"))
 
-minis_button = Button(ui_root, text="−", command=lambda: input_button_click("-"))
-minis_button.place(relheight=0.15, relwidth=0.125,
+
+minus_button = Button(ui_root, text="−", command=lambda: input_button_click("-"))
+minus_button.place(relheight=0.15, relwidth=0.125,
                    relx=0.75, rely=0.7)
+ui_root.bind("<Key-minus>", lambda value: input_button_click("-"))
+ui_root.bind("<KP_Subtract>", lambda value: input_button_click("-"))
+
 
 plus_button = Button(ui_root, text="+", command=lambda: input_button_click("+"))
 plus_button.place(relheight=0.15, relwidth=0.125,
                   relx=0.75, rely=0.85)
+ui_root.bind("<Key-plus>", lambda value: input_button_click("+"))
+ui_root.bind("<KP_Add>", lambda value: input_button_click("+"))
 
 # Advanced operation buttons
 nat_log_button = Button(ui_root, text="㏑", command=lambda: input_button_click("㏑"))
 nat_log_button.place(relheight=0.2, relwidth=0.125,
                      relx=0.75, rely=0.2)
 
+
 log_button = Button(ui_root, text="㏒", command=lambda: input_button_click("㏒"))
 log_button.place(relheight=0.2, relwidth=0.125,
                  relx=0.875, rely=0.2)
 
+
 factorial_button = Button(ui_root, text="n!", command=lambda: input_button_click("!"))
 factorial_button.place(relheight=0.15, relwidth=0.125,
                        relx=0.875, rely=0.4)
+ui_root.bind("<Key-exclam>", lambda value: input_button_click("!"))
+
 
 root_button = Button(ui_root, text="√", command=lambda: input_button_click("√"))
 root_button.place(relheight=0.15, relwidth=0.125,
                   relx=0.875, rely=0.55)
 
+
 exponent_button = Button(ui_root, text="xⁿ", command=lambda: input_button_click("^"))
 exponent_button.place(relheight=0.15, relwidth=0.125,
                       relx=0.875, rely=0.7)
+ui_root.bind("<Key-asciicircum>", lambda value: input_button_click("^"))
+
 
 # Equals button
 equals_button = Button(ui_root, text="=", command=evaluate)
 equals_button.place(relheight=0.15, relwidth=0.125,
                     relx=0.875, rely=0.85)
+ui_root.bind("<Return>", evaluate)
+ui_root.bind("<KP_Enter>", evaluate)
+
 
 # Special buttons
 backspace_button = Button(ui_root, text="⌫", command=backspace_button_click)
 backspace_button.place(relheight=0.2, relwidth=0.125,
                        relx=0.75, rely=0)
+ui_root.bind("<Key-BackSpace>", backspace_button_click)
+ui_root.bind("<Key-Delete>", backspace_button_click)
+
 
 clear_button = Button(ui_root, text="C", command=clear_button_click)
 clear_button.place(relheight=0.2, relwidth=0.125,
                    relx=0.875, rely=0)
+ui_root.bind("<Key-c>", clear_button_click)
+ui_root.bind("<Key-C>", clear_button_click)
+
 
 # MAIN loop
 ui_root.mainloop()
-
