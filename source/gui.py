@@ -12,7 +12,7 @@ from math_lib import *
 # the root of the program
 ui_root = Tk()
 ui_root.title("BHitW Calculator ")
-ui_root.resizable(0, 0)
+#ui_root.resizable(0, 0)
 ui_root.geometry("350x360")
 
 ##
@@ -236,7 +236,7 @@ def calculate(operator, args):
             result = root(args[1], args[0])
         except ValueError:
             result = "Nth Root Error: Invalid arguments\n" \
-                     "Check 'Help' or 'User Manual' for more information"
+                     "Check 'Help' or 'User Manual' for more information."
             state = 1
     elif operator == "㏑":
         try:
@@ -249,10 +249,11 @@ def calculate(operator, args):
             result = log(args[1], args[0])
         except ValueError:
             result = "Logarithm Error: Invalid arguments\n" \
-                     "Check 'Help' or 'User Manual' for more information"
+                     "Check 'Help' or 'User Manual' for more information."
             state = 1
     else:
-        result = f"Operation Error: Used unknown operation sign!"
+        result = "Operation Error:\n" \
+                 "Used unknown operation sign!"
         state = 1
     return state, result
 
@@ -356,7 +357,7 @@ def evaluate(event=None):
             break
 
     if operator == "?":                                 # if the operation sign hadn't been changed
-        output_field.config(text="Operation Error: Used unknown operation sign!")
+        output_field.config(text="Operation Error:\nUsed unknown operation sign!")
         return
 
     exec_output, result = calculate(operator, args)     # get result
