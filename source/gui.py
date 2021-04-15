@@ -34,7 +34,8 @@ def open_about_window():
                            "• xshili00 Evgenii Shiliaev\n"
                            "• xbenes58 Pavel Beneš\n"
                            "• xkubra00 Marko Kubrachenko\n"
-                           "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, anchor='w', justify='left').grid(row=1)
+                           "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify='left').grid(
+        row=1)
 
 
 ##
@@ -54,10 +55,12 @@ main_menu.add_command(label='About', font="Arial", command=open_about_window)
 main_menu.add_command(label='Help', font="Arial", command=open_help_window)
 
 # Fields
-input_field = Label(ui_root, borderwidth=1, bg='#dedede', relief=SOLID, font=("Arial", 18), wraplength=225, justify="center")
+input_field = Label(ui_root, borderwidth=1, bg='#dedede', relief=SOLID, font=("Arial", 18), wraplength=225,
+                    justify="center")
 input_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0)
 
-output_field = Label(ui_root, borderwidth=1, bg="#dedede", relief=SOLID, font=("Arial", 14), wraplength=225, justify="center")
+output_field = Label(ui_root, borderwidth=1, bg="#dedede", relief=SOLID, font=("Arial", 14), wraplength=225,
+                     justify="center")
 output_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0.2)
 
 # Operation list
@@ -224,7 +227,7 @@ def remove_empty_decimal_part(str_line):
         i = str_line.find(".0", i)
         # If decimal part is equal to zero, remove it
         if not str_line[i + 2:i + 3].isdigit():
-            str_line = str_line[:i] + str_line[i+2:]
+            str_line = str_line[:i] + str_line[i + 2:]
         i += 1
     return str_line
 
@@ -340,7 +343,7 @@ def get_last_result():
     if i == -1:                             # if there isn't
         return ""                           # return nothing
     else:
-        return remove_parentheses(output_str[i+1:])
+        return remove_parentheses(output_str[i + 1:])
 
 
 ##
@@ -368,10 +371,10 @@ def evaluate(event=None):
     # Feature "Get last result" (not working with basic logarithm properly)
     # If after last expression user will write an equation sign again
     # Last result will copy to the input field
-    if input_str == "":                                 # if the input field is empty
+    if input_str == "":
         input_field.config(text=get_last_result())
         # input_field.insert(0, get_last_result())        # put the result of last operation to input field
-        return                                          # end the function
+        return
 
     # Default values
     operator = "?"
@@ -383,11 +386,11 @@ def evaluate(event=None):
             operator = input_str[i]
             # if radical index wasn't set
             if operator == "√" and not input_str[:1].isdigit():
-                input_str = "2"+input_str
+                input_str = "2" + input_str
             if operator == "+":
                 operator_index = input_str.rfind("+")
                 args.append(float(input_str[:operator_index]))
-                args.append(float(input_str[operator_index+1:]))
+                args.append(float(input_str[operator_index + 1:]))
                 break
             args = [float(num) for num in input_str.split(operator)]
             break
@@ -397,7 +400,8 @@ def evaluate(event=None):
             args = [num]
             break
 
-    if operator == "?":                                 # if the operation sign hadn't been changed
+    # if the operation sign hadn't been changed
+    if operator == "?":
         output_field.config(text="Operation Error:\nUsed unknown operation sign!")
         return
 
@@ -606,7 +610,6 @@ clear_button.place(relheight=0.2, relwidth=0.125, relx=0.875, rely=0)
 
 ui_root.bind("<Key-c>", clear_button_click)
 ui_root.bind("<Key-C>", clear_button_click)
-
 
 # MAIN loop
 ui_root.mainloop()
