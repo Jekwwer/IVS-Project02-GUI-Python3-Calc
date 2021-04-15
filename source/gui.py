@@ -114,7 +114,7 @@ def backspace_button_click(event=None):
     current_state = input_field["text"]
     # current_state = input_field.get()
     # input_field.delete(0, END)
-    input_field.config(current_state[:-1])
+    input_field.config(text=current_state[:-1])
     # input_field.insert(0, current_state[:-1])
 
     # if last character was a decimal point, enable the decimal point button
