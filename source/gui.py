@@ -23,9 +23,17 @@ ui_root.geometry("350x360")
 # Function to open About window
 def open_about_window():
     new_window = Toplevel(ui_root)
-    new_window.title("New Window")
+    new_window.title("About")
     new_window.geometry("350x360")
-    Label(new_window, text="This is a about window").pack()
+    Label(new_window, text="This calculator project was created for\n"
+                           "school subject \"Practical Aspects of Software Design\"\n"
+                           "by team Blue Hair is the Way").pack()
+    Label(new_window, text="Authors:\n"
+                           "Evgenii Shiliaev (xshili00)\n"
+                           "Pavel Beneš (xbenes58)\n"
+                           "Marko Kubrachenko (xkubra00)\n"
+                           "Šimon Brázda (xbrazd22)").pack()
+
 
 
 ##
