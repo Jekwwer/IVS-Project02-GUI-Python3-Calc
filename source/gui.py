@@ -5,7 +5,7 @@
 # @brief   Graphic User Interface for the mathematical library
 # @authors Evgenii Shiliaev  (xshili00)
 #          Marko Kubrachenko (xkubra00)
-
+import tkinter
 from tkinter import *
 from math_lib import *
 
@@ -74,6 +74,8 @@ operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 #
 # @param num Button value
 def input_button_click(value):
+    if not check_num_availability(value):
+        return
     current_state = input_field["text"]
     # current_state = input_field.get()
 
@@ -164,6 +166,36 @@ def find_operation_sign(str_line):
         if str_line.find(op) != -1:
             return True
     return False
+
+
+##
+# Function that checks buttons availability for correct keyboard input
+#
+# @param value Button input value
+# @return Boolean value
+def check_num_availability(value):
+    if value == "+" and plus_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "-" and minis_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "*" and multiply_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "/" and divide_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "√" and root_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "!" and factorial_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "^" and exponent_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "㏒" and log_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "㏑" and nat_log_button["state"] == tkinter.DISABLED:
+        return False
+    if value == "," and dec_point_button["state"] == tkinter.DISABLED:
+        return False
+
+    return True
 
 
 ##
