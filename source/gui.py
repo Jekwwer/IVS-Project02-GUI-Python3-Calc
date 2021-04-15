@@ -78,8 +78,10 @@ operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 #
 # @param value Button value
 def input_button_click(value):
+    # If button is disabled (for keyboard input)
     if not check_num_availability(value):
         return
+
     current_state = input_field["text"]
 
     # Feature "Continue the calculating" (not working with logarithms and root)
@@ -87,6 +89,9 @@ def input_button_click(value):
     # Last result will copy to the input field with an operation sign
     if value in operations_signs[:-3] and current_state == "":
         input_field.config(text=get_last_result() + str(value))
+        return
+    elif value == "-" and current_state == "":
+        input_field.config(text=get_last_result() + "−")
         return
 
     # If was added a number after an operation sign, disable the buttons
@@ -97,9 +102,9 @@ def input_button_click(value):
     # Before setting 2nd operand in such operations
     # User can change the operation sign by setting the other one
     # without a Backspace or Clear
-    elif current_state[-1:] in operations_signs and value in operations_signs:
+    if current_state[-1:] in operations_signs and value in operations_signs:
         current_state = current_state[:-1]
-    elif current_state[-1:].isdigit() and value == "-":
+    if current_state[-1:].isdigit() and value == "-":
         value = "−"
 
     # If was written decimal point, disable the decimal point button
@@ -421,7 +426,8 @@ def evaluate(event=None):
             # if radical index wasn't set
             if operator == "√" and not input_str[:1].isdigit():
                 input_str = "2" + input_str
-            args = [float(num) for num in input_str.split(operator)]
+            args.append(float(input_str[:i]))
+            args.append(float(input_str[i+1:]))
             break
         elif input_str[i] in ["!", "㏑"]:
             operator = input_str[i]
