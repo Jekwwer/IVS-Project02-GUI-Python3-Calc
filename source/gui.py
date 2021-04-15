@@ -46,19 +46,17 @@ def open_help_window():
 
 
 # Menu
-main_menu = Menu(ui_root)
+main_menu = Menu(ui_root, background='#b2b2b2')
 ui_root.config(menu=main_menu)
 main_menu.add_command(label='About', command=open_about_window)
 main_menu.add_command(label='Help', command=open_help_window)
 
 # Fields
-input_field = Label(ui_root, bg='#c9e9f6', borderwidth=0, bd=0, relief=SOLID, font=("Arial", 18))
-input_field.place(relheight=0.2, relwidth=0.75,
-                  relx=0, rely=0)
+input_field = Label(ui_root, borderwidth=1, bg='#dedede', relief=SOLID, font=("Arial", 18))
+input_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0)
 
-output_field = Label(ui_root, borderwidth=0, bg="#c9e9f6", relief=SOLID, font=("Arial", 14))
-output_field.place(relheight=0.2, relwidth=0.75,
-                   relx=0, rely=0.2)
+output_field = Label(ui_root, borderwidth=1, bg="#dedede", relief=SOLID, font=("Arial", 14))
+output_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0.2)
 
 # Operation list
 operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
