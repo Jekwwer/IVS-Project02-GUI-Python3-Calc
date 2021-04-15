@@ -10,7 +10,6 @@ from tkinter import *
 from math_lib import *
 
 # TODO PUT THE RESULT OF THE EXPRESSION AFTER A NEW OPERATION SIGN
-# TODO 2sd ROOT BY DEFAULT
 
 # the root of the program
 ui_root = Tk()
@@ -35,7 +34,7 @@ def open_about_window():
                            "• xshili00 Evgenii Shiliaev\n"
                            "• xbenes58 Pavel Beneš\n"
                            "• xkubra00 Marko Kubrachenko\n"
-                           "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify='left').grid(row=1)
+                           "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, anchor='w', justify='left').grid(row=1)
 
 
 ##
@@ -104,6 +103,10 @@ def input_button_click(value):
     if str(value).isdigit():
         nat_log_button.config(state=DISABLED)
 
+    # If the value is digit or minus sigh and there is an operation sign in the input field
+    if (str(value).isdigit() or value == "-") and current_state[-1:] in operations_signs:
+        minis_button.config(state=DISABLED)
+
     # If was written an operation sign, enable the decimal point button
     if value in operations_signs:
         dec_point_button.config(state=NORMAL)
@@ -122,6 +125,7 @@ def clear_button_click(event=None):
 
     # Enable disabled buttons
     dec_point_button.config(state=NORMAL)
+    minis_button.config(state=NORMAL)
     enable_operation_buttons()
 
 
@@ -138,8 +142,9 @@ def backspace_button_click(event=None):
     if current_state[-1:] == ",":
         dec_point_button.config(state=NORMAL)
     # if last character was an operation sign, enable the operation buttons
-    if current_state[-1:] in operations_signs:
+    if current_state[-2:-1] in operations_signs or current_state[-1:] in operations_signs:
         enable_operation_buttons()
+        minis_button.config(state=NORMAL)
     if current_state[:-1] == "":
         enable_operation_buttons()
 
@@ -376,6 +381,7 @@ def evaluate(event=None):
     for i in range(len(input_str)):
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
+            # if radical index wasn't set
             if operator == "√" and not input_str[:1].isdigit():
                 input_str = "2"+input_str
             if operator == "+":
@@ -407,6 +413,8 @@ def evaluate(event=None):
     output_str = dots_to_commas(output_str)             # Replace dots with commas
     output_field.config(text=output_str)                # put the result to the output field
     enable_operation_buttons()
+    minis_button.config(state=NORMAL)
+    dec_point_button.config(state=NORMAL)
 
 
 # Definition of buttons and binding keys
