@@ -415,17 +415,12 @@ def evaluate(event=None):
     args = []  # TODO INVALID OPERANDS
 
     # Find the operation sign and set the arguments
-    for i in range(len(input_str)):
+    for i in range(len(input_str)-1, 0, -1):
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             # if radical index wasn't set
             if operator == "√" and not input_str[:1].isdigit():
                 input_str = "2" + input_str
-            if operator == "+":
-                operator_index = input_str.rfind("+")
-                args.append(float(input_str[:operator_index]))
-                args.append(float(input_str[operator_index + 1:]))
-                break
             args = [float(num) for num in input_str.split(operator)]
             break
         elif input_str[i] in ["!", "㏑"]:
