@@ -46,10 +46,11 @@ def open_help_window():
 
 
 # Menu
-main_menu = Menu(ui_root, background='#b2b2b2')
+main_menu = Menu(ui_root, bg='#003d63', fg='#ffffff', activebackground='#195e89',
+                 activeforeground='#ffffff')
 ui_root.config(menu=main_menu)
-main_menu.add_command(label='About', command=open_about_window)
-main_menu.add_command(label='Help', command=open_help_window)
+main_menu.add_command(label='About', font="Arial", command=open_about_window)
+main_menu.add_command(label='Help', font="Arial", command=open_help_window)
 
 # Fields
 input_field = Label(ui_root, borderwidth=1, bg='#dedede', relief=SOLID, font=("Arial", 18))
