@@ -289,7 +289,7 @@ def get_output_str(operator, args, result):
         if args[1] < 0:
             args[1] = f"({args[1]})"
 
-        if operator == "^" or operator == "㏒":
+        if operator == "^" or operator == "㏒" or operator == "√":
             output_str = "{opr1}{operator}{opr2} = {result}".format(
                 opr1=args[0], opr2=args[1], operator=operator, result=result)
         elif operator == "−":
@@ -361,6 +361,8 @@ def evaluate(event=None):
     for i in range(len(input_str)):
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
+            if operator == "√" and not input_str[:1].isdigit():
+                input_str = "2"+input_str
             args = [float(num) for num in input_str.split(operator)]
             break
         elif input_str[i] in ["!", "㏑"]:
