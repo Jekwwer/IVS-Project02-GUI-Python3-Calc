@@ -9,10 +9,12 @@
 from tkinter import *
 from math_lib import *
 
+# TODO PUT THE RESULT OF THE QXPRESSION AFTER A NEW OPERATION SIGN
+
 # the root of the program
 ui_root = Tk()
 ui_root.title("BHitW Calculator ")
-#ui_root.resizable(0, 0)
+ui_root.resizable(0, 0)
 ui_root.geometry("350x360")
 
 ##
@@ -21,7 +23,7 @@ def open_about_window():
     new_window = Toplevel(ui_root)
     new_window.title("New Window")
     new_window.geometry("350x360")
-    Label(new_window, text ="This is a about window").pack()
+    Label(new_window, text= "This is a about window").pack()
 
 ##
 # Function to open Help window
@@ -38,14 +40,13 @@ main_menu.add_command(label='About', command=open_about_window)
 main_menu.add_command(label='Help', command=open_help_window)
 
 # Fields
-input_field = Entry(ui_root, font=("Arial", 18))
-input_field.config(bg='#c9e9f6', borderwidth=0, bd=0, relief=SOLID)
+input_field = Label(ui_root, bg='#c9e9f6', borderwidth=0, bd=0, relief=SOLID, font=("Arial", 18))
 input_field.place(relheight=0.2, relwidth=0.75,
                   relx=0, rely=0)
 
-output_field = Label(ui_root, borderwidth=0, bg="#c9e9f6", relief=SOLID, font=("Arial, 14"))
+output_field = Label(ui_root, borderwidth=0, bg="#c9e9f6", relief=SOLID, font=("Arial", 14))
 output_field.place(relheight=0.2, relwidth=0.75,
-relx=0, rely=0.2)
+                   relx=0, rely=0.2)
 
 # Operation list
 operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
@@ -58,13 +59,15 @@ operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 #
 # @param num Button value
 def input_button_click(value):
-    current_state = input_field.get()
+    current_state = input_field["text"]
+    # current_state = input_field.get()
 
     # Feature "Continue the calculating" (not working with logarithms)
     # If after last expression user will write an operation sign
     # Last result will copy to the input field with an operation sign
     if value in operations_signs[:-2] and current_state == "":
-        input_field.insert(0, get_last_result() + str(value))
+        input_field.config(text=get_last_result() + str(value))
+        # input_field.insert(0, get_last_result() + str(value))
         return
 
     # If was added a number after an operation sign, disable the buttons
@@ -89,14 +92,16 @@ def input_button_click(value):
         dec_point_button.config(state=NORMAL)
 
     # Add a value to the input field
-    input_field.delete(0, END)
-    input_field.insert(0, str(current_state) + str(value))
+    input_field.config(text=str(current_state) + str(value))
+    # input_field.delete(0, END)
+    # input_field.insert(0, str(current_state) + str(value))
 
 
 ##
 # Function that clears the input field
 def clear_button_click(event=None):
-    input_field.delete(0, END)
+    input_field.config(text="")
+    # input_field.delete(0, END)
 
     # Enable disabled buttons
     dec_point_button.config(state=NORMAL)
@@ -106,9 +111,11 @@ def clear_button_click(event=None):
 ##
 # Function that deletes the last character from the input field
 def backspace_button_click(event=None):
-    current_state = input_field.get()
-    input_field.delete(0, END)
-    input_field.insert(0, current_state[:-1])
+    current_state = input_field["text"]
+    # current_state = input_field.get()
+    # input_field.delete(0, END)
+    input_field.config(current_state[:-1])
+    # input_field.insert(0, current_state[:-1])
 
     # if last character was a decimal point, enable the decimal point button
     if current_state[-1:] == ",":
@@ -331,13 +338,15 @@ def remove_parentheses(str_line):
 ##
 # Function that prints the result to the output field
 def evaluate(event=None):
-    input_str = commas_to_dots(input_field.get())
+    input_str = commas_to_dots(input_field["text"])
+    # input_str = commas_to_dots(input_field.get())
 
     # Feature "Get last result" (not working with basic logarithm properly)
     # If after last expression user will write an equation sign again
     # Last result will copy to the input field
     if input_str == "":                                 # if the input field is empty
-        input_field.insert(0, get_last_result())        # put the result of last operation to input field
+        input_field.config(text=get_last_result())
+        # input_field.insert(0, get_last_result())        # put the result of last operation to input field
         return                                          # end the function
 
     # Default values
@@ -362,7 +371,8 @@ def evaluate(event=None):
 
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
-        input_field.delete(0, END)                      # clear the input field
+        input_field.config(text="")
+        # input_field.delete(0, END)                      # clear the input field
         output_str = get_output_str(operator, args, result)
     else:
         output_str = result                             # else put error message to the
