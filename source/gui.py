@@ -68,7 +68,7 @@ output_field = Label(ui_root, borderwidth=1, bg="#dedede", relief=SOLID, font=("
 output_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0.2)
 
 # Operation list
-operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
+operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 
 
 # Functions
@@ -76,19 +76,17 @@ operations_signs = ["+", "−", "/", "*", "√", "!", "^", "㏒", "㏑"]
 ##
 # Function of adding button value to the input field
 #
-# @param num Button value
+# @param value Button value
 def input_button_click(value):
     if not check_num_availability(value):
         return
     current_state = input_field["text"]
-    # current_state = input_field.get()
 
-    # Feature "Continue the calculating" (not working with logarithms)
+    # Feature "Continue the calculating" (not working with logarithms and root)
     # If after last expression user will write an operation sign
     # Last result will copy to the input field with an operation sign
-    if value in operations_signs[:-2] and current_state == "":
+    if value in operations_signs[:-3] and current_state == "":
         input_field.config(text=get_last_result() + str(value))
-        # input_field.insert(0, get_last_result() + str(value))
         return
 
     # If was added a number after an operation sign, disable the buttons
@@ -178,25 +176,25 @@ def find_operation_sign(str_line):
 # @param value Button input value
 # @return Boolean value
 def check_num_availability(value):
-    if value == "+" and plus_button["state"] == tkinter.DISABLED:
+    if value == "+" and plus_button["state"] == DISABLED:
         return False
-    if value == "-" and minis_button["state"] == tkinter.DISABLED:
+    if value == "-" and minis_button["state"] == DISABLED:
         return False
-    if value == "*" and multiply_button["state"] == tkinter.DISABLED:
+    if value == "*" and multiply_button["state"] == DISABLED:
         return False
-    if value == "/" and divide_button["state"] == tkinter.DISABLED:
+    if value == "/" and divide_button["state"] == DISABLED:
         return False
-    if value == "√" and root_button["state"] == tkinter.DISABLED:
+    if value == "√" and root_button["state"] == DISABLED:
         return False
-    if value == "!" and factorial_button["state"] == tkinter.DISABLED:
+    if value == "!" and factorial_button["state"] == DISABLED:
         return False
-    if value == "^" and exponent_button["state"] == tkinter.DISABLED:
+    if value == "^" and exponent_button["state"] == DISABLED:
         return False
-    if value == "㏒" and log_button["state"] == tkinter.DISABLED:
+    if value == "㏒" and log_button["state"] == DISABLED:
         return False
-    if value == "㏑" and nat_log_button["state"] == tkinter.DISABLED:
+    if value == "㏑" and nat_log_button["state"] == DISABLED:
         return False
-    if value == "," and dec_point_button["state"] == tkinter.DISABLED:
+    if value == "," and dec_point_button["state"] == DISABLED:
         return False
 
     return True
