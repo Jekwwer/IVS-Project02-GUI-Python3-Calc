@@ -5,25 +5,28 @@
 # @brief   Graphic User Interface for the mathematical library
 # @authors Evgenii Shiliaev  (xshili00)
 #          Marko Kubrachenko (xkubra00)
-import tkinter
+#          Pavel Beneš       (xbenes58)
+
 from tkinter import *
 from math_lib import *
 
-# TODO PUT THE RESULT OF THE EXPRESSION AFTER A NEW OPERATION SIGN
+# TODO MAKE APP WINDOWS RESIZABLE WITH THE TEXT IN IT
 
 # the root of the program
 ui_root = Tk()
 ui_root.title("BHitW Calculator ")
 ui_root.resizable(0, 0)
 ui_root.geometry("350x360")
+ui_root.minsize(350, 360)
 
 
 ##
-# Function to open About window
+# Function to open 'About' window
 def open_about_window():
     new_window = Toplevel(ui_root)
     new_window.title("About")
     new_window.geometry("350x360")
+    new_window.minsize(350, 360)
     new_window.resizable(0, 0)
     Label(new_window, text="This calculator application was created as the 2nd project "
                            "of the \"Practical Aspects of Software Design\" subject "
@@ -44,6 +47,7 @@ def open_help_window():
     new_window = Toplevel(ui_root)
     new_window.title("Help")
     new_window.geometry("350x360")
+    new_window.minsize(350, 360)
     Label(new_window, text="This is a help window").pack()
 
 
