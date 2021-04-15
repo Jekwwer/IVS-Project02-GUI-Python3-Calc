@@ -25,15 +25,17 @@ def open_about_window():
     new_window = Toplevel(ui_root)
     new_window.title("About")
     new_window.geometry("350x360")
-    Label(new_window, text="This calculator project was created for\n"
-                           "school subject \"Practical Aspects of Software Design\"\n"
-                           "by team Blue Hair is the Way").pack()
-    Label(new_window, text="Authors:\n"
-                           "Evgenii Shiliaev (xshili00)\n"
-                           "Pavel Beneš (xbenes58)\n"
-                           "Marko Kubrachenko (xkubra00)\n"
-                           "Šimon Brázda (xbrazd22)").pack()
+    new_window.resizable(0, 0)
+    Label(new_window, text="This calculator application was created as the 2nd project "
+                           "of the \"Practical Aspects of Software Design\" subject "
+                           "by the team \"Blue Hair is the Way\""
+                           "\n", wraplength=340, justify='left').grid(row=0)
 
+    Label(new_window, text="Authors:\n"
+                           "• xshili00 Evgenii Shiliaev\n"
+                           "• xbenes58 Pavel Beneš\n"
+                           "• xkubra00 Marko Kubrachenko\n"
+                           "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify='left').grid(row=1)
 
 
 ##
