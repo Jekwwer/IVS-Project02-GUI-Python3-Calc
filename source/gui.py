@@ -40,22 +40,22 @@ def open_about_window():
 # Function to open Help window
 def open_help_window():
     new_window = Toplevel(ui_root)
-    new_window.title("New Window")
+    new_window.title("Help")
     new_window.geometry("350x360")
     Label(new_window, text="This is a help window").pack()
 
 
 # Menu
-main_menu = Menu(ui_root, background='#b2b2b2')
+main_menu = Menu(ui_root, background='#003d63')
 ui_root.config(menu=main_menu)
 main_menu.add_command(label='About', command=open_about_window)
 main_menu.add_command(label='Help', command=open_help_window)
 
 # Fields
-input_field = Label(ui_root, borderwidth=1, bg='#dedede', relief=SOLID, font=("Arial", 18))
+input_field = Label(ui_root, borderwidth=1, bg='#dedede', relief=SOLID, font=("Arial", 18), wraplength=225, justify="center")
 input_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0)
 
-output_field = Label(ui_root, borderwidth=1, bg="#dedede", relief=SOLID, font=("Arial", 14))
+output_field = Label(ui_root, borderwidth=1, bg="#dedede", relief=SOLID, font=("Arial", 14), wraplength=225, justify="center")
 output_field.place(relheight=0.2, relwidth=0.75, relx=0, rely=0.2)
 
 # Operation list
@@ -394,6 +394,8 @@ def evaluate(event=None):
     output_field.config(text=output_str)                # put the result to the output field
     enable_operation_buttons()
 
+
+# Definition of buttons and binding keys
 
 # NUM Buttons
 num7_button = Button(ui_root, text="7", command=lambda: input_button_click(7))
