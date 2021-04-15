@@ -100,6 +100,10 @@ def input_button_click(value):
     if value == ",":
         dec_point_button.config(state=DISABLED)
 
+    # If was written a number, disable a natural logarithm button
+    if str(value).isdigit():
+        nat_log_button.config(state=DISABLED)
+
     # If was written an operation sign, enable the decimal point button
     if value in operations_signs:
         dec_point_button.config(state=NORMAL)
@@ -135,6 +139,8 @@ def backspace_button_click(event=None):
         dec_point_button.config(state=NORMAL)
     # if last character was an operation sign, enable the operation buttons
     if current_state[-1:] in operations_signs:
+        enable_operation_buttons()
+    if current_state[:-1] == "":
         enable_operation_buttons()
 
 
