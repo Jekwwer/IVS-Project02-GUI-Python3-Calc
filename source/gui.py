@@ -372,6 +372,11 @@ def evaluate(event=None):
             operator = input_str[i]
             if operator == "√" and not input_str[:1].isdigit():
                 input_str = "2"+input_str
+            if operator == "+":
+                operator_index = input_str.rfind("+")
+                args.append(float(input_str[:operator_index]))
+                args.append(float(input_str[operator_index+1:]))
+                break
             args = [float(num) for num in input_str.split(operator)]
             break
         elif input_str[i] in ["!", "㏑"]:
