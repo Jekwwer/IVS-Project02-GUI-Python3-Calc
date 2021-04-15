@@ -514,11 +514,17 @@ nat_log_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', act
                    fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
 nat_log_button.place(relheight=0.2, relwidth=0.125, relx=0.75, rely=0.2)
 
+ui_root.bind("<Key-n>", lambda value: input_button_click("㏑"))
+ui_root.bind("<Key-N>", lambda value: input_button_click("㏑"))
+
 
 log_button = Button(ui_root, text="㏒", command=lambda: input_button_click("㏒"))
 log_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
                    fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
 log_button.place(relheight=0.2, relwidth=0.125, relx=0.875, rely=0.2)
+
+ui_root.bind("<Key-l>", lambda value: input_button_click("㏒"))
+ui_root.bind("<Key-L>", lambda value: input_button_click("㏒"))
 
 
 factorial_button = Button(ui_root, text="n!", command=lambda: input_button_click("!"))
@@ -533,6 +539,9 @@ root_button = Button(ui_root, text="√", command=lambda: input_button_click("�
 root_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
                    fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
 root_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.55)
+
+ui_root.bind("<Key-r>", lambda value: input_button_click("√"))
+ui_root.bind("<Key-R>", lambda value: input_button_click("√"))
 
 
 exponent_button = Button(ui_root, text="xⁿ", command=lambda: input_button_click("^"))
