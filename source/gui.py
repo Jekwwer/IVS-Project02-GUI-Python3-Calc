@@ -78,33 +78,35 @@ operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 #
 # @param value Button value
 def input_button_click(value):
+
     # If button is disabled (for keyboard input)
     if not check_num_availability(value):
         return
 
-    current_state = input_field["text"]
+    # Get string from the input
+    input_str = input_field["text"]
 
     # Feature "Continue the calculating" (not working with logarithms and root)
-    # If after last expression user will write an operation sign
-    # Last result will copy to the input field with an operation sign
-    if value in operations_signs[:-3] and current_state == "":
+    # If after the last expression user will write an operation sign,
+    # last result will copy to the input field with an operation sign
+    if value in operations_signs[:-3] and input_str == "":
         input_field.config(text=get_last_result() + str(value))
         return
-    elif value == "-" and current_state == "":
+    elif value == "-" and input_str == "":  # for correct minus sign working
         input_field.config(text=get_last_result() + "−")
         return
 
     # If was added a number after an operation sign, disable the buttons
-    if find_operation_sign(current_state) and value not in operations_signs:
+    if find_operation_sign(input_str) and value not in operations_signs:
         disable_operation_buttons()
 
     # Feature "Change the operation sign"
     # Before setting 2nd operand in such operations
-    # User can change the operation sign by setting the other one
-    # without a Backspace or Clear
-    if current_state[-1:] in operations_signs and value in operations_signs:
-        current_state = current_state[:-1]
-    if current_state[-1:].isdigit() and value == "-":
+    # user can change the operation sign by setting the other one
+    # without a Backspace or Clear button call
+    if input_str[-1:] in operations_signs and value in operations_signs:
+        input_str = input_str[:-1]
+    if input_str[-1:].isdigit() and value == "-":
         value = "−"
 
     # If was written decimal point, disable the decimal point button
@@ -112,11 +114,13 @@ def input_button_click(value):
         dec_point_button.config(state=DISABLED)
 
     # If was written a number, disable a natural logarithm button
+    # (natural logarithm get arguments only after itself)
     if str(value).isdigit():
         nat_log_button.config(state=DISABLED)
 
     # If the value is digit or minus sigh and there is an operation sign in the input field
-    if (str(value).isdigit() or value == "-") and current_state[-1:] in operations_signs:
+    # disable the minus button
+    if (str(value).isdigit() or value == "-") and input_str[-1:] in operations_signs:
         minis_button.config(state=DISABLED)
 
     # If was written an operation sign, enable the decimal point button
@@ -124,9 +128,7 @@ def input_button_click(value):
         dec_point_button.config(state=NORMAL)
 
     # Add a value to the input field
-    input_field.config(text=str(current_state) + str(value))
-    # input_field.delete(0, END)
-    # input_field.insert(0, str(current_state) + str(value))
+    input_field.config(text=str(input_str) + str(value))
 
 
 ##
