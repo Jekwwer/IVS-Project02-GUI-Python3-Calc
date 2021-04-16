@@ -157,8 +157,6 @@ def backspace_button_click(event=None):
         minis_button.config(state=NORMAL)
 
 
-# Other functions
-
 ##
 # Function that finds any operation sign in the string
 #
@@ -166,7 +164,9 @@ def backspace_button_click(event=None):
 # @return Boolean value
 def find_operation_sign(str_line):
     for op in operations_signs:
-        if str_line.find(op) != -1:
+        op_index = str_line.rfind(op)
+        # If the operation sign is in the string and it isn't a part of an exponent
+        if op_index != -1 and str_line[op_index - 1:op_index] != "e":
             return True
     return False
 
