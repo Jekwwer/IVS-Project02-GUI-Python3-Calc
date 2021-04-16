@@ -56,6 +56,7 @@ def open_about_window():
                            "• xkubra00 Marko Kubrachenko\n"
                            "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify='left').grid(row=1)
 
+    new_window.bind("<Escape>", lambda value: new_window.destroy())
 
 ##
 # Function to open Help window
@@ -70,6 +71,7 @@ def open_help_window():
     new_window.resizable(0, 0)
 
     Label(new_window, text="This is a help window").pack()
+    new_window.bind("<Escape>", lambda value: new_window.destroy())
 
 
 # Menu
@@ -736,6 +738,8 @@ clear_button.place(relheight=0.18, relwidth=0.125, relx=0.875, rely=0)
 
 ui_root.bind("<Key-c>", clear_button_click)
 ui_root.bind("<Key-C>", clear_button_click)
+
+ui_root.bind("<Escape>", lambda value: ui_root.destroy())
 
 # Sizegrip binds
 sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
