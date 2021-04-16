@@ -13,6 +13,7 @@ from math_lib import *
 
 # TODO MAKE APP WINDOWS RESIZABLE WITH THE TEXT IN IT
 # TODO MAKE BUTTON STYLES
+# TODO GET RID OF MAGIC CONSTANTS
 
 # The root of the program
 ui_root = Tk()
@@ -30,6 +31,7 @@ y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
 # Put thw  main window to the (x,y)
 ui_root.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
 ui_root.minsize(min_window_width, min_window_height)
+
 
 ##
 # Function to open 'About' window
@@ -202,20 +204,22 @@ def resize_main_window(event):
     delta_y = event.y_root - ui_root.winfo_rooty()
 
     num_buttons_size = other_buttons_size = 20
+    input_field_size = 18
+    output_field_size = 14
 
     if delta_x / 16 > delta_y / 9:
         if delta_x >= 350:
-            num_buttons_size = delta_x / 17.5
-            other_buttons_size = delta_x / 17.5
+            num_buttons_size = delta_x // 17.5
+            other_buttons_size = delta_x // 17.5
         if delta_x >= 500:
-            num_buttons_size = delta_x / 17.5 - delta_x / 100
-            other_buttons_size = delta_x / 17.5 - delta_x / 100
+            num_buttons_size = delta_x // 17.5 - delta_x // 100
+            other_buttons_size = delta_x // 17.5 - delta_x // 100
         if delta_x >= 950:
-            num_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85
-            other_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85
+            num_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85
+            other_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85
         if delta_x >= 1600:
-            num_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
-            other_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
+            num_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85 - delta_x / 125
+            other_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85 - delta_x / 125
     else:
         if delta_y >= 360:
             num_buttons_size = delta_y // 18
@@ -254,6 +258,10 @@ def resize_main_window(event):
     equals_button.config(font=("Arial", int(other_buttons_size), "bold"))
     backspace_button.config(font=("Arial", int(other_buttons_size * 0.8), "bold"))
     clear_button.config(font=("Arial", int(other_buttons_size), "bold"))
+
+    print(other_buttons_size, other_buttons_size/20*18)
+    input_field.config(font=("Arial", int(other_buttons_size/20*18)), wraplength=delta_x*225/360)
+    output_field.config(font=("Arial", int(other_buttons_size/20*14)), wraplength=delta_x*225/360)
 
     if delta_x < 1:
         delta_x = 1
@@ -554,6 +562,7 @@ def evaluate(event=None):
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
         output_str = get_output_str(operator, args, result)
+        input_field.config(text="")
     else:
         output_str = result                             # else put error message to the result string
 
