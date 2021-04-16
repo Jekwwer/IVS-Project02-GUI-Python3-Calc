@@ -12,12 +12,22 @@ from math_lib import *
 
 # TODO MAKE APP WINDOWS RESIZABLE WITH THE TEXT IN IT
 
-# the root of the program
+# The root of the program
 ui_root = Tk()
+
+# Main window
 ui_root.title("BHitW Calculator ")
 ui_root.resizable(0, 0)
-ui_root.geometry("350x360")
-ui_root.minsize(350, 360)
+main_window_width = 350
+main_window_height = 360
+
+# Upper center screen coordinates
+x_position = int(ui_root.winfo_screenwidth() / 2 - main_window_width / 2)
+y_position = int(ui_root.winfo_screenheight() / 3 - main_window_height / 2)
+
+# Put thw  main window to the (x,y)
+ui_root.geometry(f"{main_window_width}x{main_window_height}+{x_position}+{y_position}")
+ui_root.minsize(main_window_width, main_window_height)
 
 
 ##
