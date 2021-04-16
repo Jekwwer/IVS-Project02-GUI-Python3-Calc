@@ -12,7 +12,6 @@ from tkinter import ttk
 from math_lib import *
 
 # TODO MAKE APP WINDOWS RESIZABLE WITH THE TEXT IN IT
-# TODO MAKE BUTTON STYLES
 
 # The root of the program
 ui_root = Tk()
@@ -82,7 +81,7 @@ main_menu.add_command(label='Help', font="Arial", command=open_help_window)
 main_menu.add_command(label='About', font="Arial", command=open_about_window)
 
 # Fields
-default_wraplength = 225
+default_wraplength = 235
 default_input_font_size = 18
 input_field = Label(ui_root, borderwidth=1, bg='#dadada', relief=SOLID, font=("Arial", default_input_font_size),
                     wraplength=default_wraplength,
@@ -225,6 +224,7 @@ def resize_main_window(event):
         if delta_x >= 1600:
             num_buttons_text_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
             other_buttons_text_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
+
     else:
         if delta_y >= 360:
             num_buttons_text_size = delta_y / 18
@@ -251,18 +251,21 @@ def resize_main_window(event):
     backspace_button.config(font=("Arial", int(other_buttons_text_size * 0.8), "bold"))
     clear_button.config(font=("Arial", int(other_buttons_text_size), "bold"))
 
+    if delta_x < 1:
+        delta_x = 1
+    if delta_y < 1:
+        delta_y = 1
+    ui_root.geometry("%sx%s" % (delta_x, delta_y))
+
+    if delta_x < 350:
+        delta_x = 350
+    print(delta_x)
     input_field.config(
         font=("Arial", int(other_buttons_text_size / default_button_text_size * default_input_font_size)),
         wraplength=delta_x * default_wraplength / min_window_width)
     output_field.config(
         font=("Arial", int(other_buttons_text_size / default_button_text_size * default_output_font_size)),
         wraplength=delta_x * default_wraplength / min_window_width)
-
-    if delta_x < 1:
-        delta_x = 1
-    if delta_y < 1:
-        delta_y = 1
-    ui_root.geometry("%sx%s" % (delta_x, delta_y))
 
 
 ##
