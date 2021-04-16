@@ -192,7 +192,7 @@ def check_num_availability(value):
         return False
     if value == "!" and factorial_button["state"] == DISABLED:
         return False
-    if value == "^" and exponent_button["state"] == DISABLED:
+    if value == "^" and power_button["state"] == DISABLED:
         return False
     if value == "㏒" and log_button["state"] == DISABLED:
         return False
@@ -210,7 +210,7 @@ def disable_operation_buttons():
     plus_button.config(state=DISABLED)
     multiply_button.config(state=DISABLED)
     divide_button.config(state=DISABLED)
-    exponent_button.config(state=DISABLED)
+    power_button.config(state=DISABLED)
     root_button.config(state=DISABLED)
     factorial_button.config(state=DISABLED)
     log_button.config(state=DISABLED)
@@ -223,7 +223,7 @@ def enable_operation_buttons():
     plus_button.config(state=NORMAL)
     multiply_button.config(state=NORMAL)
     divide_button.config(state=NORMAL)
-    exponent_button.config(state=NORMAL)
+    power_button.config(state=NORMAL)
     root_button.config(state=NORMAL)
     factorial_button.config(state=NORMAL)
     log_button.config(state=NORMAL)
@@ -335,7 +335,7 @@ def calculate(operator, args):
 
 
 ##
-# Function preparing the output string for output field
+# Function that prepares the output string for the output field
 #
 # @param operator Expression operation
 # @param args Expression arguments
@@ -344,7 +344,7 @@ def calculate(operator, args):
 def get_output_str(operator, args, result):
     output_str = ""
 
-    # Check numbers negativity
+    # Check numbers negativity (for setting parentheses)
     if args[0] < 0:
         args[0] = f"({args[0]})"
     if result < 0:
@@ -376,7 +376,7 @@ def get_output_str(operator, args, result):
 
 
 ##
-# Function preparing the output string for output field
+# Function that finds the result of the last expression
 #
 # @return Result of the last expression or an empty string
 def get_last_result():
@@ -396,10 +396,10 @@ def get_last_result():
 def remove_parentheses(str_line):
     for p in "()":
         i = 0
+        # While there are parentheses, remove them
         while str_line.find(p, i) != -1:
             i = str_line.find(p, i)
-            if i > 0:
-                str_line = str_line[:i] + str_line[i + 1:]
+            str_line = str_line[:i] + str_line[i + 1:]
             i += 1
     return str_line
 
@@ -408,7 +408,6 @@ def remove_parentheses(str_line):
 # Function that prints the result to the output field
 def evaluate(event=None):
     input_str = commas_to_dots(input_field["text"])
-    # input_str = commas_to_dots(input_field.get())
 
     # Feature "Get last result" (not working with basic logarithm properly)
     # If after last expression user will write an equation sign again
@@ -417,12 +416,11 @@ def evaluate(event=None):
         input_field.config(text=get_last_result())
         if input_field["text"] != "":
             nat_log_button.config(state=DISABLED)
-        # input_field.insert(0, get_last_result())        # put the result of last operation to input field
         return
 
     # Default values
     operator = "?"
-    args = []  # TODO INVALID OPERANDS
+    args = []
 
     # Find the operation sign and set the arguments
     for i in range(len(input_str)-1, 0, -1):
@@ -447,15 +445,14 @@ def evaluate(event=None):
 
     exec_output, result = calculate(operator, args)     # get result
     if exec_output == 0:                                # if function ends successfully
-        input_field.config(text="")
-        # input_field.delete(0, END)                      # clear the input field
         output_str = get_output_str(operator, args, result)
     else:
-        output_str = result                             # else put error message to the
+        output_str = result                             # else put error message to the result string
 
     output_str = remove_empty_decimal_part(output_str)  # Remove useless decimal parts
     output_str = dots_to_commas(output_str)             # Replace dots with commas
     output_field.config(text=output_str)                # put the result to the output field
+
     enable_operation_buttons()
     minis_button.config(state=NORMAL)
     dec_point_button.config(state=NORMAL)
@@ -617,10 +614,10 @@ root_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.55)
 ui_root.bind("<Key-r>", lambda value: input_button_press("√"))
 ui_root.bind("<Key-R>", lambda value: input_button_press("√"))
 
-exponent_button = Button(ui_root, text="xⁿ", command=lambda: input_button_press("^"))
-exponent_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
-                       fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
-exponent_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.7)
+power_button = Button(ui_root, text="xⁿ", command=lambda: input_button_press("^"))
+power_button.config(relief=FLAT, font=("Arial", 20, "bold"), bg='#003d63', activebackground='#195e89',
+                    fg='#ffffff', activeforeground='#ffffff', highlightbackground='black')
+power_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.7)
 
 ui_root.bind("<Key-asciicircum>", lambda value: input_button_press("^"))
 
