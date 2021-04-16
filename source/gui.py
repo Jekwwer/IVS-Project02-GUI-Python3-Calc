@@ -205,7 +205,7 @@ def check_num_availability(value):
 
 
 ##
-# Function that disables all operation buttons
+# Function that disables all operation buttons (except the minus operation)
 def disable_operation_buttons():
     plus_button.config(state=DISABLED)
     multiply_button.config(state=DISABLED)
@@ -218,7 +218,7 @@ def disable_operation_buttons():
 
 
 ##
-# Function that disables all operation buttons
+# Function that enables all operation buttons (except the minus operation)
 def enable_operation_buttons():
     plus_button.config(state=NORMAL)
     multiply_button.config(state=NORMAL)
@@ -276,7 +276,7 @@ def remove_empty_decimal_part(str_line):
 # @param operator Expression operation
 # @param args Expression arguments
 # @return Result of the expression
-# @exception Result ot the function execution
+# @return Result ot the function execution
 def calculate(operator, args):
     state = 0
     if operator == "+":
@@ -289,19 +289,22 @@ def calculate(operator, args):
         try:
             result = div(args[0], args[1])
         except ValueError:
-            result = f"Zero Division Error: {args[0]} / {args[1]} is NOT possible!"
+            result = f"Zero Division Error:\n" \
+                     f"{args[0]} / {args[1]} is NOT possible!"
             state = 1
     elif operator == "!":
         try:
             result = fac(args[0])
         except ValueError:
-            result = f"Factorial Error: {args[0]} must NOT be decimal or negative!"
+            result = f"Factorial Error:" \
+                     f"{args[0]} must NOT be decimal or negative!"
             state = 1
     elif operator == "^":
         try:
             result = power(args[0], args[1])
         except ValueError:
-            result = f"Power Error: {args[1]} MUST be a natural number!"
+            result = f"Power Error: " \
+                     f"{args[1]} MUST be a natural number!"
             state = 1
     elif operator == "√":
         try:
@@ -314,7 +317,8 @@ def calculate(operator, args):
         try:
             result = ln(args[0])
         except ValueError:
-            result = f"Natural Logarithm Error: {args[0]} MUST be greater than zero."
+            result = f"Natural Logarithm Error: " \
+                     f"{args[0]} MUST be greater than zero."
             state = 1
     elif operator == "㏒":
         try:
