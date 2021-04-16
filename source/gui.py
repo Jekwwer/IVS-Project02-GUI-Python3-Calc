@@ -212,7 +212,7 @@ def resize_main_window(event):
     num_buttons_text_size = other_buttons_text_size = default_button_text_size
 
     if delta_x / 16 > delta_y / 9:
-        if delta_x >= 350:
+        if delta_x >= min_window_width:
             num_buttons_text_size = delta_x / 17.5
             other_buttons_text_size = delta_x / 17.5
         if delta_x >= 500:
@@ -226,7 +226,7 @@ def resize_main_window(event):
             other_buttons_text_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
 
     else:
-        if delta_y >= 360:
+        if delta_y >= min_window_height:
             num_buttons_text_size = delta_y / 18
             other_buttons_text_size = delta_y / 18
         if delta_y >= 540 and delta_x < 400:
@@ -257,8 +257,8 @@ def resize_main_window(event):
         delta_y = 1
     ui_root.geometry("%sx%s" % (delta_x, delta_y))
 
-    if delta_x < 350:
-        delta_x = 350
+    if delta_x < min_window_width:
+        delta_x = min_window_width
     print(delta_x)
     input_field.config(
         font=("Arial", int(other_buttons_text_size / default_button_text_size * default_input_font_size)),
