@@ -204,36 +204,34 @@ def resize_main_window(event):
     delta_y = event.y_root - ui_root.winfo_rooty()
 
     num_buttons_size = other_buttons_size = 20
-    input_field_size = 18
-    output_field_size = 14
 
     if delta_x / 16 > delta_y / 9:
         if delta_x >= 350:
-            num_buttons_size = delta_x // 17.5
-            other_buttons_size = delta_x // 17.5
+            num_buttons_size = delta_x / 17.5
+            other_buttons_size = delta_x / 17.5
         if delta_x >= 500:
-            num_buttons_size = delta_x // 17.5 - delta_x // 100
-            other_buttons_size = delta_x // 17.5 - delta_x // 100
+            num_buttons_size = delta_x / 17.5 - delta_x / 100
+            other_buttons_size = delta_x / 17.5 - delta_x / 100
         if delta_x >= 950:
-            num_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85
-            other_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85
+            num_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85
+            other_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85
         if delta_x >= 1600:
-            num_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85 - delta_x / 125
-            other_buttons_size = delta_x // 17.5 - delta_x // 100 - delta_x // 85 - delta_x / 125
+            num_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
+            other_buttons_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
     else:
         if delta_y >= 360:
-            num_buttons_size = delta_y // 18
-            other_buttons_size = delta_y // 18
+            num_buttons_size = delta_y / 18
+            other_buttons_size = delta_y / 18
         if delta_y >= 540 and delta_x < 400:
-            other_buttons_size = delta_y // 20
+            other_buttons_size = delta_y / 20
         if delta_y >= 600 and delta_x < 1000:
-            other_buttons_size = delta_y // 22
+            other_buttons_size = delta_y / 22
         if delta_y >= 700 and delta_x < 900:
-            other_buttons_size = delta_y // 25
+            other_buttons_size = delta_y / 25
         if delta_y >= 800 and delta_x < 750:
-            other_buttons_size = delta_y // 28
+            other_buttons_size = delta_y / 28
         if delta_y >= 900 and delta_x < 540:
-            other_buttons_size = delta_y // 31
+            other_buttons_size = delta_y / 31
 
     for num_button in num_buttons:
         num_button.config(font=("Arial", int(num_buttons_size), "bold"))
