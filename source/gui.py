@@ -155,6 +155,9 @@ def backspace_button_click(event=None):
     if input_str[-2:-1] in operations_signs or input_str[-1:] in operations_signs:
         enable_operation_buttons()
         minis_button.config(state=NORMAL)
+    # If input field is empty
+    if input_str[:-1] == "":
+        enable_operation_buttons()
 
 
 ##
@@ -408,6 +411,8 @@ def evaluate(event=None):
     # Last result will copy to the input field
     if input_str == "":
         input_field.config(text=get_last_result())
+        if input_field["text"] != "":
+            nat_log_button.config(state=DISABLED)
         # input_field.insert(0, get_last_result())        # put the result of last operation to input field
         return
 
