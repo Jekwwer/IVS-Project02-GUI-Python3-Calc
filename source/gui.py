@@ -18,16 +18,16 @@ ui_root = Tk()
 # Main window
 ui_root.title("BHitW Calculator ")
 ui_root.resizable(0, 0)
-main_window_width = 350
-main_window_height = 360
+min_window_width = 350
+min_window_height = 360
 
 # Upper center screen coordinates
-x_position = int(ui_root.winfo_screenwidth() / 2 - main_window_width / 2)
-y_position = int(ui_root.winfo_screenheight() / 3 - main_window_height / 2)
+x_position = int(ui_root.winfo_screenwidth() / 2 - min_window_width / 2)
+y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
 
 # Put thw  main window to the (x,y)
-ui_root.geometry(f"{main_window_width}x{main_window_height}+{x_position}+{y_position}")
-ui_root.minsize(main_window_width, main_window_height)
+ui_root.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+ui_root.minsize(min_window_width, min_window_height)
 
 
 ##
@@ -35,9 +35,13 @@ ui_root.minsize(main_window_width, main_window_height)
 def open_about_window():
     new_window = Toplevel(ui_root)
     new_window.title("About")
-    new_window.geometry("350x360")
-    new_window.minsize(350, 360)
+
+    x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
+    y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
+    new_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+    new_window.minsize(min_window_width, min_window_height)
     new_window.resizable(0, 0)
+
     Label(new_window, text="This calculator application was created as the 2nd project "
                            "of the \"Practical Aspects of Software Design\" subject "
                            "by the team \"Blue Hair is the Way\""
@@ -56,8 +60,13 @@ def open_about_window():
 def open_help_window():
     new_window = Toplevel(ui_root)
     new_window.title("Help")
-    new_window.geometry("350x360")
-    new_window.minsize(350, 360)
+
+    x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
+    y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
+    new_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+    new_window.minsize(min_window_width, min_window_height)
+    new_window.resizable(0, 0)
+
     Label(new_window, text="This is a help window").pack()
 
 
