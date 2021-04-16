@@ -235,31 +235,17 @@ def resize_main_window(event):
         if delta_y >= 900 and delta_x < 540:
             other_buttons_size = delta_y // 31
 
-    num0_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num1_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num2_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num3_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num4_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num5_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num6_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num7_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num8_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    num9_button.config(font=("Arial", int(num_buttons_size), "bold"))
-    dec_point_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    plus_button.config(font=("Arial", int(other_buttons_size), "bold"))
+    for num_button in num_buttons:
+        num_button.config(font=("Arial", int(num_buttons_size), "bold"))
+
+    for op_button in operation_buttons:
+        op_button.config(font=("Arial", int(other_buttons_size), "bold"))
+
     minis_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    multiply_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    divide_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    power_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    root_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    factorial_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    log_button.config(font=("Arial", int(other_buttons_size), "bold"))
-    nat_log_button.config(font=("Arial", int(other_buttons_size), "bold"))
     equals_button.config(font=("Arial", int(other_buttons_size), "bold"))
     backspace_button.config(font=("Arial", int(other_buttons_size * 0.8), "bold"))
     clear_button.config(font=("Arial", int(other_buttons_size), "bold"))
 
-    print(other_buttons_size, other_buttons_size/20*18)
     input_field.config(font=("Arial", int(other_buttons_size/20*18)), wraplength=delta_x*225/360)
     output_field.config(font=("Arial", int(other_buttons_size/20*14)), wraplength=delta_x*225/360)
 
@@ -323,27 +309,15 @@ def check_num_availability(value):
 ##
 # Function that disables all operation buttons (except the minus operation)
 def disable_operation_buttons():
-    plus_button.config(state=DISABLED)
-    multiply_button.config(state=DISABLED)
-    divide_button.config(state=DISABLED)
-    power_button.config(state=DISABLED)
-    root_button.config(state=DISABLED)
-    factorial_button.config(state=DISABLED)
-    log_button.config(state=DISABLED)
-    nat_log_button.config(state=DISABLED)
+    for op_button in operation_buttons:
+        op_button.config(state=DISABLED)
 
 
 ##
 # Function that enables all operation buttons (except the minus operation)
 def enable_operation_buttons():
-    plus_button.config(state=NORMAL)
-    multiply_button.config(state=NORMAL)
-    divide_button.config(state=NORMAL)
-    power_button.config(state=NORMAL)
-    root_button.config(state=NORMAL)
-    factorial_button.config(state=NORMAL)
-    log_button.config(state=NORMAL)
-    nat_log_button.config(state=NORMAL)
+    for op_button in operation_buttons:
+        op_button.config(state=NORMAL)
 
 
 ##
@@ -769,6 +743,12 @@ ui_root.bind("<Key-C>", clear_button_click)
 sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
 sizegrip.bind("<B1-Motion>", resize_main_window)
 sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+
+num_buttons = [num0_button, num1_button, num2_button, num3_button, num4_button, num5_button, num6_button,
+               num7_button, num8_button, num9_button]
+
+operation_buttons = [plus_button, multiply_button, divide_button, power_button, root_button,
+                     factorial_button, log_button, nat_log_button, dec_point_button]
 
 # MAIN loop
 ui_root.mainloop()
