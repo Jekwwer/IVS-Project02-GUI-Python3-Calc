@@ -135,7 +135,6 @@ def input_button_press(value):
 # Function that clears the input field
 def clear_button_click(event=None):
     input_field.config(text="")
-    # input_field.delete(0, END)
 
     # Enable disabled buttons
     dec_point_button.config(state=NORMAL)
@@ -146,21 +145,15 @@ def clear_button_click(event=None):
 ##
 # Function that deletes the last character from the input field
 def backspace_button_click(event=None):
-    current_state = input_field["text"]
-    # current_state = input_field.get()
-    # input_field.delete(0, END)
-    input_field.config(text=current_state[:-1])
-    # input_field.insert(0, current_state[:-1])
-
-    # if last character was a decimal point, enable the decimal point button
-    if current_state[-1:] == ",":
+    input_str = input_field["text"]
+    input_field.config(text=input_str[:-1])
+    # If last character was a decimal point, enable the decimal point button
+    if input_str[-1:] == ",":
         dec_point_button.config(state=NORMAL)
-    # if last character was an operation sign, enable the operation buttons
-    if current_state[-2:-1] in operations_signs or current_state[-1:] in operations_signs:
+    # If last character was an operation sign, enable the operation buttons
+    if input_str[-2:-1] in operations_signs or input_str[-1:] in operations_signs:
         enable_operation_buttons()
         minis_button.config(state=NORMAL)
-    if current_state[:-1] == "":
-        enable_operation_buttons()
 
 
 # Other functions
