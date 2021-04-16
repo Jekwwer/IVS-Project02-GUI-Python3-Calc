@@ -92,7 +92,8 @@ def input_button_press(value):
     if value in operations_signs[:-3] and input_str == "":
         input_field.config(text=get_last_result() + str(value))
         return
-    elif value == "-" and input_str == "":  # for correct minus sign working
+    # (for correct minus sign working)
+    elif value == "-" and input_str == "" and output_field["text"] != "":
         input_field.config(text=get_last_result() + "−")
         return
 
