@@ -11,7 +11,7 @@ from tkinter import *
 from tkinter import ttk
 from math_lib import *
 
-# TODO MAKE APP WINDOWS RESIZABLE WITH THE TEXT IN IT
+# TODO MAKE ADDITIONAL WINDOWS RESIZABLE WITH THE TEXT IN IT
 
 # The root of the program
 ui_root = Tk()
@@ -34,44 +34,58 @@ ui_root.minsize(min_window_width, min_window_height)
 ##
 # Function to open 'About' window
 def open_about_window():
-    new_window = Toplevel(ui_root)
-    new_window.title("About")
+    global about_window
+    try:
+        if about_window.state() == "normal":
+            about_window.focus()
+    except (NameError, TclError):
+        about_window = Toplevel(ui_root)
+        about_window.title("About")
 
-    x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
-    y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
-    new_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-    new_window.minsize(min_window_width, min_window_height)
-    new_window.resizable(0, 0)
+        x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
+        y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
+        about_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+        about_window.minsize(min_window_width, min_window_height)
+        about_window.resizable(0, 0)
 
-    Label(new_window, text="This calculator application was created as the 2nd project "
-                           "of the \"Practical Aspects of Software Design\" subject "
-                           "by the team \"Blue Hair is the Way\""
-                           "\n", wraplength=340, justify='left').grid(row=0)
+        Label(about_window, text="This calculator application was created as the 2nd project "
+                                 "of the \"Practical Aspects of Software Design\" subject "
+                                 "by the team \"Blue Hair is the Way\""
+                                 "\n", wraplength=340, justify='left').grid(row=0)
 
-    Label(new_window, text="Authors:\n"
-                           "• xshili00 Evgenii Shiliaev\n"
-                           "• xbenes58 Pavel Beneš\n"
-                           "• xkubra00 Marko Kubrachenko\n"
-                           "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify='left').grid(row=1)
+        Label(about_window, text="Authors:\n"
+                                 "• xshili00 Evgenii Shiliaev\n"
+                                 "• xbenes58 Pavel Beneš\n"
+                                 "• xkubra00 Marko Kubrachenko\n"
+                                 "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify='left').grid(row=1)
 
-    new_window.bind("<Escape>", lambda value: new_window.destroy())
+        about_window.bind("<Escape>", lambda value: about_window.destroy())
 
 
 ##
 # Function to open Help window
 def open_help_window():
-    new_window = Toplevel(ui_root)
-    new_window.title("Help")
+    global help_window
+    try:
+        if help_window.state() == "normal":
+            help_window.focus()
+    except (NameError, TclError):
+        help_window = Toplevel(ui_root)
+        help_window.title("Help")
 
-    x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
-    y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
-    new_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-    new_window.minsize(min_window_width, min_window_height)
-    new_window.resizable(0, 0)
+        x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
+        y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
+        help_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+        help_window.minsize(min_window_width, min_window_height)
+        help_window.resizable(0, 0)
 
-    Label(new_window, text="This is a help window").pack()
-    new_window.bind("<Escape>", lambda value: new_window.destroy())
+        Label(help_window, text="This is a help window").pack()
+        help_window.bind("<Escape>", lambda value: help_window.destroy())
 
+
+# Help hotkeys
+ui_root.bind("<H>", lambda value: open_help_window())
+ui_root.bind("<h>", lambda value: open_help_window())
 
 # Menu
 main_menu = Menu(ui_root, bg='#003d63', fg='#ffffff', activebackground='#195e89',
@@ -259,7 +273,6 @@ def resize_main_window(event):
 
     if delta_x < min_window_width:
         delta_x = min_window_width
-    print(delta_x)
     input_field.config(
         font=("Arial", int(other_buttons_text_size / default_button_text_size * default_input_font_size)),
         wraplength=delta_x * default_wraplength / min_window_width)
