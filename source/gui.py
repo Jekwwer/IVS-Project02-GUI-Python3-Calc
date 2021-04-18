@@ -11,8 +11,6 @@ from tkinter import *
 from tkinter import ttk
 from math_lib import *
 
-# TODO MAKE ADDITIONAL WINDOWS RESIZABLE WITH THE TEXT IN IT
-
 # The root of the program
 master = Tk()
 
@@ -503,6 +501,8 @@ def calculate(operator, args):
     elif operator == "!":
         try:
             result = fac(args[0])
+            if args[0] > 13:
+                result = "{:e}".format(result)
         except ValueError:
             result = f"Factorial Error:" \
                      f"{args[0]} must NOT be decimal or negative!"
@@ -555,7 +555,7 @@ def get_output_str(operator, args, result):
     # Check numbers negativity (for setting parentheses)
     if args[0] < 0:
         args[0] = f"({args[0]})"
-    if result < 0:
+    if float(result) < 0:
         result = f"({result})"
 
     if len(args) == 2:
