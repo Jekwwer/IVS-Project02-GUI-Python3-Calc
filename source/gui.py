@@ -30,68 +30,40 @@ y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
 ui_root.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
 ui_root.minsize(min_window_width, min_window_height)
 
-
-##
-# Function to open 'About' window
-def open_about_window():
-    global about_window
-    try:
-        if about_window.state() == "normal":
-            about_window.focus()
-    except (NameError, TclError):
-        about_window = Toplevel(ui_root)
-        about_window.title("About")
-
-        x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
-        y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
-        about_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-        about_window.minsize(min_window_width, min_window_height)
-        about_window.resizable(0, 0)
-
-        Label(about_window, text="This calculator application was created as the 2nd project "
-                                 "of the \"Practical Aspects of Software Design\" subject "
-                                 "by the team \"Blue Hair is the Way\""
-                                 "\n", wraplength=340, justify="left").grid(row=0)
-
-        Label(about_window, text="Authors:\n"
-                                 "• xshili00 Evgenii Shiliaev\n"
-                                 "• xbenes58 Pavel Beneš\n"
-                                 "• xkubra00 Marko Kubrachenko\n"
-                                 "• xbrazd22 Šimon Brázda", font="Courier", wraplength=340, justify="left").grid(row=1)
-
-        about_window.bind("<Escape>", lambda value: about_window.destroy())
-
-
-##
-# Function to open Help window
-def open_help_window():
-    global help_window
-    try:
-        if help_window.state() == "normal":
-            help_window.focus()
-    except (NameError, TclError):
-        help_window = Toplevel(ui_root)
-        help_window.title("Help")
-
-        x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
-        y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
-        help_window.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-        help_window.minsize(min_window_width, min_window_height)
-        help_window.resizable(0, 0)
-
-        Label(help_window, text="This is a help window").pack()
-        help_window.bind("<Escape>", lambda value: help_window.destroy())
-
-
-# Help hotkeys
-ui_root.bind("<H>", lambda value: open_help_window())
-ui_root.bind("<h>", lambda value: open_help_window())
-
 # Menu
 main_menu = Menu(ui_root, bg="#003d63", fg="#ffffff", activebackground="#195e89",
                  activeforeground="#ffffff")
 ui_root.config(menu=main_menu)
+
+
+##
+# Function that opens Help window
+def open_help_window():
+    global help_window
+    # If the window is opened, focus on it
+    try:
+        if help_window.state() == "normal":
+            help_window.focus()
+    # Else open it
+    except (NameError, TclError):
+        help_window = HelpWindow(ui_root)
+
+
 main_menu.add_command(label="Help", font="Arial", command=open_help_window)
+
+##
+# Function that opens About window
+def open_about_window():
+    global about_window
+    # If the window is opened, focus on it
+    try:
+        if about_window.state() == "normal":
+            about_window.focus()
+    # Else open it
+    except (NameError, TclError):
+        about_window = AboutWindow(ui_root)
+
+
 main_menu.add_command(label="About", font="Arial", command=open_about_window)
 
 # Fields
@@ -122,6 +94,107 @@ sizegrip.pack(anchor="se")
 operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 
 
+# Additional windows
+
+##
+# Class of the About window
+class AboutWindow(Toplevel):
+    ##
+    # Function that inisializes the About window
+    def __init__(self, master=None):
+        super().__init__(master=ui_root)
+        self.title("About")
+
+        # Put on the Left upper center part of the screen
+        x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
+        y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
+        self.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+        self.minsize(min_window_width, min_window_height)
+        self.resizable(0, 0)
+
+        # About window frame
+        about_win_frame = Frame(self, bg="#dadada", highlightbackground="black")
+        about_win_frame.pack(side="bottom", fill=X)
+
+        # About window sizegrip
+        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
+                                             {"sticky": "se", "side": "bottom"})])
+        about_win_sizegrip = ttk.Label(about_win_frame, style="Sizer.TLabel")
+        about_win_sizegrip.pack(anchor="se")
+
+        about_win_sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
+        about_win_sizegrip.bind("<B1-Motion>", lambda value: resize_additional_window(value, self,
+                                                                                      [app_about_label, authors_label],
+                                                                                      default_font_size))
+        about_win_sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+
+        # Put some labels
+        default_font_size = 13
+        app_about_label = Label(self, text="This calculator application was created as the 2nd project "
+                                           "of the \"Practical Aspects of Software Design\" subject "
+                                           "by the team \"Blue Hair is the Way\n", font=("Arial", default_font_size),
+                                wraplength=min_window_width,
+                                justify="left")
+        app_about_label.pack()
+
+        authors_label = Label(self, text="Authors:\n"
+                                         "• xshili00 Evgenii Shiliaev\n"
+                                         "• xbenes58 Pavel Beneš\n"
+                                         "• xkubra00 Marko Kubrachenko\n"
+                                         "• xbrazd22 Šimon Brázda", font=("Courier", default_font_size),
+                              wraplength=min_window_width,
+                              justify="left")
+        authors_label.pack()
+
+        # Exit About window shortcut
+        self.bind("<Escape>", lambda value: self.destroy())
+
+
+##
+# Class of the Help window
+class HelpWindow(Toplevel):
+    ##
+    # Function that inisializes the Help window
+    def __init__(self, master=None):
+        super().__init__(master=ui_root)
+        self.title("Help")
+
+        # Put on the Left upper center part of the screen
+        x_position = int(ui_root.winfo_screenwidth() / 2 + min_window_width / 2)
+        y_position = int(ui_root.winfo_screenheight() / 3 - min_window_height / 2)
+        self.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
+        self.minsize(min_window_width, min_window_height)
+        self.resizable(0, 0)
+
+        # Help window frame
+        help_window_frame = Frame(self, bg="#dadada", highlightbackground="black")
+        help_window_frame.pack(side="bottom", fill=X)
+
+        # Help window sizegrip
+        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
+                                             {"sticky": "se", "side": "bottom"})])
+        about_win_sizegrip = ttk.Label(help_window_frame, style="Sizer.TLabel")
+        about_win_sizegrip.pack(anchor="se")
+
+        about_win_sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
+        about_win_sizegrip.bind("<B1-Motion>", lambda value: resize_additional_window(value, self, [help_label],
+                                                                                      default_font_size))
+        about_win_sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+
+        # Put some labels
+        default_font_size = 13
+        help_label = Label(self, text="This is a help window", font=("Arial", default_font_size))
+        help_label.pack()
+
+        # Exit Help window shortcut
+        self.bind("<Escape>", lambda value: self.destroy())
+
+
+# Help hotkeys
+ui_root.bind("<H>", lambda value: open_help_window())
+ui_root.bind("<h>", lambda value: open_help_window())
+
+
 # Functions
 
 ##
@@ -129,7 +202,6 @@ operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 #
 # @param value Button value
 def input_button_press(value):
-
     # If button is disabled (for keyboard input)
     if not check_num_availability(value):
         return
@@ -215,6 +287,27 @@ def backspace_button_click(event=None):
 # Function that catches pressing the sizegrip button
 def sizegrip_button_press(event):
     sizegrip["cursor"] = "bottom_right_corner"
+
+
+def resize_additional_window(event, window, labels, default_font_size):
+    delta_x = event.x_root - window.winfo_rootx()
+    delta_y = event.y_root - window.winfo_rooty()
+
+    if delta_x < 1:
+        delta_x = 1
+    if delta_y < 1:
+        delta_y = 1
+    window.geometry("%sx%s" % (delta_x, delta_y))
+
+    for i in range(len(labels)):
+        label_font_config = (labels[i]["font"].split())[0]
+        label_font_size = default_font_size
+        if delta_x >= min_window_width:
+            label_font_size = int(delta_x / min_window_width * default_font_size)
+        labels[i].config(font=(label_font_config[0], label_font_size))
+        if delta_x < min_window_width:
+            delta_x = min_window_width
+        labels[i].config(wraplength=delta_x - 10)
 
 
 ##
@@ -495,10 +588,10 @@ def get_output_str(operator, args, result):
 #
 # @return Result of the last expression or an empty string
 def get_last_result():
-    output_str = output_field["text"]       # get the text from output
-    i = output_str.rfind("=")               # get the index of '=' sign
-    if i == -1:                             # if there isn't
-        return ""                           # return nothing
+    output_str = output_field["text"]  # get the text from output
+    i = output_str.rfind("=")  # get the index of '=' sign
+    if i == -1:  # if there isn't
+        return ""  # return nothing
     else:
         return remove_parentheses(output_str[i + 1:])
 
@@ -538,14 +631,14 @@ def evaluate(event=None):
     args = []
 
     # Find the operation sign and set the arguments
-    for i in range(len(input_str)-1, 0, -1):
+    for i in range(len(input_str) - 1, 0, -1):
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             # if radical index wasn't set
             if operator == "√" and not input_str[:1].isdigit():
                 input_str = "2" + input_str
             args.append(float(input_str[:i]))
-            args.append(float(input_str[i+1:]))
+            args.append(float(input_str[i + 1:]))
             break
         elif input_str[i] in ["!", "㏑"]:
             operator = input_str[i]
@@ -558,16 +651,16 @@ def evaluate(event=None):
         output_field.config(text="Operation Error:\nUsed unknown operation sign!")
         return
 
-    exec_output, result = calculate(operator, args)     # get result
-    if exec_output == 0:                                # if function ends successfully
+    exec_output, result = calculate(operator, args)  # get result
+    if exec_output == 0:  # if function ends successfully
         output_str = get_output_str(operator, args, result)
         input_field.config(text="")
     else:
-        output_str = result                             # else put error message to the result string
+        output_str = result  # else put error message to the result string
 
     output_str = remove_empty_decimal_part(output_str)  # Remove useless decimal parts
-    output_str = dots_to_commas(output_str)             # Replace dots with commas
-    output_field.config(text=output_str)                # put the result to the output field
+    output_str = dots_to_commas(output_str)  # Replace dots with commas
+    output_field.config(text=output_str)  # put the result to the output field
 
     enable_operation_buttons()
     minis_button.config(state=NORMAL)
