@@ -9,6 +9,8 @@ import unittest
 import math_lib as mathlib  # our mathematical library
 
 
+##
+# Class for unit tests of math library
 class MathLibTests(unittest.TestCase):
 
     # Test of function add
@@ -188,7 +190,6 @@ class MathLibTests(unittest.TestCase):
         self.assertAlmostEqual(mathlib.root(-24.42, -7), -0.633505836, 9)
         self.assertAlmostEqual(mathlib.root(567, -9.4), 0.509407849, 9)
         self.assertAlmostEqual(mathlib.root(666.666, -6.6), 0.373366291, 9)
-
 
     # Test of function log
     def test_log(self):
