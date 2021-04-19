@@ -1,0 +1,5 @@
+Profiling - summary 
+
+In the attached graphs we can see that with a small number of input data, the most time is spent in 
+loading. With more input numbers, the most of the time is spent in the 'power' and 'add' functions. 
+These functions are also called most frequently, so we should focus on them when optimizing the code. 
