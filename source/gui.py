@@ -288,6 +288,8 @@ def sizegrip_button_press(event):
     sizegrip["cursor"] = "bottom_right_corner"
 
 
+##
+# Function that resizes the additional app windows
 def resize_additional_window(event, window, labels, default_font_size):
     delta_x = event.x_root - window.winfo_rootx()
     delta_y = event.y_root - window.winfo_rooty()
