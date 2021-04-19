@@ -1,11 +1,11 @@
-# GIU
+# GUI
 
 ##
-# @file    gui.py
-# @brief   Graphic User Interface for the mathematical library
-# @authors Evgenii Shiliaev  (xshili00)
-#          Marko Kubrachenko (xkubra00)
-#          Pavel Beneš       (xbenes58)
+# @file     gui.py
+# @brief    Graphic User Interface for the mathematical library
+# @authors  Evgenii Shiliaev  (xshili00)
+# @authors  Marko Kubrachenko (xkubra00)
+# @authors  Pavel Beneš       (xbenes58)
 
 from tkinter import *
 from tkinter import ttk
@@ -48,6 +48,7 @@ def open_help_window():
 
 
 main_menu.add_command(label="Help", font="Arial", command=open_help_window)
+
 
 ##
 # Function that opens About window
