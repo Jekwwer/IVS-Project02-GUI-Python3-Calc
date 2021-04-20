@@ -19,6 +19,9 @@ master.title("BHitW Calculator ")
 master.resizable(False, False)
 min_window_width = 350
 min_window_height = 370
+min_additional_window_width = 400
+min_additional_window_height = 404
+wraplength_difference = 25
 
 # Upper center screen coordinates
 x_position = int(master.winfo_screenwidth() / 2 - min_window_width / 2)
@@ -83,7 +86,7 @@ output_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0.18)
 frame = Frame(master, bg="#dadada", highlightbackground="black")
 frame.pack(side="bottom", fill=X)
 
-# Sizegrip
+# Sizegrip TODO make as an instance of the class
 ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
                                      {"sticky": "se", "side": "bottom"})])
 sizegrip = ttk.Label(frame, style="Sizer.TLabel")
@@ -93,7 +96,58 @@ sizegrip.pack(anchor="se")
 operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 
 
+##
+# Class of the scrollbar
+class Scrollbar(Frame):
+    def __init__(self, parent):
+        Frame.__init__(self, parent)
+
+        scroll_frame = Frame(parent)
+        scroll_frame.pack(fill=BOTH, expand=1)
+
+        scroll_canvas = Canvas(scroll_frame)
+        scroll_canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+        scrollbar = ttk.Scrollbar(scroll_frame, orient=VERTICAL, command=scroll_canvas.yview)
+        scrollbar.pack(side=RIGHT, fill=Y)
+
+        scroll_canvas.configure(yscrollcommand=scrollbar.set)
+        scroll_canvas.bind("<Configure>", lambda event: scroll_canvas.configure(scrollregion=scroll_canvas.bbox("all")))
+
+        self.scroll_content_frame = Frame(scroll_canvas)
+        scroll_canvas.create_window((0, 0), window=self.scroll_content_frame, anchor="nw")
+
+    ##
+    # Function that returns the scroll content frame
+    # @brief  This function makes possible to correctly add new scrollable widgets to the scrollbar frame
+    #
+    # @return Frame that contains all scrollbar's widgets
+    def return_content_frame(self):
+        return self.scroll_content_frame
+
+
+##
+# Class of the Sizegrip
+class Sizegrip(Frame):
+    def __init__(self, parent):
+        Frame.__init__(self, parent)
+
+        self.sizegrip_frame = Frame(self, bg="#dadada", highlightbackground="black")
+        self.sizegrip_frame.pack(side="bottom", fill=X)
+
+        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
+                                             {"sticky": "se", "side": "bottom"})])
+        self.sizegrip = ttk.Label(self.sizegrip_frame, style="Sizer.TLabel")
+        self.sizegrip.pack(anchor="se")
+
+        self.sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
+        parent_labels, font_size = parent.get_params()
+        self.sizegrip.bind("<B1-Motion>",
+                           lambda event: resize_additional_window(event, parent, parent_labels, font_size))
+        self.sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+
 # Additional windows
+
 
 ##
 # Class of the About window
@@ -105,48 +159,53 @@ class AboutWindow(Toplevel):
         self.title("About")
 
         # Put on the Left upper center part of the screen
-        x_position = int(master.winfo_screenwidth() / 2 + min_window_width / 2)
-        y_position = int(master.winfo_screenheight() / 3 - min_window_height / 2)
-        self.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-        self.minsize(min_window_width, min_window_height)
-        self.resizable(0, 0)
+        add_x_position = int(master.winfo_screenwidth() / 2 + min_additional_window_width / 2)
+        add_y_position = y_position
+        self.geometry(f"{min_additional_window_width}x{min_additional_window_height}+{add_x_position}+{add_y_position}")
+        self.minsize(min_additional_window_width, min_additional_window_height)
+        self.resizable(False, False)
 
-        # About window frame
-        about_win_frame = Frame(self, bg="#dadada", highlightbackground="black")
-        about_win_frame.pack(side="bottom", fill=X)
+        min_label_width = min_additional_window_width - wraplength_difference
 
-        # About window sizegrip
-        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
-                                             {"sticky": "se", "side": "bottom"})])
-        about_win_sizegrip = ttk.Label(about_win_frame, style="Sizer.TLabel")
-        about_win_sizegrip.pack(anchor="se")
-
-        about_win_sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
-        about_win_sizegrip.bind("<B1-Motion>", lambda value: resize_additional_window(value, self,
-                                                                                      [app_about_label, authors_label],
-                                                                                      default_font_size))
-        about_win_sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+        scrollbar = Scrollbar(self)
+        scrollbar_frame = scrollbar.return_content_frame()
+        scrollbar.pack()
 
         # Put some labels
-        default_font_size = 13
-        app_about_label = Label(self, text="This calculator application was created as the 2nd project "
-                                           "of the \"Practical Aspects of Software Design\" subject "
-                                           "by the team \"Blue Hair is the Way\n", font=("Arial", default_font_size),
-                                wraplength=min_window_width,
+        self.default_font_size = 13
+        self.labels_list = []
+        app_about_label = Label(scrollbar_frame, text="This calculator application was created as the 2nd project "
+                                                   "of the \"Practical Aspects of Software Design\" subject "
+                                                   "by the team \"Blue Hair is the Way\n",
+                                font=("Arial", self.default_font_size),
+                                wraplength=min_label_width,
                                 justify="left")
         app_about_label.pack()
+        self.labels_list.append(app_about_label)
 
-        authors_label = Label(self, text="Authors:\n"
-                                         "• xshili00 Evgenii Shiliaev\n"
-                                         "• xbenes58 Pavel Beneš\n"
-                                         "• xkubra00 Marko Kubrachenko\n"
-                                         "• xbrazd22 Šimon Brázda", font=("Courier", default_font_size),
-                              wraplength=min_window_width,
+        authors_label = Label(scrollbar_frame, text="Authors:\n"
+                                                 "• xshili00 Evgenii Shiliaev\n"
+                                                 "• xbenes58 Pavel Beneš\n"
+                                                 "• xkubra00 Marko Kubrachenko\n"
+                                                 "• xbrazd22 Šimon Brázda", font=("Courier", self.default_font_size),
+                              wraplength=min_label_width,
                               justify="left")
         authors_label.pack()
+        self.labels_list.append(authors_label)
+
+        Sizegrip(self).pack(anchor="se")
 
         # Exit About window shortcut
         self.bind("<Escape>", lambda value: self.destroy())
+
+    ##
+    # Function that returns the labels list with their default font size
+    # @brief  This function makes possible to change the window labels size via the sizegrip
+    #
+    # @return List of the window labels
+    # @return Default labels' font size
+    def get_params(self):
+        return self.labels_list, self.default_font_size
 
 
 ##
@@ -159,34 +218,40 @@ class HelpWindow(Toplevel):
         self.title("Help")
 
         # Put on the Left upper center part of the screen
-        x_position = int(master.winfo_screenwidth() / 2 + min_window_width / 2)
-        y_position = int(master.winfo_screenheight() / 3 - min_window_height / 2)
-        self.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-        self.minsize(min_window_width, min_window_height)
-        self.resizable(0, 0)
+        add_x_position = int(master.winfo_screenwidth() / 2 - 1.5 * min_additional_window_width)
+        add_y_position = y_position
+        self.geometry(f"{min_additional_window_width}x{min_additional_window_height}+{add_x_position}+{add_y_position}")
+        self.minsize(min_additional_window_width, min_additional_window_height)
+        self.resizable(False, False)
 
-        # Help window frame
-        help_window_frame = Frame(self, bg="#dadada", highlightbackground="black")
-        help_window_frame.pack(side="bottom", fill=X)
-
-        # Help window sizegrip
-        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
-                                             {"sticky": "se", "side": "bottom"})])
-        about_win_sizegrip = ttk.Label(help_window_frame, style="Sizer.TLabel")
-        about_win_sizegrip.pack(anchor="se")
-
-        about_win_sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
-        about_win_sizegrip.bind("<B1-Motion>", lambda value: resize_additional_window(value, self, [help_label],
-                                                                                      default_font_size))
-        about_win_sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+        # Help window scrollbar
+        scrollbar = Scrollbar(self)
+        scrollbar_frame = scrollbar.return_content_frame()
+        scrollbar.pack()
 
         # Put some labels
-        default_font_size = 13
-        help_label = Label(self, text="This is a help window", font=("Arial", default_font_size))
+        self.labels_list = []
+        self.default_font_size = 13
+        help_label = Label(scrollbar_frame, text="This is a help window", font=("Arial", self.default_font_size))
         help_label.pack()
 
-        # Exit Help window shortcut
+        self.labels_list.append(help_label)
+
+        Sizegrip(self).pack(anchor="se")
+
+        # Exit About window shortcut
         self.bind("<Escape>", lambda value: self.destroy())
+
+    ##
+    # Function that returns the labels list with their default font size
+    # @brief  This function makes possible to change the window labels size via the sizegrip
+    #
+    # @return List of the window labels
+    # @return Default labels' font size
+    def get_params(self):
+        return self.labels_list, self.default_font_size
+
+    # TODO get rid of code duplications
 
 
 # Help hotkeys
@@ -308,7 +373,7 @@ def resize_additional_window(event, window, labels, default_font_size):
         labels[i].config(font=(label_font_config[0], label_font_size))
         if delta_x < min_window_width:
             delta_x = min_window_width
-        labels[i].config(wraplength=delta_x - 10)
+        labels[i].config(wraplength=delta_x - wraplength_difference)
 
 
 ##
