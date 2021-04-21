@@ -279,6 +279,9 @@ def input_button_press(value):
     # Get string from the input
     input_str = input_field["text"]
 
+    if input_str[-1:] == value == '-':
+        return
+
     # Feature "Continue the calculating" (not working with logarithms and root)
     # If after the last expression user will write an operation sign,
     # last result will copy to the input field with an operation sign
@@ -328,6 +331,9 @@ def input_button_press(value):
 ##
 # Function that clears the input field
 def clear_button_click(event=None):
+    if input_field["text"] == "":
+        output_field["text"] = ""
+
     input_field.config(text="")
 
     # Enable disabled buttons
@@ -909,6 +915,7 @@ if __name__ == "__main__":
 
     # Sizegrip
     main_window_sizegrip = Sizegrip(master).pack(anchor="se", side=BOTTOM)
+
 
     # Application loop
     master.mainloop()
