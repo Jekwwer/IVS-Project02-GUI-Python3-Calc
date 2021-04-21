@@ -23,6 +23,24 @@ default_button_text_size = 20
 
 # Custom widgets
 
+
+##
+# Class of the main window I/O fields
+class MainWindowField(Label):
+    ##
+    # Constructor of the main window I/O fields
+    #
+    # @params font_size font_size
+    # @params wraplength Label wraplength
+    def __init__(self, font_size, wraplength, **kwargs):
+        super().__init__()
+        self["borderwidth"] = 1
+        self["bg"] = "#dadada"
+        self["relief"] = "solid"
+        self["font"] = "Arial " + str(font_size)
+        self["wraplength"]=wraplength
+
+
 ##
 # Class of the main window buttons
 class MainWindowButton(Button):
@@ -745,18 +763,15 @@ if __name__ == "__main__":
     main_menu.add_command(label="About", font="Arial", command=open_about_window)
 
     # I/O Fields
-    default_wraplength = 235     # TODO
-    default_input_font_size = 18 # TODO
-    input_field = Label(master, borderwidth=1, bg="#dadada", relief=SOLID, font=("Arial", default_input_font_size),
-                        wraplength=default_wraplength,
-                        justify="center")
-    input_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0)
+    field_width_ratio = 0.75
+    default_wraplength = int(field_width_ratio * min_main_window_width - wraplength_difference)
+    default_input_font_size = 18
+    input_field = MainWindowField(default_input_font_size, default_wraplength)
+    input_field.place(relheight=0.18, relwidth=field_width_ratio, relx=0, rely=0)
 
-    default_output_font_size = 14 # TODO
-    output_field = Label(master, borderwidth=1, bg="#dadada", relief=SOLID, font=("Arial", default_output_font_size),
-                         wraplength=default_wraplength,
-                         justify="center")
-    output_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0.18)
+    default_output_font_size = 14
+    output_field = MainWindowField(default_input_font_size, default_wraplength)
+    output_field.place(relheight=0.18, relwidth=field_width_ratio, relx=0, rely=0.18)
 
     # Definition of buttons and binding keys
     # NUM Buttons
