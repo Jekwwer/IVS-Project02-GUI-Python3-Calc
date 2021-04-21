@@ -11,6 +11,9 @@ from tkinter import *
 from tkinter import ttk
 from math_lib import *
 
+# TODO Disable numbers after factorial sign
+# Todo Factorial bound
+
 # Windows parameters
 min_main_window_width = 350
 min_main_window_height = 370
@@ -273,7 +276,7 @@ operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 # @param value Button value
 def input_button_press(value):
     # If button is disabled (for keyboard input)
-    if not check_num_availability(value):
+    if not check_button_availability(value):
         return
 
     # Get string from the input
@@ -281,6 +284,9 @@ def input_button_press(value):
 
     if input_str[-1:] == value == '-':
         return
+
+    if input_str == "" and str(value).isdigit():
+        enable_operation_buttons()
 
     # Feature "Continue the calculating" (not working with logarithms and root)
     # If after the last expression user will write an operation sign,
@@ -296,14 +302,24 @@ def input_button_press(value):
     # If was added a number after an operation sign, disable the buttons
     if find_operation_sign(input_str) and value not in operations_signs:
         disable_operation_buttons()
+        is_operator, op_index = find_operation_sign(input_str)
+        if "," in input_str[op_index:]:
+            dec_point_button.config(state=DISABLED)
+        else:
+            dec_point_button.config(state=NORMAL)
 
     # Feature "Change the operation sign"
     # Before setting 2nd operand in such operations
     # user can change the operation sign by setting the other one
     # without a Backspace or Clear button call
     if input_str[-1:] in operations_signs and value in operations_signs:
-        input_str = input_str[:-1]
-    if input_str[-1:].isdigit() and value == "-":
+        is_operator, op_index = find_operation_sign(input_str)
+        if is_operator and input_str[:op_index] != "":
+            input_str = input_str[:-1]
+        else:
+            return
+
+    if (input_str[-1:].isdigit() or input_str[-1:] == ",") and value == "-":
         value = "−"
 
     # If was written decimal point, disable the decimal point button
@@ -333,8 +349,17 @@ def input_button_press(value):
 def clear_button_click(event=None):
     if input_field["text"] == "":
         output_field["text"] = ""
+        disable_operation_buttons()
+        dec_point_button.config(state=NORMAL)
+        minis_button.config(state=NORMAL)
+        return
 
     input_field.config(text="")
+    if output_field["text"] == "":
+        disable_operation_buttons()
+        dec_point_button.config(state=NORMAL)
+        minis_button.config(state=NORMAL)
+        return
 
     # Enable disabled buttons
     dec_point_button.config(state=NORMAL)
@@ -345,7 +370,11 @@ def clear_button_click(event=None):
 ##
 # Function that deletes the last character from the input field
 def backspace_button_click(event=None):
-    input_str = input_field["text"]
+    input_str = str(input_field["text"])
+    # If input field is empty
+    if input_str[:-1] == "" or len(input_str) == 1:
+        clear_button_click()
+        return
     input_field.config(text=input_str[:-1])
     # If last character was a decimal point, enable the decimal point button
     if input_str[-1:] == ",":
@@ -354,9 +383,6 @@ def backspace_button_click(event=None):
     if input_str[-2:-1] in operations_signs or input_str[-1:] in operations_signs:
         enable_operation_buttons()
         minis_button.config(state=NORMAL)
-    # If input field is empty
-    if input_str[:-1] == "":
-        enable_operation_buttons()
 
 
 ##
@@ -468,7 +494,7 @@ def find_operation_sign(str_line):
         op_index = str_line.rfind(op)
         # If the operation sign is in the string and it isn't a part of an exponent
         if op_index != -1 and str_line[op_index - 1:op_index] != "e":
-            return True
+            return True, op_index
     return False
 
 
@@ -477,7 +503,7 @@ def find_operation_sign(str_line):
 #
 # @param value Button input value
 # @return Boolean value
-def check_num_availability(value):
+def check_button_availability(value):
     if value == "+" and plus_button["state"] == DISABLED:
         return False
     if value == "-" and minis_button["state"] == DISABLED:
@@ -507,6 +533,10 @@ def check_num_availability(value):
 def disable_operation_buttons():
     for op_button in operation_buttons:
         op_button.config(state=DISABLED)
+
+    if input_field["text"] == "":
+        nat_log_button.config(state=NORMAL)
+        dec_point_button.config(state=NORMAL)
 
 
 ##
@@ -673,7 +703,7 @@ def get_last_result():
     if i == -1:  # if there isn't
         return ""  # return nothing
     else:
-        return remove_parentheses(output_str[i + 1:])
+        return remove_parentheses(output_str[i + 2:])
 
 
 ##
@@ -711,12 +741,13 @@ def evaluate(event=None):
     args = []
 
     # Find the operation sign and set the arguments
-    for i in range(len(input_str) - 1, 0, -1):
+    for i in range(len(input_str) - 1, -1, -1):
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             # if radical index wasn't set
             if operator == "√" and not input_str[:1].isdigit():
                 input_str = "2" + input_str
+                i += 1
             args.append(float(input_str[:i]))
             args.append(float(input_str[i + 1:]))
             break
@@ -916,6 +947,7 @@ if __name__ == "__main__":
     # Sizegrip
     main_window_sizegrip = Sizegrip(master).pack(anchor="se", side=BOTTOM)
 
+    disable_operation_buttons()
 
     # Application loop
     master.mainloop()
