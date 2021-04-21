@@ -19,6 +19,7 @@ min_additional_window_height = 404
 # Text parameters
 wraplength_difference = 25
 default_button_text_size = 20
+default_font = "Arial"
 
 
 # Custom widgets
@@ -37,8 +38,8 @@ class MainWindowField(Label):
         self["borderwidth"] = 1
         self["bg"] = "#dadada"
         self["relief"] = "solid"
-        self["font"] = "Arial " + str(font_size)
-        self["wraplength"]=wraplength
+        self["font"] = f"{default_font} {font_size}"
+        self["wraplength"] = wraplength
 
 
 ##
@@ -57,13 +58,13 @@ class MainWindowButton(Button):
         self["activebackground"] = "#195e89"
         self["highlightbackground"] = "black"
         self["text"] = text
-        self["font"] = "Arial " + str(default_button_text_size) + " bold"
+        self["font"] = f"{default_font} {default_button_text_size} bold"
         self["command"] = command
 
     ##
     # Function that sets the button text size by ratio of the default size
     def set_font_size_by_ratio(self, font_size_ratio):
-        self["font"] = "Arial " + str(int(font_size_ratio * default_button_text_size)) + " bold"
+        self["font"] = f"{default_font} {int(font_size_ratio * default_button_text_size)} bold"
 
 
 ##
@@ -113,8 +114,7 @@ class Sizegrip(Frame):
         sizegrip_frame = Frame(self, bg="#dadada", highlightbackground="black")
         sizegrip_frame.pack(side="bottom", fill=X)
 
-        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
-                                             {"sticky": "se", "side": "bottom"})])
+        ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip", {"sticky": "se", "side": "bottom"})])
         sizegrip = ttk.Label(sizegrip_frame, style="Sizer.TLabel")
         sizegrip.pack(anchor="se")
 
@@ -159,7 +159,7 @@ class AboutWindow(Toplevel):
         app_about_label = Label(scrollbar_frame, text="This calculator application was created as the 2nd project "
                                                       "of the \"Practical Aspects of Software Design\" subject "
                                                       "by the team \"Blue Hair is the Way\n",
-                                font=("Arial", self.default_font_size),
+                                font=(default_font, self.default_font_size),
                                 wraplength=min_label_width,
                                 justify="left")
         app_about_label.pack()
@@ -178,7 +178,7 @@ class AboutWindow(Toplevel):
         Sizegrip(self).pack(anchor="se")
 
         # Exit About window shortcut
-        self.bind("<Escape>", lambda value: self.destroy())
+        self.bind("<Escape>", lambda event: self.destroy())
 
     ##
     # Function that returns the labels list with their default font size
@@ -214,7 +214,7 @@ class HelpWindow(Toplevel):
         # Put some labels
         self.labels_list = []
         self.default_font_size = 13
-        help_label = Label(scrollbar_frame, text="This is a help window", font=("Arial", self.default_font_size))
+        help_label = Label(scrollbar_frame, text="This is a help window", font=(default_font, self.default_font_size))
         help_label.pack()
 
         self.labels_list.append(help_label)
@@ -222,7 +222,7 @@ class HelpWindow(Toplevel):
         Sizegrip(self).pack(anchor="se")
 
         # Exit About window shortcut
-        self.bind("<Escape>", lambda value: self.destroy())
+        self.bind("<Escape>", lambda event: self.destroy())
 
     ##
     # Function that returns the labels list with their default font size
@@ -374,11 +374,11 @@ def resize_additional_window(event, window, labels, default_font_size):
     for i in range(len(labels)):
         label_font_config = (labels[i]["font"].split())[0]
         label_font_size = default_font_size
-        if delta_x >= min_main_window_width:
-            label_font_size = int(delta_x / min_main_window_width * default_font_size)
+        if delta_x >= min_additional_window_width:
+            label_font_size = int(delta_x / min_additional_window_width * default_font_size)
         labels[i].config(font=(label_font_config[0], label_font_size))
-        if delta_x < min_main_window_width:
-            delta_x = min_main_window_width
+        if delta_x < min_additional_window_width:
+            delta_x = min_additional_window_width
         labels[i].config(wraplength=delta_x - wraplength_difference)
 
 
@@ -420,15 +420,15 @@ def resize_main_window(event):
             other_buttons_text_size = delta_y / 31
 
     for num_button in num_buttons:
-        num_button.config(font=("Arial", int(num_buttons_text_size), "bold"))
+        num_button.config(font=(default_font, int(num_buttons_text_size), "bold"))
 
     for op_button in operation_buttons:
-        op_button.config(font=("Arial", int(other_buttons_text_size), "bold"))
+        op_button.config(font=(default_font, int(other_buttons_text_size), "bold"))
 
-    minis_button.config(font=("Arial", int(other_buttons_text_size), "bold"))
-    equals_button.config(font=("Arial", int(other_buttons_text_size), "bold"))
-    backspace_button.config(font=("Arial", int(other_buttons_text_size * 0.8), "bold"))
-    clear_button.config(font=("Arial", int(other_buttons_text_size), "bold"))
+    minis_button.config(font=(default_font, int(other_buttons_text_size), "bold"))
+    equals_button.config(font=(default_font, int(other_buttons_text_size), "bold"))
+    backspace_button.config(font=(default_font, int(other_buttons_text_size * 0.8), "bold"))
+    clear_button.config(font=(default_font, int(other_buttons_text_size), "bold"))
 
     if delta_x < 1:
         delta_x = 1
@@ -439,10 +439,10 @@ def resize_main_window(event):
     if delta_x < min_main_window_width:
         delta_x = min_main_window_width
     input_field.config(
-        font=("Arial", int(other_buttons_text_size / default_button_text_size * default_input_font_size)),
+        font=(default_font, int(other_buttons_text_size / default_button_text_size * default_input_font_size)),
         wraplength=delta_x * default_wraplength / min_main_window_width)
     output_field.config(
-        font=("Arial", int(other_buttons_text_size / default_button_text_size * default_output_font_size)),
+        font=(default_font, int(other_buttons_text_size / default_button_text_size * default_output_font_size)),
         wraplength=delta_x * default_wraplength / min_main_window_width)
 
 
@@ -759,8 +759,8 @@ if __name__ == "__main__":
     main_menu = Menu(master, bg="#003d63", fg="#ffffff", activebackground="#195e89",
                      activeforeground="#ffffff")
     master.config(menu=main_menu)
-    main_menu.add_command(label="Help", font="Arial", command=open_help_window)
-    main_menu.add_command(label="About", font="Arial", command=open_about_window)
+    main_menu.add_command(label="Help", font=default_font, command=open_help_window)
+    main_menu.add_command(label="About", font=default_font, command=open_about_window)
 
     # I/O Fields
     field_width_ratio = 0.75
@@ -770,7 +770,7 @@ if __name__ == "__main__":
     input_field.place(relheight=0.18, relwidth=field_width_ratio, relx=0, rely=0)
 
     default_output_font_size = 14
-    output_field = MainWindowField(default_input_font_size, default_wraplength)
+    output_field = MainWindowField(default_output_font_size, default_wraplength)
     output_field.place(relheight=0.18, relwidth=field_width_ratio, relx=0, rely=0.18)
 
     # Definition of buttons and binding keys
@@ -895,11 +895,11 @@ if __name__ == "__main__":
     master.bind("<Key-C>", clear_button_click)
 
     # Close the application by key
-    master.bind("<Escape>", lambda value: master.destroy())
+    master.bind("<Escape>", lambda event: master.destroy())
 
     # Help hotkeys
-    master.bind("<H>", lambda value: open_help_window())
-    master.bind("<h>", lambda value: open_help_window())
+    master.bind("<H>", lambda event: open_help_window())
+    master.bind("<h>", lambda event: open_help_window())
 
     num_buttons = [num0_button, num1_button, num2_button, num3_button, num4_button, num5_button, num6_button,
                    num7_button, num8_button, num9_button]
