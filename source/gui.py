@@ -21,31 +21,7 @@ wraplength_difference = 25
 default_button_text_size = 20
 
 
-##
-# Function that opens Help window
-def open_help_window():
-    global help_window
-    # If the window is opened, focus on it
-    try:
-        if help_window.state() == "normal":
-            help_window.focus()
-    # Else open it
-    except (NameError, TclError):
-        help_window = HelpWindow(master)
-
-
-##
-# Function that opens About window
-def open_about_window():
-    global about_window
-    # If the window is opened, focus on it
-    try:
-        if about_window.state() == "normal":
-            about_window.focus()
-    # Else open it
-    except (NameError, TclError):
-        about_window = AboutWindow(master)
-
+# Custom widgets
 
 ##
 # Class of the main window buttons
@@ -75,6 +51,10 @@ class MainWindowButton(Button):
 ##
 # Class of the scrollbar
 class Scrollbar(Frame):
+    ##
+    # Constructor of the window scrollbar
+    #
+    # @params parent Parent window
     def __init__(self, parent):
         Frame.__init__(self, parent)
 
@@ -101,9 +81,14 @@ class Scrollbar(Frame):
     def return_content_frame(self):
         return self.scroll_content_frame
 
+
 ##
-# Class of the Sizegrip
+# Class of the sizegrip
 class Sizegrip(Frame):
+    ##
+    # Constructor of the window sizegrip
+    #
+    # @params parent Parent window
     def __init__(self, parent):
         Frame.__init__(self, parent)
 
@@ -132,9 +117,9 @@ class Sizegrip(Frame):
 # Class of the About window
 class AboutWindow(Toplevel):
     ##
-    # Function that inisializes the About window
-    def __init__(self, master=None):
-        super().__init__(master=master)
+    # Constructor of the About window
+    def __init__(self):
+        super().__init__()
         self.title("About")
 
         # Put on the Left upper center part of the screen
@@ -191,9 +176,9 @@ class AboutWindow(Toplevel):
 # Class of the Help window
 class HelpWindow(Toplevel):
     ##
-    # Function that inisializes the Help window
-    def __init__(self, master=None):
-        super().__init__(master=master)
+    # Constructor of the Help window
+    def __init__(self):
+        super().__init__()
         self.title("Help")
 
         # Put on the Left upper center part of the screen
@@ -229,12 +214,38 @@ class HelpWindow(Toplevel):
     # @return Default labels' font size
     def get_params(self):
         return self.labels_list, self.default_font_size
-
     # TODO get rid of code duplications
+
+
+##
+# Function that opens the Help window
+def open_help_window():
+    global help_window
+    # If the window is opened, focus on it
+    try:
+        if help_window.state() == "normal":
+            help_window.focus()
+    # Else open it
+    except (NameError, TclError):
+        help_window = HelpWindow()
+
+
+##
+# Function that opens the About window
+def open_about_window():
+    global about_window
+    # If the window is opened, focus on it
+    try:
+        if about_window.state() == "normal":
+            about_window.focus()
+    # Else open it
+    except (NameError, TclError):
+        about_window = AboutWindow()
 
 
 # Operation list
 operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
+
 
 # Functions
 
