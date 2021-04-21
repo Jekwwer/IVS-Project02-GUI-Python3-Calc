@@ -11,30 +11,14 @@ from tkinter import *
 from tkinter import ttk
 from math_lib import *
 
-# The root of the program
-master = Tk()
-
-# Main window
-master.title("BHitW Calculator ")
-master.resizable(False, False)
-min_window_width = 350
-min_window_height = 370
+# Windows parameters
+min_main_window_width = 350
+min_main_window_height = 370
 min_additional_window_width = 400
 min_additional_window_height = 404
+# Text parameters
 wraplength_difference = 25
-
-# Upper center screen coordinates
-x_position = int(master.winfo_screenwidth() / 2 - min_window_width / 2)
-y_position = int(master.winfo_screenheight() / 3 - min_window_height / 2)
-
-# Put thw  main window to the (x,y)
-master.geometry(f"{min_window_width}x{min_window_height}+{x_position}+{y_position}")
-master.minsize(min_window_width, min_window_height)
-
-# Menu
-main_menu = Menu(master, bg="#003d63", fg="#ffffff", activebackground="#195e89",
-                 activeforeground="#ffffff")
-master.config(menu=main_menu)
+default_button_text_size = 20
 
 
 ##
@@ -50,9 +34,6 @@ def open_help_window():
         help_window = HelpWindow(master)
 
 
-main_menu.add_command(label="Help", font="Arial", command=open_help_window)
-
-
 ##
 # Function that opens About window
 def open_about_window():
@@ -66,34 +47,29 @@ def open_about_window():
         about_window = AboutWindow(master)
 
 
-main_menu.add_command(label="About", font="Arial", command=open_about_window)
+##
+# Class of the main window buttons
+class MainWindowButton(Button):
+    ##
+    # Constructor of the main window button
+    #
+    # @params text On-button text
+    # @params command Button-click command
+    def __init__(self, text, command, **kwargs):
+        super().__init__()
+        self["relief"] = FLAT
+        self["bg"] = "#003d63"
+        self["fg"] = "#ffffff"
+        self["activebackground"] = "#195e89"
+        self["highlightbackground"] = "black"
+        self["text"] = text
+        self["font"] = "Arial " + str(default_button_text_size) + " bold"
+        self["command"] = command
 
-# Fields
-default_wraplength = 235
-default_input_font_size = 18
-input_field = Label(master, borderwidth=1, bg="#dadada", relief=SOLID, font=("Arial", default_input_font_size),
-                    wraplength=default_wraplength,
-                    justify="center")
-input_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0)
-
-default_output_font_size = 14
-output_field = Label(master, borderwidth=1, bg="#dadada", relief=SOLID, font=("Arial", default_output_font_size),
-                     wraplength=default_wraplength,
-                     justify="center")
-output_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0.18)
-
-# Frame
-frame = Frame(master, bg="#dadada", highlightbackground="black")
-frame.pack(side="bottom", fill=X)
-
-# Sizegrip TODO make as an instance of the class
-ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
-                                     {"sticky": "se", "side": "bottom"})])
-sizegrip = ttk.Label(frame, style="Sizer.TLabel")
-sizegrip.pack(anchor="se")
-
-# Operation list
-operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
+    ##
+    # Function that sets the button text size by ratio of the default size
+    def set_font_size_by_ratio(self, font_size_ratio):
+        self["font"] = "Arial " + str(int(font_size_ratio * default_button_text_size)) + " bold"
 
 
 ##
@@ -125,29 +101,32 @@ class Scrollbar(Frame):
     def return_content_frame(self):
         return self.scroll_content_frame
 
-
 ##
 # Class of the Sizegrip
 class Sizegrip(Frame):
     def __init__(self, parent):
         Frame.__init__(self, parent)
 
-        self.sizegrip_frame = Frame(self, bg="#dadada", highlightbackground="black")
-        self.sizegrip_frame.pack(side="bottom", fill=X)
+        sizegrip_frame = Frame(self, bg="#dadada", highlightbackground="black")
+        sizegrip_frame.pack(side="bottom", fill=X)
 
         ttk.Style().layout("Sizer.TLabel", [("Sizegrip.sizegrip",
                                              {"sticky": "se", "side": "bottom"})])
-        self.sizegrip = ttk.Label(self.sizegrip_frame, style="Sizer.TLabel")
-        self.sizegrip.pack(anchor="se")
+        sizegrip = ttk.Label(sizegrip_frame, style="Sizer.TLabel")
+        sizegrip.pack(anchor="se")
 
-        self.sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
-        parent_labels, font_size = parent.get_params()
-        self.sizegrip.bind("<B1-Motion>",
-                           lambda event: resize_additional_window(event, parent, parent_labels, font_size))
-        self.sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
+        sizegrip.bind("<ButtonPress-1>", lambda event: sizegrip_button_press(event, sizegrip))
+        if parent == master:
+            sizegrip.bind("<B1-Motion>", lambda event: resize_main_window(event))
+        else:
+            parent_labels, font_size = parent.get_params()
+            sizegrip.bind("<B1-Motion>",
+                          lambda event: resize_additional_window(event, parent, parent_labels, font_size))
+
+        sizegrip.bind("<ButtonRelease-1>", lambda event: sizegrip_button_release(event, sizegrip))
+
 
 # Additional windows
-
 
 ##
 # Class of the About window
@@ -175,8 +154,8 @@ class AboutWindow(Toplevel):
         self.default_font_size = 13
         self.labels_list = []
         app_about_label = Label(scrollbar_frame, text="This calculator application was created as the 2nd project "
-                                                   "of the \"Practical Aspects of Software Design\" subject "
-                                                   "by the team \"Blue Hair is the Way\n",
+                                                      "of the \"Practical Aspects of Software Design\" subject "
+                                                      "by the team \"Blue Hair is the Way\n",
                                 font=("Arial", self.default_font_size),
                                 wraplength=min_label_width,
                                 justify="left")
@@ -184,10 +163,10 @@ class AboutWindow(Toplevel):
         self.labels_list.append(app_about_label)
 
         authors_label = Label(scrollbar_frame, text="Authors:\n"
-                                                 "• xshili00 Evgenii Shiliaev\n"
-                                                 "• xbenes58 Pavel Beneš\n"
-                                                 "• xkubra00 Marko Kubrachenko\n"
-                                                 "• xbrazd22 Šimon Brázda", font=("Courier", self.default_font_size),
+                                                    "• xshili00 Evgenii Shiliaev\n"
+                                                    "• xbenes58 Pavel Beneš\n"
+                                                    "• xkubra00 Marko Kubrachenko\n"
+                                                    "• xbrazd22 Šimon Brázda", font=("Courier", self.default_font_size),
                               wraplength=min_label_width,
                               justify="left")
         authors_label.pack()
@@ -254,10 +233,8 @@ class HelpWindow(Toplevel):
     # TODO get rid of code duplications
 
 
-# Help hotkeys
-master.bind("<H>", lambda value: open_help_window())
-master.bind("<h>", lambda value: open_help_window())
-
+# Operation list
+operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 
 # Functions
 
@@ -349,7 +326,7 @@ def backspace_button_click(event=None):
 
 ##
 # Function that catches pressing the sizegrip button
-def sizegrip_button_press(event):
+def sizegrip_button_press(event, sizegrip):
     sizegrip["cursor"] = "bottom_right_corner"
 
 
@@ -368,11 +345,11 @@ def resize_additional_window(event, window, labels, default_font_size):
     for i in range(len(labels)):
         label_font_config = (labels[i]["font"].split())[0]
         label_font_size = default_font_size
-        if delta_x >= min_window_width:
-            label_font_size = int(delta_x / min_window_width * default_font_size)
+        if delta_x >= min_main_window_width:
+            label_font_size = int(delta_x / min_main_window_width * default_font_size)
         labels[i].config(font=(label_font_config[0], label_font_size))
-        if delta_x < min_window_width:
-            delta_x = min_window_width
+        if delta_x < min_main_window_width:
+            delta_x = min_main_window_width
         labels[i].config(wraplength=delta_x - wraplength_difference)
 
 
@@ -385,7 +362,7 @@ def resize_main_window(event):
     num_buttons_text_size = other_buttons_text_size = default_button_text_size
 
     if delta_x / 16 > delta_y / 9:
-        if delta_x >= min_window_width:
+        if delta_x >= min_main_window_width:
             num_buttons_text_size = delta_x / 17.5
             other_buttons_text_size = delta_x / 17.5
         if delta_x >= 500:
@@ -399,7 +376,7 @@ def resize_main_window(event):
             other_buttons_text_size = delta_x / 17.5 - delta_x / 100 - delta_x / 85 - delta_x / 125
 
     else:
-        if delta_y >= min_window_height:
+        if delta_y >= min_main_window_height:
             num_buttons_text_size = delta_y / 18
             other_buttons_text_size = delta_y / 18
         if delta_y >= 540 and delta_x < 400:
@@ -430,19 +407,19 @@ def resize_main_window(event):
         delta_y = 1
     master.geometry("%sx%s" % (delta_x, delta_y))
 
-    if delta_x < min_window_width:
-        delta_x = min_window_width
+    if delta_x < min_main_window_width:
+        delta_x = min_main_window_width
     input_field.config(
         font=("Arial", int(other_buttons_text_size / default_button_text_size * default_input_font_size)),
-        wraplength=delta_x * default_wraplength / min_window_width)
+        wraplength=delta_x * default_wraplength / min_main_window_width)
     output_field.config(
         font=("Arial", int(other_buttons_text_size / default_button_text_size * default_output_font_size)),
-        wraplength=delta_x * default_wraplength / min_window_width)
+        wraplength=delta_x * default_wraplength / min_main_window_width)
 
 
 ##
 # Function that catches releasing the sizegrip button
-def sizegrip_button_release(event):
+def sizegrip_button_release(event, sizegrip):
     sizegrip["cursor"] = "arrow"
 
 
@@ -735,233 +712,177 @@ def evaluate(event=None):
     dec_point_button.config(state=NORMAL)
 
 
-# Definition of buttons and binding keys
+if __name__ == "__main__":
+    # Main window parameters
+    master = Tk()
+    master.title("BHitW Calculator ")
+    master.resizable(False, False)
 
-# NUM Buttons
-default_button_text_size = 20
+    # Upper center screen coordinates
+    x_position = int(master.winfo_screenwidth() / 2 - min_main_window_width / 2)
+    y_position = int(master.winfo_screenheight() / 3 - min_main_window_height / 2)
 
-num7_button = Button(master, text="7", command=lambda: input_button_press(7))
-num7_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num7_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.36)
+    # Put thw  main window to the (x,y)
+    master.geometry(f"{min_main_window_width}x{min_main_window_height}+{x_position}+{y_position}")
+    master.minsize(min_main_window_width, min_main_window_height)
 
-master.bind("<Key-7>", lambda value: input_button_press(7))
-master.bind("<KP_7>", lambda value: input_button_press(7))
+    # Main window menu
+    main_menu = Menu(master, bg="#003d63", fg="#ffffff", activebackground="#195e89",
+                     activeforeground="#ffffff")
+    master.config(menu=main_menu)
+    main_menu.add_command(label="Help", font="Arial", command=open_help_window)
+    main_menu.add_command(label="About", font="Arial", command=open_about_window)
 
-num8_button = Button(master, text="8", command=lambda: input_button_press(8))
-num8_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num8_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.36)
+    # I/O Fields
+    default_wraplength = 235     # TODO
+    default_input_font_size = 18 # TODO
+    input_field = Label(master, borderwidth=1, bg="#dadada", relief=SOLID, font=("Arial", default_input_font_size),
+                        wraplength=default_wraplength,
+                        justify="center")
+    input_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0)
 
-master.bind("<Key-8>", lambda value: input_button_press(8))
-master.bind("<KP_8>", lambda value: input_button_press(8))
+    default_output_font_size = 14 # TODO
+    output_field = Label(master, borderwidth=1, bg="#dadada", relief=SOLID, font=("Arial", default_output_font_size),
+                         wraplength=default_wraplength,
+                         justify="center")
+    output_field.place(relheight=0.18, relwidth=0.75, relx=0, rely=0.18)
 
-num9_button = Button(master, text="9", command=lambda: input_button_press(9))
-num9_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num9_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.36)
+    # Definition of buttons and binding keys
+    # NUM Buttons
+    num7_button = MainWindowButton("7", lambda: input_button_press(7))
+    num7_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.36)
+    master.bind("<Key-7>", lambda value: input_button_press(7))
+    master.bind("<KP_7>", lambda value: input_button_press(7))
 
-master.bind("<Key-9>", lambda value: input_button_press(9))
-master.bind("<KP_9>", lambda value: input_button_press(9))
+    num8_button = MainWindowButton("8", lambda: input_button_press(8))
+    num8_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.36)
+    master.bind("<Key-8>", lambda value: input_button_press(8))
+    master.bind("<KP_8>", lambda value: input_button_press(8))
 
-num4_button = Button(master, text="4", command=lambda: input_button_press(4))
-num4_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num4_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.51)
+    num9_button = MainWindowButton("9", lambda: input_button_press(9))
+    num9_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.36)
+    master.bind("<Key-9>", lambda value: input_button_press(9))
+    master.bind("<KP_9>", lambda value: input_button_press(9))
 
-master.bind("<Key-4>", lambda value: input_button_press(4))
-master.bind("<KP_4>", lambda value: input_button_press(4))
+    num4_button = MainWindowButton("4", lambda: input_button_press(4))
+    num4_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.51)
+    master.bind("<Key-4>", lambda value: input_button_press(4))
+    master.bind("<KP_4>", lambda value: input_button_press(4))
 
-num5_button = Button(master, text="5", command=lambda: input_button_press(5))
-num5_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num5_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.51)
+    num5_button = MainWindowButton("5", lambda: input_button_press(5))
+    num5_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.51)
+    master.bind("<Key-5>", lambda value: input_button_press(5))
+    master.bind("<KP_5>", lambda value: input_button_press(5))
 
-master.bind("<Key-5>", lambda value: input_button_press(5))
-master.bind("<KP_5>", lambda value: input_button_press(5))
+    num6_button = MainWindowButton("6", lambda: input_button_press(6))
+    num6_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.51)
+    master.bind("<Key-6>", lambda value: input_button_press(6))
+    master.bind("<KP_6>", lambda value: input_button_press(6))
 
-num6_button = Button(master, text="6", command=lambda: input_button_press(6))
-num6_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num6_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.51)
+    num1_button = MainWindowButton("1", lambda: input_button_press(1))
+    num1_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.66)
+    master.bind("<Key-1>", lambda value: input_button_press(1))
+    master.bind("<KP_1>", lambda value: input_button_press(1))
 
-master.bind("<Key-6>", lambda value: input_button_press(6))
-master.bind("<KP_6>", lambda value: input_button_press(6))
+    num2_button = MainWindowButton("2", lambda: input_button_press(2))
+    num2_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.66)
+    master.bind("<Key-2>", lambda value: input_button_press(2))
+    master.bind("<KP_2>", lambda value: input_button_press(2))
 
-num1_button = Button(master, text="1", command=lambda: input_button_press(1))
-num1_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num1_button.place(relheight=0.15, relwidth=0.25, relx=0, rely=0.66)
+    num3_button = MainWindowButton("3", lambda: input_button_press(3))
+    num3_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.66)
+    master.bind("<Key-3>", lambda value: input_button_press(3))
+    master.bind("<KP_3>", lambda value: input_button_press(3))
 
-master.bind("<Key-1>", lambda value: input_button_press(1))
-master.bind("<KP_1>", lambda value: input_button_press(1))
+    num0_button = MainWindowButton("0", lambda: input_button_press(0))
+    num0_button.place(relheight=0.15, relwidth=0.5, relx=0, rely=0.81)
+    master.bind("<Key-0>", lambda value: input_button_press(0))
+    master.bind("<KP_0>", lambda value: input_button_press(0))
 
-num2_button = Button(master, text="2", command=lambda: input_button_press(2))
-num2_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num2_button.place(relheight=0.15, relwidth=0.25, relx=0.25, rely=0.66)
+    dec_point_button = MainWindowButton(",", lambda: input_button_press(","))
+    dec_point_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.81)
+    master.bind("<Key-comma>", lambda value: input_button_press(","))
+    master.bind("<KP_Decimal>", lambda value: input_button_press(","))
 
-master.bind("<Key-2>", lambda value: input_button_press(2))
-master.bind("<KP_2>", lambda value: input_button_press(2))
+    # Basic operation buttons
+    divide_button = MainWindowButton("÷", lambda: input_button_press("/"))
+    divide_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.36)
+    master.bind("<Key-slash>", lambda value: input_button_press("/"))
+    master.bind("<KP_Divide>", lambda value: input_button_press("/"))
 
-num3_button = Button(master, text="3", command=lambda: input_button_press(3))
-num3_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num3_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.66)
+    multiply_button = MainWindowButton("×", lambda: input_button_press("*"))
+    multiply_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.51)
+    master.bind("<Key-asterisk>", lambda value: input_button_press("*"))
+    master.bind("<KP_Multiply>", lambda value: input_button_press("*"))
 
-master.bind("<Key-3>", lambda value: input_button_press(3))
-master.bind("<KP_3>", lambda value: input_button_press(3))
+    minis_button = MainWindowButton("−", lambda: input_button_press("-"))
+    minis_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.66)
+    master.bind("<Key-minus>", lambda value: input_button_press("-"))
+    master.bind("<KP_Subtract>", lambda value: input_button_press("-"))
 
-num0_button = Button(master, text="0", command=lambda: input_button_press(0))
-num0_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-num0_button.place(relheight=0.15, relwidth=0.5, relx=0, rely=0.81)
+    plus_button = MainWindowButton("+", lambda: input_button_press("+"))
+    plus_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.81)
+    master.bind("<Key-plus>", lambda value: input_button_press("+"))
+    master.bind("<KP_Add>", lambda value: input_button_press("+"))
 
-master.bind("<Key-0>", lambda value: input_button_press(0))
-master.bind("<KP_0>", lambda value: input_button_press(0))
+    # Advanced operation buttons
+    nat_log_button = MainWindowButton("㏑", lambda: input_button_press("㏑"))
+    nat_log_button.place(relheight=0.18, relwidth=0.125, relx=0.75, rely=0.18)
+    master.bind("<Key-n>", lambda value: input_button_press("㏑"))
+    master.bind("<Key-N>", lambda value: input_button_press("㏑"))
 
-dec_point_button = Button(master, text=",", command=lambda: input_button_press(","))
-dec_point_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                        activebackground="#195e89",
-                        fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-dec_point_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.81)
+    log_button = MainWindowButton("㏒", lambda: input_button_press("㏒"))
+    log_button.place(relheight=0.18, relwidth=0.125, relx=0.875, rely=0.18)
+    master.bind("<Key-l>", lambda value: input_button_press("㏒"))
+    master.bind("<Key-L>", lambda value: input_button_press("㏒"))
 
-master.bind("<Key-comma>", lambda value: input_button_press(","))
-master.bind("<KP_Decimal>", lambda value: input_button_press(","))
+    factorial_button = MainWindowButton("n!", lambda: input_button_press("!"))
+    factorial_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.36)
+    master.bind("<Key-exclam>", lambda value: input_button_press("!"))
 
-# Basic operation buttons
-divide_button = Button(master, text="÷", command=lambda: input_button_press("/"))
-divide_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                     activebackground="#195e89",
-                     fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-divide_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.36)
+    root_button = MainWindowButton("√", lambda: input_button_press("√"))
+    root_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.51)
+    master.bind("<Key-r>", lambda value: input_button_press("√"))
+    master.bind("<Key-R>", lambda value: input_button_press("√"))
 
-master.bind("<Key-slash>", lambda value: input_button_press("/"))
-master.bind("<KP_Divide>", lambda value: input_button_press("/"))
+    power_button = MainWindowButton("xⁿ", lambda: input_button_press("^"))
+    power_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.66)
+    master.bind("<Key-asciicircum>", lambda value: input_button_press("^"))
 
-multiply_button = Button(master, text="×", command=lambda: input_button_press("*"))
-multiply_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                       activebackground="#195e89",
-                       fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-multiply_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.51)
+    # Equals button
+    equals_button = MainWindowButton("=", command=evaluate)
+    equals_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.81)
+    master.bind("<Return>", evaluate)
+    master.bind("<KP_Enter>", evaluate)
+    master.bind("<Key-equal>", evaluate)
 
-master.bind("<Key-asterisk>", lambda value: input_button_press("*"))
-master.bind("<KP_Multiply>", lambda value: input_button_press("*"))
+    # Special buttons
+    backspace_button = MainWindowButton("⌫", backspace_button_click)
+    backspace_button.place(relheight=0.18, relwidth=0.125, relx=0.75, rely=0)
+    backspace_button.set_font_size_by_ratio(0.9)
+    master.bind("<Key-BackSpace>", backspace_button_click)
+    master.bind("<Key-Delete>", backspace_button_click)
 
-minis_button = Button(master, text="−", command=lambda: input_button_press("-"))
-minis_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                    activebackground="#195e89",
-                    fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-minis_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.66)
+    clear_button = MainWindowButton("C", clear_button_click)
+    clear_button.place(relheight=0.18, relwidth=0.125, relx=0.875, rely=0)
+    master.bind("<Key-c>", clear_button_click)
+    master.bind("<Key-C>", clear_button_click)
 
-master.bind("<Key-minus>", lambda value: input_button_press("-"))
-master.bind("<KP_Subtract>", lambda value: input_button_press("-"))
+    # Close the application by key
+    master.bind("<Escape>", lambda value: master.destroy())
 
-plus_button = Button(master, text="+", command=lambda: input_button_press("+"))
-plus_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-plus_button.place(relheight=0.15, relwidth=0.125, relx=0.75, rely=0.81)
+    # Help hotkeys
+    master.bind("<H>", lambda value: open_help_window())
+    master.bind("<h>", lambda value: open_help_window())
 
-master.bind("<Key-plus>", lambda value: input_button_press("+"))
-master.bind("<KP_Add>", lambda value: input_button_press("+"))
+    num_buttons = [num0_button, num1_button, num2_button, num3_button, num4_button, num5_button, num6_button,
+                   num7_button, num8_button, num9_button]
 
-# Advanced operation buttons
-nat_log_button = Button(master, text="㏑", command=lambda: input_button_press("㏑"))
-nat_log_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                      activebackground="#195e89",
-                      fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-nat_log_button.place(relheight=0.18, relwidth=0.125, relx=0.75, rely=0.18)
+    operation_buttons = [plus_button, multiply_button, divide_button, power_button, root_button,
+                         factorial_button, log_button, nat_log_button, dec_point_button]
 
-master.bind("<Key-n>", lambda value: input_button_press("㏑"))
-master.bind("<Key-N>", lambda value: input_button_press("㏑"))
+    # Sizegrip
+    main_window_sizegrip = Sizegrip(master).pack(anchor="se", side=BOTTOM)
 
-log_button = Button(master, text="㏒", command=lambda: input_button_press("㏒"))
-log_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                  activebackground="#195e89",
-                  fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-log_button.place(relheight=0.18, relwidth=0.125, relx=0.875, rely=0.18)
-
-master.bind("<Key-l>", lambda value: input_button_press("㏒"))
-master.bind("<Key-L>", lambda value: input_button_press("㏒"))
-
-factorial_button = Button(master, text="n!", command=lambda: input_button_press("!"))
-factorial_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                        activebackground="#195e89",
-                        fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-factorial_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.36)
-
-master.bind("<Key-exclam>", lambda value: input_button_press("!"))
-
-root_button = Button(master, text="√", command=lambda: input_button_press("√"))
-root_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                   activebackground="#195e89",
-                   fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-root_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.51)
-
-master.bind("<Key-r>", lambda value: input_button_press("√"))
-master.bind("<Key-R>", lambda value: input_button_press("√"))
-
-power_button = Button(master, text="xⁿ", command=lambda: input_button_press("^"))
-power_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                    activebackground="#195e89",
-                    fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-power_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.66)
-
-master.bind("<Key-asciicircum>", lambda value: input_button_press("^"))
-
-# Equals button
-equals_button = Button(master, text="=", command=evaluate)
-equals_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                     activebackground="#195e89",
-                     fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-equals_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.81)
-
-master.bind("<Return>", evaluate)
-master.bind("<KP_Enter>", evaluate)
-master.bind("<Key-equal>", evaluate)
-
-# Special buttons
-backspace_button = Button(master, text="⌫", command=backspace_button_click)
-backspace_button.config(relief=FLAT, font=("Arial", int(0.9 * default_button_text_size), "bold"), bg="#003d63",
-                        activebackground="#195e89",
-                        fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-backspace_button.place(relheight=0.18, relwidth=0.125, relx=0.75, rely=0)
-
-master.bind("<Key-BackSpace>", backspace_button_click)
-master.bind("<Key-Delete>", backspace_button_click)
-
-clear_button = Button(master, text="C", command=clear_button_click)
-clear_button.config(relief=FLAT, font=("Arial", default_button_text_size, "bold"), bg="#003d63",
-                    activebackground="#195e89",
-                    fg="#ffffff", activeforeground="#ffffff", highlightbackground="black")
-clear_button.place(relheight=0.18, relwidth=0.125, relx=0.875, rely=0)
-
-master.bind("<Key-c>", clear_button_click)
-master.bind("<Key-C>", clear_button_click)
-
-master.bind("<Escape>", lambda value: master.destroy())
-
-# Sizegrip binds
-sizegrip.bind("<ButtonPress-1>", sizegrip_button_press)
-sizegrip.bind("<B1-Motion>", resize_main_window)
-sizegrip.bind("<ButtonRelease-1>", sizegrip_button_release)
-
-num_buttons = [num0_button, num1_button, num2_button, num3_button, num4_button, num5_button, num6_button,
-               num7_button, num8_button, num9_button]
-
-operation_buttons = [plus_button, multiply_button, divide_button, power_button, root_button,
-                     factorial_button, log_button, nat_log_button, dec_point_button]
-
-# MAIN loop
-master.mainloop()
+    # Application loop
+    master.mainloop()
