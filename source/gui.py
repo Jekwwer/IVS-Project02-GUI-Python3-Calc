@@ -285,7 +285,10 @@ def input_button_press(value):
     if input_str[-1:] == value == '-':
         return
 
-    if input_str == "" and str(value).isdigit():
+    if input_str == "" and (str(value).isdigit()):
+        enable_operation_buttons()
+
+    if len(input_str) == 1 and (str(value).isdigit()):
         enable_operation_buttons()
 
     # Feature "Continue the calculating" (not working with logarithms and root)
@@ -376,6 +379,10 @@ def backspace_button_click(event=None):
         clear_button_click()
         return
     input_field.config(text=input_str[:-1])
+    if input_str[:-1] == "-":
+        disable_operation_buttons()
+        dec_point_button.config(state=NORMAL)
+        minis_button.config(state=NORMAL)
     # If last character was a decimal point, enable the decimal point button
     if input_str[-1:] == ",":
         dec_point_button.config(state=NORMAL)
