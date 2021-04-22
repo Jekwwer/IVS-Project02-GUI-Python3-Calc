@@ -353,6 +353,7 @@ def clear_button_click(event=None):
     if input_field["text"] == "":
         output_field["text"] = ""
         disable_operation_buttons()
+        root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
         return
@@ -360,6 +361,7 @@ def clear_button_click(event=None):
     input_field.config(text="")
     if output_field["text"] == "":
         disable_operation_buttons()
+        root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
         return
@@ -381,6 +383,7 @@ def backspace_button_click(event=None):
     input_field.config(text=input_str[:-1])
     if input_str[:-1] == "-":
         disable_operation_buttons()
+        root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
     # If last character was a decimal point, enable the decimal point button
@@ -542,6 +545,7 @@ def disable_operation_buttons():
         op_button.config(state=DISABLED)
 
     if input_field["text"] == "":
+        root_button.config(state=NORMAL)
         nat_log_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
 
