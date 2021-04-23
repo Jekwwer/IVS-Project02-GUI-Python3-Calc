@@ -188,107 +188,94 @@ class Sizegrip(Frame):
 # Additional windows
 
 ##
+# Class of the Additional windows
+class AdditionalWindow(Toplevel):
+    ##
+    # Constructor of the About window
+    #
+    # @param title Window title
+    def __init__(self, title):
+        super().__init__()
+        self.title(title)
+        self.minsize(min_additional_window_width, min_additional_window_height)
+        self.resizable(False, False)
+
+        self.default_font_size = 13
+        self.objects_list = []
+
+        self.min_label_width = min_additional_window_width - wraplength_difference
+
+        self.scrollbar = Scrollbar(self)
+        self.scrollbar_frame = self.scrollbar.return_content_frame()
+        self.scrollbar.pack()
+
+        Sizegrip(self).pack(anchor="se")
+
+        # Exit About window shortcut
+        self.bind("<Escape>", lambda event: self.destroy())
+
+    ##
+    # Function that returns the labels list with their default font size
+    # @brief  This function makes possible to change the window labels size via the sizegrip
+    #
+    # @return List of the window labels
+    # @return Default labels' font size
+    def get_params(self):
+        return self.objects_list, self.default_font_size
+
+
+##
 # Class of the About window
-class AboutWindow(Toplevel):
+class AboutWindow(AdditionalWindow):
     ##
     # Constructor of the About window
     def __init__(self):
-        super().__init__()
-        self.title("About")
+        super().__init__("About")
 
         # Put on the Left upper center part of the screen
         add_x_position = int(master.winfo_screenwidth() / 2 + min_additional_window_width / 2)
         add_y_position = y_position
         self.geometry(f"{min_additional_window_width}x{min_additional_window_height}+{add_x_position}+{add_y_position}")
-        self.minsize(min_additional_window_width, min_additional_window_height)
-        self.resizable(False, False)
 
-        min_label_width = min_additional_window_width - wraplength_difference
-
-        scrollbar = Scrollbar(self)
-        scrollbar_frame = scrollbar.return_content_frame()
-        scrollbar.pack()
-
-        # Put some labels
-        self.default_font_size = 13
-        self.labels_list = []
-        app_about_label = Label(scrollbar_frame, text="This calculator application was created as the 2nd project "
-                                                      "of the \"Practical Aspects of Software Design\" subject "
-                                                      "by the team \"Blue Hair is the Way\n",
+        app_about_label = Label(self.scrollbar_frame, text="This calculator application was created as the 2nd project "
+                                                           "of the \"Practical Aspects of Software Design\" subject "
+                                                           "by the team \"Blue Hair is the Way\n",
                                 font=(default_font, self.default_font_size),
-                                wraplength=min_label_width,
+                                wraplength=self.min_label_width,
                                 justify="left")
         app_about_label.pack()
-        self.labels_list.append(app_about_label)
+        self.objects_list.append(app_about_label)
 
-        authors_label = Label(scrollbar_frame, text="Authors:\n"
-                                                    "• xshili00 Evgenii Shiliaev\n"
-                                                    "• xbenes58 Pavel Beneš\n"
-                                                    "• xkubra00 Marko Kubrachenko\n"
-                                                    "• xbrazd22 Šimon Brázda", font=("Courier", self.default_font_size),
-                              wraplength=min_label_width,
+        authors_label = Label(self.scrollbar_frame, text="Authors:\n"
+                                                         "• xshili00 Evgenii Shiliaev\n"
+                                                         "• xbenes58 Pavel Beneš\n"
+                                                         "• xkubra00 Marko Kubrachenko\n"
+                                                         "• xbrazd22 Šimon Brázda",
+                              font=("Courier", self.default_font_size),
+                              wraplength=self.min_label_width,
                               justify="left")
         authors_label.pack()
-        self.labels_list.append(authors_label)
-
-        Sizegrip(self).pack(anchor="se")
-
-        # Exit About window shortcut
-        self.bind("<Escape>", lambda event: self.destroy())
-
-    ##
-    # Function that returns the labels list with their default font size
-    # @brief  This function makes possible to change the window labels size via the sizegrip
-    #
-    # @return List of the window labels
-    # @return Default labels' font size
-    def get_params(self):
-        return self.labels_list, self.default_font_size
+        self.objects_list.append(authors_label)
 
 
 ##
 # Class of the Help window
-class HelpWindow(Toplevel):
+class HelpWindow(AdditionalWindow):
     ##
     # Constructor of the Help window
     def __init__(self):
-        super().__init__()
-        self.title("Help")
+        super().__init__("Help")
 
         # Put on the Left upper center part of the screen
         add_x_position = int(master.winfo_screenwidth() / 2 - 1.5 * min_additional_window_width)
         add_y_position = y_position
         self.geometry(f"{min_additional_window_width}x{min_additional_window_height}+{add_x_position}+{add_y_position}")
-        self.minsize(min_additional_window_width, min_additional_window_height)
-        self.resizable(False, False)
-
-        # Help window scrollbar
-        scrollbar = Scrollbar(self)
-        scrollbar_frame = scrollbar.return_content_frame()
-        scrollbar.pack()
 
         # Put some labels
-        self.labels_list = []
-        self.default_font_size = 13
-        help_label = Label(scrollbar_frame, text="This is a help window", font=(default_font, self.default_font_size))
+        help_label = Label(self.scrollbar_frame, text="This is a help window",
+                           font=(default_font, self.default_font_size))
         help_label.pack()
-
-        self.labels_list.append(help_label)
-
-        Sizegrip(self).pack(anchor="se")
-
-        # Exit About window shortcut
-        self.bind("<Escape>", lambda event: self.destroy())
-
-    ##
-    # Function that returns the labels list with their default font size
-    # @brief  This function makes possible to change the window labels size via the sizegrip
-    #
-    # @return List of the window labels
-    # @return Default labels' font size
-    def get_params(self):
-        return self.labels_list, self.default_font_size
-    # TODO get rid of code duplications
+        self.objects_list.append(help_label)
 
 
 ##
