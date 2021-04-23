@@ -326,8 +326,6 @@ operations_signs = ["+", "−", "/", "*", "!", "^", "√", "㏒", "㏑"]
 ##
 # Function of adding button value to the input field
 #
-# @todo disable numbers after factorial sign
-#
 # @param value Button value
 def input_button_press(value):
     # If button is disabled (for keyboard input)
@@ -337,14 +335,19 @@ def input_button_press(value):
     # Get string from the input
     input_str = input_field["text"]
 
+    # Preventing multiple minus input
     if input_str[-1:] == value == '-':
         return
 
+    # If the first input sign was a digit,
+    # enable the operation buttons
     if input_str == "" and (str(value).isdigit()):
         enable_operation_buttons()
 
-    if len(input_str) == 1 and (str(value).isdigit()):
-        enable_operation_buttons()
+    # If was added a factorial operation sign, disable the num buttons and minus button
+    if value == "!":
+        disable_number_buttons()
+        minis_button.config(state=DISABLED)
 
     # Feature "Continue the calculating" (not working with logarithms and root)
     # If after the last expression user will write an operation sign,
@@ -372,6 +375,7 @@ def input_button_press(value):
     # without a Backspace or Clear button call
     if input_str[-1:] in operations_signs and value in operations_signs:
         is_operator, op_index = find_operation_sign(input_str)
+        enable_number_buttons()
         if is_operator and input_str[:op_index] != "":
             input_str = input_str[:-1]
         else:
@@ -425,6 +429,7 @@ def clear_button_click():
     dec_point_button.config(state=NORMAL)
     minis_button.config(state=NORMAL)
     enable_operation_buttons()
+    enable_number_buttons()
 
 
 ##
@@ -447,6 +452,7 @@ def backspace_button_click():
     # If last character was an operation sign, enable the operation buttons
     if input_str[-2:-1] in operations_signs or input_str[-1:] in operations_signs:
         enable_operation_buttons()
+        enable_number_buttons()
         minis_button.config(state=NORMAL)
 
 
@@ -615,6 +621,20 @@ def enable_operation_buttons():
 
 
 ##
+# Function that disables all number buttons
+def disable_number_buttons():
+    for num_button in num_buttons:
+        num_button.config(state=DISABLED)
+
+
+##
+# Function that enables all number buttons
+def enable_number_buttons():
+    for num_button in num_buttons:
+        num_button.config(state=NORMAL)
+
+
+##
 # Function that changes all commas in the string to dots (for mathematical operations)
 #
 # @param str_line Input string
@@ -657,8 +677,6 @@ def remove_empty_decimal_part(str_line):
 ##
 # Function that calculates the expression
 #
-# @todo Factorial bound
-#
 # @param operator Expression operation
 # @param args Expression arguments
 # @return Result of the expression
@@ -679,14 +697,19 @@ def calculate(operator, args):
                      f"{args[0]} / {args[1]} is NOT possible!"
             state = 1
     elif operator == "!":
-        try:
-            result = fac(args[0])
-            if args[0] > 13:
-                result = "{:e}".format(result)
-        except ValueError:
-            result = f"Factorial Error:" \
-                     f"{args[0]} must NOT be decimal or negative!"
+        if args[0] > 170:
+            result = "Factorial Error: \n" \
+                     "Max value for factorial is 170"
             state = 1
+        else:
+            try:
+                result = fac(args[0])
+                if args[0] > 13:
+                    result = "{:e}".format(result)
+            except ValueError:
+                result = f"Factorial Error:" \
+                         f"{args[0]} must NOT be decimal or negative!"
+                state = 1
     elif operator == "^":
         try:
             result = power(args[0], args[1])
