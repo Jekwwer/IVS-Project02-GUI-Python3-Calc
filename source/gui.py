@@ -19,7 +19,7 @@ min_additional_window_height = 404
 # Text parameters
 wraplength_difference = 25
 default_button_text_size = 20
-default_font = "Arial"
+default_font = "Ubuntu"
 # Custom colors
 dark_red = ["#630000", "#891919"]
 dark_orange = ["#633700", "#894f19"]
@@ -52,7 +52,7 @@ class MainWindowField(Label):
 
 
 ##
-# Class of the main window menu
+# Class of the main window buttons
 class MainWindowButton(Button):
     ##
     # Constructor of the main window button
@@ -251,7 +251,7 @@ class AboutWindow(AdditionalWindow):
                                                          "• xbenes58 Pavel Beneš\n"
                                                          "• xkubra00 Marko Kubrachenko\n"
                                                          "• xbrazd22 Šimon Brázda",
-                              font=("Courier", self.default_font_size),
+                              font=("UbuntuMono", self.default_font_size),
                               wraplength=self.min_label_width,
                               justify="left")
         authors_label.pack()
@@ -896,7 +896,7 @@ if __name__ == "__main__":
     set_color_menu.add_new_command("Dark Yellow", dark_yellow, lambda: change_theme(dark_yellow))
     set_color_menu.add_new_command("Dark Green", dark_green, lambda: change_theme(dark_green))
     set_color_menu.add_new_command("Dark Cyan", dark_cyan, lambda: change_theme(dark_cyan))
-    set_color_menu.add_new_command("Dark Blue", dark_blue, lambda: change_theme(dark_blue))
+    set_color_menu.add_new_command("Dark Blue (Default)", dark_blue, lambda: change_theme(dark_blue))
     set_color_menu.add_new_command("Dark Violet", dark_violet, lambda: change_theme(dark_violet))
     settings_menu.add_cascade(label="Set color theme", font=default_font, menu=set_color_menu)
     main_menu.add_cascade(label="Settings", font=default_font, menu=settings_menu)
