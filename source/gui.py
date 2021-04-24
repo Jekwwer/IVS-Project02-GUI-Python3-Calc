@@ -973,6 +973,7 @@ if __name__ == "__main__":
     dec_point_button = MainWindowButton(master, ",", lambda: input_button_press(","))
     dec_point_button.place(relheight=0.15, relwidth=0.25, relx=0.5, rely=0.81)
     master.bind("<Key-comma>", lambda value: input_button_press(","))
+    master.bind("<Key-period>", lambda value: input_button_press(","))
     master.bind("<KP_Decimal>", lambda value: input_button_press(","))
 
     # Basic operation buttons
@@ -1023,21 +1024,21 @@ if __name__ == "__main__":
     # Equals button
     equals_button = MainWindowButton(master, "=", command=evaluate)
     equals_button.place(relheight=0.15, relwidth=0.125, relx=0.875, rely=0.81)
-    master.bind("<Return>", evaluate)
-    master.bind("<KP_Enter>", evaluate)
-    master.bind("<Key-equal>", evaluate)
+    master.bind("<Return>", lambda event: evaluate())
+    master.bind("<KP_Enter>", lambda event: evaluate())
+    master.bind("<Key-equal>", lambda event: evaluate())
 
     # Special buttons
     backspace_button = MainWindowButton(master, "⌫", backspace_button_click)
     backspace_button.place(relheight=0.18, relwidth=0.125, relx=0.75, rely=0)
     backspace_button.set_font_size_by_ratio(0.9)
-    master.bind("<Key-BackSpace>", backspace_button_click)
-    master.bind("<Key-Delete>", backspace_button_click)
+    master.bind("<Key-BackSpace>", lambda event: backspace_button_click())
+    master.bind("<Key-Delete>", lambda event: backspace_button_click())
 
     clear_button = MainWindowButton(master, "C", clear_button_click)
     clear_button.place(relheight=0.18, relwidth=0.125, relx=0.875, rely=0)
-    master.bind("<Key-c>", clear_button_click)
-    master.bind("<Key-C>", clear_button_click)
+    master.bind("<Key-c>", lambda event: clear_button_click())
+    master.bind("<Key-C>", lambda event: clear_button_click())
 
     # Close the application by key
     master.bind("<Escape>", lambda event: master.destroy())
