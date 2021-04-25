@@ -473,7 +473,7 @@ def resize_additional_window(event, window, labels, default_font_size):
         label_font_size = default_font_size
         if delta_x >= min_additional_window_width:
             label_font_size = int(delta_x / min_additional_window_width * default_font_size)
-        labels[i].config(font=(label_font_config[0], label_font_size))
+        labels[i].config(font=(label_font_config, label_font_size))
         if delta_x < min_additional_window_width:
             delta_x = min_additional_window_width
         labels[i].config(wraplength=delta_x - wraplength_difference)
