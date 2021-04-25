@@ -9,6 +9,7 @@
 
 from tkinter import *
 from tkinter import ttk
+from tkdocviewer import *
 from math_lib import *
 
 # Windows parameters
@@ -260,22 +261,28 @@ class AboutWindow(AdditionalWindow):
 
 ##
 # Class of the Help window
-class HelpWindow(AdditionalWindow):
+class HelpWindow(Toplevel):
     ##
     # Constructor of the Help window
     def __init__(self):
-        super().__init__("Help")
+        super().__init__()
+        self.title("Help")
+        self.minsize(min_additional_window_width, min_additional_window_height)
+
+        self.min_additional_window_width = int(min_additional_window_width * 2)
+        self.min_additional_window_height = int(min_additional_window_height * 2)
 
         # Put on the Left upper center part of the screen
-        add_x_position = int(master.winfo_screenwidth() / 2 - 1.5 * min_additional_window_width)
+        add_x_position = int(master.winfo_screenwidth() / 2 - 1.5 * self.min_additional_window_width)
         add_y_position = y_position
-        self.geometry(f"{min_additional_window_width}x{min_additional_window_height}+{add_x_position}+{add_y_position}")
+        self.geometry(f"{self.min_additional_window_width}x{self.min_additional_window_height}+{add_x_position}+{add_y_position}")
 
-        # Put some labels
-        help_label = Label(self.scrollbar_frame, text="This is a help window",
-                           font=(default_font, self.default_font_size))
-        help_label.pack()
-        self.objects_list.append(help_label)
+        # Manual Viewer
+        user_manual = DocViewer(self)
+        user_manual.pack(side="top", expand=1, fill="both")
+
+        # Display the manual
+        user_manual.display_file("../documentation.pdf")
 
 
 ##
