@@ -428,6 +428,7 @@ def clear_button_click():
     if input_field["text"] == "":
         output_field["text"] = ""
         disable_operation_buttons()
+        enable_number_buttons()
         root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
@@ -436,6 +437,7 @@ def clear_button_click():
     input_field.config(text="")
     if output_field["text"] == "":
         disable_operation_buttons()
+        enable_number_buttons()
         root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
@@ -883,6 +885,7 @@ def evaluate():
     output_field.config(text=output_str)  # put the result to the output field
 
     enable_operation_buttons()
+    enable_number_buttons()
     minis_button.config(state=NORMAL)
     dec_point_button.config(state=NORMAL)
 
