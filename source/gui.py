@@ -247,16 +247,38 @@ class AboutWindow(AdditionalWindow):
         app_about_label.pack()
         self.objects_list.append(app_about_label)
 
-        authors_label = Label(self.scrollbar_frame, text="Authors:\n"
-                                                         "• xshili00 Evgenii Shiliaev\n"
-                                                         "• xbenes58 Pavel Beneš\n"
-                                                         "• xkubra00 Marko Kubrachenko\n"
-                                                         "• xbrazd22 Šimon Brázda",
-                              font=("UbuntuMono", self.default_font_size),
+        authors_label1 = Label(self.scrollbar_frame, text="Authors",
+                               font=("UbuntuMono", self.default_font_size),
+                               wraplength=self.min_label_width,
+                               justify="center")
+        authors_label1.pack(side=TOP)
+        self.objects_list.append(authors_label1)
+
+        authors_label2 = Label(self.scrollbar_frame, text="• xshili00 Evgenii Shiliaev\n"
+                                                          "• xbenes58 Pavel Beneš\n"
+                                                          "• xkubra00 Marko Kubrachenko\n"
+                                                          "• xbrazd22 Šimon Brázda\n",
+                               font=("UbuntuMono", self.default_font_size),
+                               wraplength=self.min_label_width,
+                               justify="left")
+        authors_label2.pack(side=TOP)
+        self.objects_list.append(authors_label2)
+
+        version_label = Label(self.scrollbar_frame, text="Version\n"
+                                                         "1.0\n",
+                              font=(default_font, self.default_font_size),
                               wraplength=self.min_label_width,
-                              justify="left")
-        authors_label.pack()
-        self.objects_list.append(authors_label)
+                              justify="center")
+        version_label.pack(side=LEFT)
+        self.objects_list.append(version_label)
+
+        licence_label = Label(self.scrollbar_frame, text="Licence\n"
+                                                         "GNU GPLv3\n",
+                              font=(default_font, self.default_font_size),
+                              wraplength=self.min_label_width,
+                              justify="center")
+        licence_label.pack(side=RIGHT)
+        self.objects_list.append(licence_label)
 
 
 ##
