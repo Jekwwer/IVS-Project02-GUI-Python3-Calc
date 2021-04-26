@@ -4,7 +4,7 @@
 # @file    math_lib.py
 # @brief   Functions for mathematical library
 # @authors Evgenii Shiliaev  (xshili00)
-#          Marko Kubrachenko (xkubra00)
+# @authors Marko Kubrachenko (xkubra00)
 
 ##
 # Function of adding two values
@@ -62,6 +62,7 @@ def power(b, exp):
     return round((b ** exp), 10)
 
 
+##
 # Factorial function
 #
 # @param a Number
@@ -70,6 +71,7 @@ def fac(a):
     # Factorial does not exist for negative or decimal numbers
     if round(a) != a or a < 0:
         raise ValueError
+    a = int(a)
     factorial = 1
     # Factorial of 1 is 0
     if a == 0:
