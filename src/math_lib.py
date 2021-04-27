@@ -99,9 +99,9 @@ def root(x, n):
         raise ValueError
 
     if x < 0:
-        return -((-x) ** (1 / n))
+        return round(-((-x) ** (1 / n)), 10)
     else:
-        return x ** (1 / n)
+        return round(x ** (1 / n), 10)
 
 
 ##

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # GUI
 
 ##
@@ -291,7 +293,7 @@ class HelpWindow(Toplevel):
         self.title("Help")
         self.minsize(min_additional_window_width, min_additional_window_height)
 
-        self.min_additional_window_width = int(min_additional_window_width * 2)
+        self.min_additional_window_width = int(min_additional_window_width * 1.5)
         self.min_additional_window_height = int(min_additional_window_height * 2)
 
         # Put on the Left upper center part of the screen
@@ -304,7 +306,7 @@ class HelpWindow(Toplevel):
         user_manual.pack(side="top", expand=1, fill="both")
 
         # Display the manual
-        user_manual.display_file("../documentation.pdf")
+        user_manual.display_file("manual_for_help_window.pdf")
 
 
 ##
@@ -428,6 +430,7 @@ def clear_button_click():
     if input_field["text"] == "":
         output_field["text"] = ""
         disable_operation_buttons()
+        enable_number_buttons()
         root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
@@ -436,6 +439,7 @@ def clear_button_click():
     input_field.config(text="")
     if output_field["text"] == "":
         disable_operation_buttons()
+        enable_number_buttons()
         root_button.config(state=NORMAL)
         dec_point_button.config(state=NORMAL)
         minis_button.config(state=NORMAL)
@@ -854,7 +858,7 @@ def evaluate():
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             # if radical index wasn't set
-            if operator == "√" and not input_str[:1].isdigit():
+            if operator == "√" and not input_str[i-1:i].isdigit():
                 input_str = "2" + input_str
                 i += 1
             args.append(float(input_str[:i]))
@@ -883,6 +887,7 @@ def evaluate():
     output_field.config(text=output_str)  # put the result to the output field
 
     enable_operation_buttons()
+    enable_number_buttons()
     minis_button.config(state=NORMAL)
     dec_point_button.config(state=NORMAL)
 
