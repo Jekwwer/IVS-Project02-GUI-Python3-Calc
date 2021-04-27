@@ -4,7 +4,7 @@
 # @author   MARKO KUBRACHENKO   (xkubra00)
 # @date     2021-04-24
 
-.PHONY: all pack clean test doc run profile
+.PHONY: all init pack folder clean test doc run profile
 
 PYTHON = python3
 SUDO = sudo apt-get
@@ -22,12 +22,19 @@ init:
 	$(SUDO) install $(PYTHON)-tk
 
 # packs the project so it can be submitted
-pack: clean
-	cd ../.. && zip -r $(TEAM).zip $(TEAM)
+pack: folder
+	cd ../../.. && zip -r $(TEAM).zip $(TEAM)
+
+# creates a folder to be zipped
+folder: doc clean
+	mv ../../$(TEAM) ../../repo
+	mkdir ../../$(TEAM) && mv ../../repo ../../$(TEAM)
+	mkdir ../../install
+	mv ../documentation/ ../../
 
 # deletes all the files that should not be submitted
 clean:
-	rm -rf documentation
+	rm -rf __pycache__
 
 # runs tests of the math library
 test: $(MATH_FILES)
@@ -36,7 +43,8 @@ test: $(MATH_FILES)
 # starts documentation generating
 doc: Doxyfile
 	$(SUDO) install doxygen
-	doxygen Doxyfile
+	rm -rf ../documentation
+	cd .. && doxygen src/Doxyfile
 
 # runs the application
 run: gui.py
