@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=WaterLift Calculator
-Comment=example
+Comment=Basic mathematical operations color calculator
 Exec=/usr/bin/WaterLift-calc
 Icon=/usr/share/pixmaps/WaterLift_Calculator_logo.png
 Categories=Utility;
