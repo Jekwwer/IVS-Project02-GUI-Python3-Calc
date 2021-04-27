@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=WaterLift Calculator
+Comment=example
+Exec=/usr/bin/WaterLift-calc
+Icon=/usr/share/pixmaps/WaterLift_Calculator_logo.png
+Categories=Utility;
+Terminal=false
+StartupNotify=true
+StartupWMClass=gui
+Name[cs]=WaterLift Calculator
