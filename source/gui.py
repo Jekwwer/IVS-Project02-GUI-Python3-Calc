@@ -858,7 +858,7 @@ def evaluate():
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             # if radical index wasn't set
-            if operator == "√" and not input_str[:1].isdigit():
+            if operator == "√" and not input_str[i-1:i].isdigit():
                 input_str = "2" + input_str
                 i += 1
             args.append(float(input_str[:i]))
