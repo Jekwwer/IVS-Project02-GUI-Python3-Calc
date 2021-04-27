@@ -293,7 +293,7 @@ class HelpWindow(Toplevel):
         self.title("Help")
         self.minsize(min_additional_window_width, min_additional_window_height)
 
-        self.min_additional_window_width = int(min_additional_window_width * 2)
+        self.min_additional_window_width = int(min_additional_window_width * 1.5)
         self.min_additional_window_height = int(min_additional_window_height * 2)
 
         # Put on the Left upper center part of the screen
@@ -306,7 +306,7 @@ class HelpWindow(Toplevel):
         user_manual.pack(side="top", expand=1, fill="both")
 
         # Display the manual
-        user_manual.display_file("../documentation.pdf")
+        user_manual.display_file("manual_for_help_window.pdf")
 
 
 ##
