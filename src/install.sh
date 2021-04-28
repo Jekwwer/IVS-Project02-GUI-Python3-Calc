@@ -1,6 +1,6 @@
 #!/bin/sh
 
-awk '{gsub(/manual_for_help_window.pdf/,"/usr/share/waterlift-calc/manual_for_help_window.pdf")}1' gui.py > tmp_gui.py ; cat tmp_gui.py > gui.py ; rm -f tmp_gui.py
+awk '{gsub("manual_for_help_window.pdf","/usr/share/waterlift-calc/manual_for_help_window.pdf")}1' gui.py > tmp_gui.py ; cat tmp_gui.py > gui.py ; rm -f tmp_gui.py
 awk '{gsub("../images/waterlift_calc_logo.png","/usr/share/pixmaps/waterlift_calc_logo.png")}1' gui.py > tmp_gui.py ; cat tmp_gui.py > gui.py ; rm -f tmp_gui.py
 
 mkdir -p '../install/usr/share/waterlift-calc' 2>/dev/null
