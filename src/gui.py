@@ -905,7 +905,11 @@ def change_theme(color):
 
 if __name__ == "__main__":
     # Main window parameters
-    master = Tk()
+    master = Tk(className="WaterLift Calculator")
+
+    app_icon = PhotoImage(file="../images/waterlift_calc_logo.png")
+    master.iconphoto(False, app_icon)
+
     master.title("WaterLift Calculator")
     master.resizable(False, False)
 
