@@ -20,6 +20,8 @@ init:
 	$(SUDO) update
 	$(SUDO) install $(PYTHON)
 	$(SUDO) install $(PYTHON)-tk
+	$(SUDO) install $(PYTHON)-pip
+	$(PIP)  install tkDocViewer
 
 # packs the project so it can be submitted
 pack: folder
@@ -30,7 +32,7 @@ folder: doc clean
 	mv ../../$(TEAM) ../../repo
 	mkdir ../../$(TEAM) && mv ../../repo ../../$(TEAM)
 	mkdir ../../install
-	mv ../documentation/ ../../
+	mv ../doc/ ../../
 
 # deletes all the files that should not be submitted
 clean:
@@ -43,8 +45,8 @@ test: $(MATH_FILES)
 # starts documentation generating
 doc: Doxyfile
 	$(SUDO) install doxygen
-	rm -rf ../documentation
-	cd .. && doxygen src/Doxyfile
+	rm -rf ../doc
+	doxygen Doxyfile
 
 # runs the application
 run: gui.py
