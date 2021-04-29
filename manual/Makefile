@@ -1,4 +1,4 @@
-# Autor:   Evgenii Shiliaev
+# Author:   Evgenii Shiliaev
 
 MANUAL = dokumentace
 MANUAL_FOR_HELP_WINDOW = manual_for_help_window
@@ -17,7 +17,7 @@ $(MANUAL_FOR_HELP_WINDOW).pdf: $(MANUAL_FOR_HELP_WINDOW).tex
 	latex $(MANUAL_FOR_HELP_WINDOW).tex
 	dvips -t a5 $(MANUAL_FOR_HELP_WINDOW).dvi
 	ps2pdf -sPAPERSIZE=a5 $(MANUAL_FOR_HELP_WINDOW).ps
-	mv $(MANUAL_FOR_HELP_WINDOW).pdf ../source
+	mv $(MANUAL_FOR_HELP_WINDOW).pdf ../src
 
 .PHONY: clean
 
