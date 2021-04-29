@@ -8,6 +8,7 @@
 
 PYTHON = python3
 SUDO = sudo apt-get
+PIP = pip3
 TEAM = IVS_BHitW
 LOGIN = xshili00_xbenes58_xbrazd22_xkubra00
 REPOSITORY = https://github.com/Jekwwer/IVS_BHitW.git
@@ -15,7 +16,8 @@ INSTALL_FILES := $(filter-out tests.py, $(wildcard *.py))
 MATH_FILES = math_lib.py tests.py
 
 # cannot compile python
-all: init
+all: init profile
+	chmod +x gui.py
 
 # installs everything required to run the calculator
 init:
@@ -52,12 +54,11 @@ doc: Doxyfile
 
 # runs the application
 run: gui.py
-	$(PYTHON) gui.py
+	./gui.py
 
 # runs profiling
 profile: profiling.py
 	chmod +x profiling.py
-	./profiling.py
 
 # creates a deb file
 install: $(INSTALL_FILES)
