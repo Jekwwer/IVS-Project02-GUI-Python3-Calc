@@ -21,7 +21,6 @@ all: init profile
 
 # installs everything required to run the calculator
 init:
-	$(SUDO) update
 	$(SUDO) install $(PYTHON)
 	$(SUDO) install $(PYTHON)-tk
 	$(SUDO) install $(PYTHON)-pip
@@ -36,7 +35,7 @@ pack: folder
 folder: doc install clean
 	mkdir ../../$(LOGIN) && cd ../../$(LOGIN) && git clone $(REPOSITORY) && mv IVS_BHitW repo
 	cp -a ../doc ../../$(LOGIN)/ && rm -rf ../doc
-	cp -a ../install ../../$(LOGIN)/ && rm -rf ../install/*.deb
+	mkdir ../../$(LOGIN)/install && cp -a ../install/*.deb ../../$(LOGIN)/install/ && rm -rf ../install/*.deb
 
 # deletes all the files that should not be submitted
 clean:
@@ -51,6 +50,7 @@ doc: Doxyfile
 	$(SUDO) install doxygen
 	rm -rf ../doc
 	doxygen Doxyfile
+	rm -rf doxygen_warning.txt
 
 # runs the application
 run: gui.py
