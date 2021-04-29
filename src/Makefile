@@ -1,7 +1,7 @@
 ##
 # @file     Makefile
 # @brief    Makefile for WaterLift Calculator
-# @author   MARKO KUBRACHENKO   (xkubra00)
+# @author   Marko Kubrachenko   (xkubra00)
 # @date     2021-04-24
 
 .PHONY: all init pack folder clean test doc run profile install
