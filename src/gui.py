@@ -747,22 +747,22 @@ def calculate(operator, args):
         try:
             result = root(args[1], args[0])
         except ValueError:
-            result = "Nth Root Error: Invalid arguments\n" \
-                     "Check 'Help' or 'User Manual' for more information."
+            result = "Nth Root Error: Invalid arguments! " \
+                     "Check 'Help' for more information"
             state = 1
     elif operator == "㏑":
         try:
             result = ln(args[0])
         except ValueError:
             result = f"Natural Logarithm Error: " \
-                     f"{args[0]} MUST be greater than zero."
+                     f"{args[0]} MUST be greater than zero!"
             state = 1
     elif operator == "㏒":
         try:
             result = log(args[1], args[0])
         except ValueError:
-            result = "Logarithm Error: Invalid arguments\n" \
-                     "Check 'Help' or 'User Manual' for more information."
+            result = "Logarithm Error: Invalid arguments! " \
+                     "Check 'Help' for more information"
             state = 1
     else:
         result = "Operation Error:\n" \
