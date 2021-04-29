@@ -34,6 +34,7 @@ dark_violet = ["#490063", "#6e1989"]
 default_color = dark_blue
 default_foregroung_color = "#ffffff"
 
+
 # Custom widgets
 
 
@@ -203,6 +204,8 @@ class AdditionalWindow(Toplevel):
         self.minsize(min_additional_window_width, min_additional_window_height)
         self.resizable(False, False)
 
+        self.iconphoto(False, app_icon)
+
         self.default_font_size = 13
         self.objects_list = []
 
@@ -293,13 +296,16 @@ class HelpWindow(Toplevel):
         self.title("Help")
         self.minsize(min_additional_window_width, min_additional_window_height)
 
+        self.iconphoto(False, app_icon)
+
         self.min_additional_window_width = int(min_additional_window_width * 1.5)
         self.min_additional_window_height = int(min_additional_window_height * 2)
 
         # Put on the Left upper center part of the screen
         add_x_position = int(master.winfo_screenwidth() / 2 - 1.5 * self.min_additional_window_width)
         add_y_position = y_position
-        self.geometry(f"{self.min_additional_window_width}x{self.min_additional_window_height}+{add_x_position}+{add_y_position}")
+        self.geometry(
+            f"{self.min_additional_window_width}x{self.min_additional_window_height}+{add_x_position}+{add_y_position}")
 
         # Manual Viewer
         user_manual = DocViewer(self)
@@ -858,7 +864,7 @@ def evaluate():
         if input_str[i] in ["+", "−", "/", "*", "√", "^", "㏒"]:
             operator = input_str[i]
             # if radical index wasn't set
-            if operator == "√" and not input_str[i-1:i].isdigit():
+            if operator == "√" and not input_str[i - 1:i].isdigit():
                 input_str = "2" + input_str
                 i += 1
             args.append(float(input_str[:i]))
