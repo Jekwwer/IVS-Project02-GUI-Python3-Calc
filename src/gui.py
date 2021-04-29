@@ -710,14 +710,14 @@ def remove_empty_decimal_part(str_line):
 def calculate(operator, args):
     state = 0
     if operator == "+":
-        result = add(args[0], args[1])
+        result = round(add(args[0], args[1]), 11)
     elif operator == "−":
-        result = sub(args[0], args[1])
+        result = round(sub(args[0], args[1]), 11)
     elif operator == "*":
-        result = mul(args[0], args[1])
+        result = round(mul(args[0], args[1]), 11)
     elif operator == "/":
         try:
-            result = div(args[0], args[1])
+            result = round(div(args[0], args[1]), 11)
         except ValueError:
             result = f"Zero Division Error:\n" \
                      f"{args[0]} / {args[1]} is NOT possible!"
@@ -738,14 +738,14 @@ def calculate(operator, args):
                 state = 1
     elif operator == "^":
         try:
-            result = power(args[0], args[1])
+            result = round(power(args[0], args[1]), 11)
         except ValueError:
             result = f"Power Error: " \
                      f"{args[1]} MUST be a natural number!"
             state = 1
     elif operator == "√":
         try:
-            result = root(args[1], args[0])
+            result = round(root(args[1], args[0]), 11)
         except ValueError:
             result = "Nth Root Error: Invalid arguments! " \
                      "Check 'Help' for more information"
