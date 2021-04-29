@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=WaterLift Calculator
+Comment=Basic mathematical operations color calculator
+Exec=/usr/bin/waterlift-calc
+Icon=/usr/share/pixmaps/waterlift_calc_logo.png
+Categories=Utility;
+Terminal=false
+StartupNotify=true
+StartupWMClass=gui
+Name[cs]=WaterLift Calculator
