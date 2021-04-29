@@ -365,7 +365,7 @@ def input_button_press(value):
 
     # If the first input sign was a digit,
     # enable the operation buttons
-    if input_str == "" and (str(value).isdigit()):
+    if (input_str == "" or input_str == "-") and (str(value).isdigit()):
         enable_operation_buttons()
 
     # If was added a factorial operation sign, disable the num buttons and minus button
