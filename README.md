@@ -22,7 +22,7 @@ Download the last version installer of the application
 
 - Or use CLI command:
 ```bash
-sudo dpkg -i WaterLift_Calc-1.0-ubuntu20.04-x64.deb
+sudo dpkg -i waterlift_calc-1.0-ubuntu20.04-x64.deb
 ```
 
 ## Run WaterLift Calculator
@@ -33,7 +33,7 @@ sudo dpkg -i WaterLift_Calc-1.0-ubuntu20.04-x64.deb
 
 - Or use CLI command:
 ```bash
-WaterLift-calc
+waterlift-calc
 ```
 
 ## Features
