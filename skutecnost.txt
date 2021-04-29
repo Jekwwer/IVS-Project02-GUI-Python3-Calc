@@ -1,0 +1,5 @@
+- Nevhodné plánovaní termínů a rozdělení úkolů na konci.
+Na začátku jsme dodržovali všechny termíny, ale během plánování jsme rozhodli udělat ten stejný termín na odevzdání GUI a instalátoru, což způsobilo to, že nebylo možné zároveň otestovat všechno, bylo třeba vychytat bugy v GUI, pak otestovat instalátor a samotný produkt mimo IDE.
+Tohle posunulo ostatní deadliny skoro až do termínu odevzdání projektu, což není dobře.
+
+- Špatné pojmenování složek v repozitáři na začátku dělalo zmatek a vnášelo nekonzistenci na konci práci.

@@ -1,0 +1,4 @@
+xshili00 121 (logika GUI, matematická knihovna, uživatelská dokumentace, mockup)
+xbenes58 94 (testy, programová dokumentace, vstup z klávesnice)
+xbrazd22 92 (profiling, instalátor)
+xkubra00 93 (vzhled GUI, matematická knihovna, Makefile)
