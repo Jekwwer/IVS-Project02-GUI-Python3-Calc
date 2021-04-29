@@ -64,3 +64,5 @@ profile: profiling.py
 install: $(INSTALL_FILES)
 	rm -rf ../install/*.deb
 	bash install.sh
+
+# END OF Makefile FILE

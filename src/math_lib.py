@@ -149,3 +149,5 @@ def log(a, b):
 def ln(a):
     e = 2.718281828459045
     return log(a, e)
+
+# END OF math_lib.py FILE

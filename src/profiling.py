@@ -51,3 +51,5 @@ if __name__ == "__main__":
     num_list = string_input.replace("\t", " ").replace("\n", " ").split(" ")
     deviation = standard_deviation(num_list)
     print(deviation)
+
+# END OF profiling.py FILE

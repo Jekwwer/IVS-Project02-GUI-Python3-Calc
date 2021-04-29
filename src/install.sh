@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# Script that generates .deb package
+
 # Backup original gui.py
 cat gui.py > backup_gui.py
 
@@ -25,3 +27,5 @@ rm -r '../install/usr/share/pixmaps'
 
 cat backup_gui.py > gui.py
 rm -r backup_gui.py
+
+# END OF install.sh FILE
