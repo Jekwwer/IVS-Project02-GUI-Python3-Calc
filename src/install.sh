@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Backup original gui.py
+cat gui.py > backup_gui.py
+
 awk '{gsub("manual_for_help_window.pdf","/usr/share/waterlift-calc/manual_for_help_window.pdf")}1' gui.py > tmp_gui.py ; cat tmp_gui.py > gui.py ; rm -f tmp_gui.py
 awk '{gsub("../images/waterlift_calc_logo.png","/usr/share/pixmaps/waterlift_calc_logo.png")}1' gui.py > tmp_gui.py ; cat tmp_gui.py > gui.py ; rm -f tmp_gui.py
 
@@ -19,3 +22,6 @@ dpkg-deb --build '../install/' '../install/waterlift_calc-1.0-ubuntu20.04-x64.de
 rm -r '../install/usr/bin'
 rm -r '../install/usr/share/waterlift-calc'
 rm -r '../install/usr/share/pixmaps'
+
+cat backup_gui.py > gui.py
+rm -r backup_gui.py
