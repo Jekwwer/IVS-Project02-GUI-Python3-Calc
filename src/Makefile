@@ -4,12 +4,14 @@
 # @author   MARKO KUBRACHENKO   (xkubra00)
 # @date     2021-04-24
 
-.PHONY: all init pack folder clean test doc run profile
+.PHONY: all init pack folder clean test doc run profile install
 
 PYTHON = python3
 SUDO = sudo apt-get
-TEAM = xshili00_xbenes58_xbrazd22_xkubra00
-PYTHON_FILES := $(wildcard *.py)
+TEAM = IVS_BHitW
+LOGIN = xshili00_xbenes58_xbrazd22_xkubra00
+REPOSITORY = https://github.com/Jekwwer/IVS_BHitW.git
+INSTALL_FILES := $(filter-out tests.py, $(wildcard *.py))
 MATH_FILES = math_lib.py tests.py
 
 # cannot compile python
@@ -25,14 +27,14 @@ init:
 
 # packs the project so it can be submitted
 pack: folder
-	cd ../../.. && zip -r $(TEAM).zip $(TEAM)
+	cd ../.. && zip -r $(LOGIN).zip $(LOGIN)
+	cd ../.. && rm -rf $(LOGIN)
 
 # creates a folder to be zipped
-folder: doc clean
-	mv ../../$(TEAM) ../../repo
-	mkdir ../../$(TEAM) && mv ../../repo ../../$(TEAM)
-	mkdir ../../install
-	mv ../doc/ ../../
+folder: doc install clean
+	mkdir ../../$(LOGIN) && cd ../../$(LOGIN) && git clone $(REPOSITORY) && mv IVS_BHitW repo
+	cp -a ../doc ../../$(LOGIN)/ && rm -rf ../doc
+	cp -a ../install ../../$(LOGIN)/ && rm -rf ../install/*.deb
 
 # deletes all the files that should not be submitted
 clean:
@@ -56,3 +58,8 @@ run: gui.py
 profile: profiling.py
 	chmod +x profiling.py
 	./profiling.py
+
+# creates a deb file
+install: $(INSTALL_FILES)
+	rm -rf ../install/*.deb
+	bash install.sh
