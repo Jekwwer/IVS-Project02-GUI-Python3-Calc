@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+
 ##
 # @file     profiling.py
 # @brief    Reads numbers and prints standard deviation
-# @author   Simon Brazda    (xbrazd22)
+# @author   Simon Brazda (xbrazd22)
 # @date     2021-04-06
 
 
