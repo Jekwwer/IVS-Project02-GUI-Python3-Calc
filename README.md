@@ -67,7 +67,7 @@ waterlift-calc
 
 ## ✨ Features
 
-#### "No zero part"
+### "No zero part"
 
 No need to write a zero in decimal numbers; the calculator adds it by itself.
 
@@ -75,7 +75,7 @@ No need to write a zero in decimal numbers; the calculator adds it by itself.
     <img src="https://i.ibb.co/PMgxJTM/no-zero-part.gif" alt="no_zero_part" border="0">
 </p>
 
-#### "Continue the calculating"
+### "Continue the calculating"
 
 After the evaluation of the last expression,
 
@@ -89,7 +89,7 @@ After the evaluation of the last expression,
     <img src="https://i.ibb.co/7RFC5tg/continue-the-calculating02.gif" alt="continue_the_calculating02" border="0">
 </p>
 
-#### "Change the operation sign"
+### "Change the operation sign"
 
 When you put an operation sign into the input field, you can change it by pressing another.
 
@@ -97,7 +97,7 @@ When you put an operation sign into the input field, you can change it by pressi
     <img src="https://i.ibb.co/Wx9BDKy/change-the-operation-sign.gif" alt="change_the_operation_sign" border="0">
 </p>
 
-#### Window size control
+### Window size control
 
 You can change the window size by clicking the `left mouse button` on the sizegrip and moving the mouse.
 
@@ -105,15 +105,15 @@ You can change the window size by clicking the `left mouse button` on the sizegr
     <img src="https://i.ibb.co/RTt5NyP/window-size-control.gif" alt="window_size_control" border="0">
 </p>
 
-#### Inactive buttons
+### Inactive buttons
 
 The buttons become inactive if their using is impossible in the current expression.
 
-#### Keyboard input support
+### Keyboard input support
 
 We provide keyboard support for all input buttons. You can find _Keyboard bindings table_ in the [user manual](./documentation.pdf).
 
-#### In-build user manual
+### In-build user manual
 
 You can always open a short version of the user manual by clicking `Help` or pressing the `H` keyboard button.
 
