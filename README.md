@@ -1,4 +1,4 @@
-<h1 align="center">WaterLift Calculator</h1>
+<h1 align="center">🌊 WaterLift Calculator</h1>
 <p align="center">
     <img src="https://i.ibb.co/sH7mC4S/waterlift-calculator-logo.png" alt="waterlift_calculator_logo" border="0">
 </p>
@@ -7,11 +7,18 @@ _WaterLift Calculator_ is a calculator application that provides basic mathemati
 
 This application was developed as the second project for the _"Practical Aspects of Software Design"_ school subject by the team _"Blue Hair is the Way"_.
 
-## Supported platforms
+## 💻 Supported platforms
 
 The application works properly on **Ubuntu 20.04 64-bit** or newer.
 
-## Installation
+## 🔗 Dependencies
+
+-   `python3.8`: The core programming language used by WaterLift Calculator.
+-   `python-tk`: A graphical user interface (GUI) library for Python-based applications.
+-   `python3-pip`: The package installer for Python, allowing you to install other necessary packages.
+-   `tkDocViewer`: A Tkinter-based widget to display text documents in various formats.
+
+## 📥 Installation
 
 [Download the latest version of the application installer here.](https://github.com/Jekwwer/IVS-Project02-WaterLift-Calc/releases)
 
@@ -26,7 +33,7 @@ The application works properly on **Ubuntu 20.04 64-bit** or newer.
 sudo dpkg -i waterlift_calc-1.0-ubuntu20.04-x64.deb
 ```
 
-## Run WaterLift Calculator
+## ▶️ Run WaterLift Calculator
 
 -   Go to 'Show Applications' and click on _WaterLift Calculator_.
 <p align="center">
@@ -39,7 +46,7 @@ sudo dpkg -i waterlift_calc-1.0-ubuntu20.04-x64.deb
 waterlift-calc
 ```
 
-## Features
+## ✨ Features
 
 #### "No zero part"
 
@@ -95,7 +102,7 @@ You can always open a short version of the user manual by clicking `Help` or pre
     <img src="https://i.ibb.co/sqyp9B6/help-window.gif" alt="help_window" border="0">
 </p>
 
-## Appearance
+## 🎨 Appearance
 
 <p align="center">
     <img src="https://i.ibb.co/YXdmGvM/user-interface01.png" alt="user_interface01" border="0">
@@ -107,7 +114,7 @@ We also provide some color themes for your better calculating experience.
     <img src="https://i.ibb.co/bHP3CQP/ui-color-themes.gif" alt="ui_color_themes" border="0">
 </p>
 
-## Plans
+## 📅 Plans
 
 In the future, we are planning to add:
 
@@ -119,11 +126,11 @@ In the future, we are planning to add:
     <img src="https://i.ibb.co/M686gwb/mockup.png" alt="mockup" border="0">
 </p>
 
-## License
+## 🔑 License
 
-[GNU GPLv3 ](https://choosealicense.com/licenses/gpl-3.0/)
+[GNU GPLv3 ](LICENSE)
 
-## Authors
+## 👤 Authors
 
 Blue Hair is the Way
 
@@ -136,4 +143,4 @@ Blue Hair is the Way
 
 ---
 
-<h1 align="center">Happy calculating!</h1>
+<h1 align="center">🌊 Happy calculating!</h1>
