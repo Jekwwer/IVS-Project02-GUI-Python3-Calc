@@ -130,16 +130,14 @@ In the future, we are planning to add:
 
 [GNU GPLv3 ](LICENSE)
 
-## 👤 Authors
+## 👤 Authors - Blue Hair is the Way
 
-Blue Hair is the Way
-
-```
--   Evgenii Shiliaev --------- xshili00
--   Pavel Beneš -------------- xbenes58
--   Šimon Brázda ------------- xbrazd22
--   Marko Kubrachenko -------- xkubra00
-```
+| Member            | Project Parts                                               |
+| :---------------- | :---------------------------------------------------------- |
+| Evgenii Shiliaev  | GUI logic, mathematical library, user documentation, mockup |
+| Pavel Beneš       | tests, program documentation, keyboard input                |
+| Šimon Brázda      | profiling, installer                                        |
+| Marko Kubrachenko | GUI appearance, mathematical library, Makefile              |
 
 ---
 
