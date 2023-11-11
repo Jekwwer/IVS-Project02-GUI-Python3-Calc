@@ -7,6 +7,25 @@ _WaterLift Calculator_ is a calculator application that provides basic mathemati
 
 This application was developed as the second project for the _"Practical Aspects of Software Design"_ school subject by the team _"Blue Hair is the Way"_.
 
+## 📌 Table of Contents
+
+-   [ 💻 Supported platforms](#-supported-platforms)
+-   [ 🔗 Dependencies](#-dependencies)
+-   [ 📥 Installation](#-installation)
+-   [ ▶️ Run WaterLift Calculator](#-run-waterlift-calculator)
+-   [ ✨ Features](#-features)
+    -   [No zero part](#no-zero-part)
+    -   [Continue the calculating](#continue-the-calculating)
+    -   [Change the operation sign](#change-the-operation-sign)
+    -   [Window size control](#window-size-control)
+    -   [Inactive buttons](#inactive-buttons)
+    -   [Keyboard input support](#keyboard-input-support)
+    -   [Inbuild user manual](#in-build-user-manual)
+-   [ 🎨 Appearance](#-appearance)
+-   [ 📅 Plans](#-plans)
+-   [ 🔑 License](#-license)
+-   [ 👤 Authors](#-authors---blue-hair-is-the-way)
+
 ## 💻 Supported platforms
 
 The application works properly on **Ubuntu 20.04 64-bit** or newer.
@@ -138,6 +157,10 @@ In the future, we are planning to add:
 | Pavel Beneš       | tests, program documentation, keyboard input                |
 | Šimon Brázda      | profiling, installer                                        |
 | Marko Kubrachenko | GUI appearance, mathematical library, Makefile              |
+
+---
+
+**🔙 Back to [Table of Contents](#-table-of-contents)**
 
 ---
 
